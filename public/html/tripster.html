@@ -1,0 +1,99 @@
+<!doctype html>
+<html ng-app="tripsterApp">
+<head>
+	<!--============================ META ============================-->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!--============================ SCROLLS ============================-->
+	<!-- snap -->
+	<link rel="stylesheet" type="text/css" href="../css/snap.css" />
+	<link rel="stylesheet" type="text/css" href="../css/mysnap.css" />
+
+	<!-- bootstrap CDN-->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> 
+
+	<!-- my style -->
+	<link rel="stylesheet" type="text/css" href="../css/mystyle.css" />
+
+	<!-- animate css -->
+	<link rel="stylesheet" type="text/css" href="../css/animate.css" />
+
+	<!--============================ SPELLS ============================-->
+	<!-- angular CDN -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-route.min.js"></script>
+
+	<!-- bootstrap CDN -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+	<!-- angular bootstrap ui -->
+	<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
+
+	<!-- core and controller -->
+	<script src="../js/angular/core.js"></script>
+	<script src="../js/angular/controllers/mytrip.js"></script>
+	<script src="../js/angular/controllers/createtrip/newtrip_01.js"></script>
+	<script src="../js/angular/controllers/createtrip/newtrip_02.js"></script>
+	<script src="../js/angular/controllers/createtrip/newtrip_03.js"></script>
+	<script src="../js/angular/controllers/search.js"></script>
+
+	<!-- service -->
+	<script src="../js/angular/services/createtrip.js"></script>
+
+</head>
+<body>
+
+	<div class="container-fluid">
+		<!-- Side Bar -->
+		<div class="snap-drawers">
+			<div class="snap-drawer snap-drawer-left">
+				<div>
+					<ul>
+						<li><a href="default.html">Default</a></li>
+						<li><a href="noDrag.html">No Drag</a></li>
+						<li><a href="#/mytrip"><span class="glyphicon glyphicon-pencil" style="margin-right:5px"></span> My Trip</a></li>
+						<li><a href="#/search"><span class="glyphicon glyphicon-search" style="margin-right:5px"></span> Search</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<!-- Main Content -->
+		<div id="content" class="snap-content">
+
+			<!-- Top Nav Bar -->
+			<!-- <nav class="navbar navbar-static-top navbar-inverse" role="navigation"> -->
+				<nav class="navbar navbar-static-top navbar-default" role="navigation">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" style="height:40px" id="open-left">
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>    
+						<a class="navbar-brand" href="#/home"><b>Tripster</b></a> 
+					</div>
+				</nav>
+
+
+				<!-- Angular ng-view -->
+				<div ng-view></div>
+			</div>
+		</div>
+
+
+		<!--============================ SPELLS(cont.) ============================-->
+		<!-- snap -->
+		<script src="../js/snap/snap.js"></script>
+		<script src="../js/snap/snap.min.js"></script>
+		<script src="../js/snap/mysnap.js"></script>
+		<script type="text/javascript">
+		var snapper = new Snap({
+			element: document.getElementById('content'),
+			disable: 'right'
+		});
+		</script>
+	</body>
+	</html>

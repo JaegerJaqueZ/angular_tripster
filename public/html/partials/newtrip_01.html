@@ -1,0 +1,92 @@
+<!-- NavBar for Modal-->
+<nav class="navbar navbar-static-top navbar-default" role="navigation">
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle" id="fix-btn" style="height:40px; width:80px" ng-click="cancel()">
+			Cancel
+		</button>    
+		<a class="navbar-brand" href="#"><b>Create Trip</b></a> 
+	</div>
+</nav>
+<!-- Modal -->
+<!--div class="modal-header"></div-->
+<div class="modal-body animated slideInLeft" ng-controller="newtrip01Ctrl">
+	<form role="form">
+		<div class="form-group">
+			<label for="tripName">Trip Name</label>
+			<input type="tripName" class="form-control" id="tripName" placeholder="Enter Trip Name" ng-model="name">
+		</div>
+		<div class="form-group">
+			<label for="tripDesc">Trip Description</label>
+			<textarea type="tripDesc" class="form-control" id="tripDesc" rows="3" placeholder="Enter Trip Description" ng-model="description"></textarea>
+		</div>
+
+
+		<!-- Date Picker -->
+		<div ng-controller="DatepickerBeginCtrl">
+
+			<label for="begindate">Begin Date</label>
+			<div class="row">
+				<div class="col-md-12">
+					<p class="input-group">
+						<input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="begindate" is-open="opened" show-button-bar="false" datepicker-options="dateOptions" ng-required="true" ng-change="changed()" close-text="Close" />
+						<span class="input-group-btn">
+							<button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div ng-controller="DatepickerEndCtrl">
+			<label for="begindate">End Date</label>
+			<div class="row">
+				<div class="col-md-12">
+					<p class="input-group">
+						<input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="enddate" is-open="opened" show-button-bar="false" datepicker-options="dateOptions" ng-required="true" ng-change="changed()" close-text="Close" />
+						<span class="input-group-btn">
+							<button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
+					</p>
+				</div>
+			</div>
+
+		</div>
+
+
+
+
+		<div class="form-group">
+			<label for="Places">Place(s)</label>		
+			<div class="list-group">
+				<a ng-repeat="place in places" class="list-group-item" ng-click="open(place)">
+					{{place.foursquare.name}}
+					<span class="glyphicon glyphicon-chevron-right" style="float: right"></span>
+				</a>
+				<div>
+					<button class="btn btn-default btn-lg btn-block" ng-click="open()">
+						<span class="glyphicon glyphicon-plus"></span>
+					</button>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- <div class="form-group">
+			<label for="Date">Map</label><br>
+			<center>
+			<img src="../img/exmap.png" class="img-responsive img-thumbnail" alt="Responsive image">
+			</center>
+			</div> -->
+			<br>
+		</form>
+		<hr>
+		<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="confirmTrip()">Save</button>
+		<button type="submit" class="btn btn-success btn-lg btn-block">Publish</button>
+	</div>
+	<!-- <div class="modal-footer">
+	<button type="button" class="btn btn-primary btn-lg btn-block">Save</button>
+	<button type="submit" class="btn btn-success btn-lg btn-block">Publish</button>
+	<!-- <button type="button" class="btn btn-danger btn-lg btn-block">Delete</button> ->
+	</div> -->
+
+

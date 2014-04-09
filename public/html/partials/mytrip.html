@@ -1,0 +1,22 @@
+<div class="container-fluid animated slideInLeft">	
+	<!-- Search Trip -->
+	<div class="input-group">
+		<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+		<input ng-model="query" type="text" class="form-control" placeholder="Search Trip Title">
+	</div>
+	<br>
+	<!-- Add -->
+	<div>
+		<button class="btn btn-success" ng-click="open()">
+			<span class="glyphicon glyphicon-plus"></span> Add New Trip
+		</button>
+	</div>
+	<br>
+	<!-- List Trips -->
+	<div class="list-group">
+		<a ng-repeat="trip in trips | filter:query" href="" class="list-group-item" ng-click="open(trip)">
+			{{trip.title}}
+			<span class="glyphicon glyphicon-chevron-right" style="float: right"></span>
+		</a>
+	</div>
+</div>
