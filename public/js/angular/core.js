@@ -4,7 +4,8 @@ var tripsterApp = angular.module('tripsterApp', [
 	'ngRoute',
 	'ui.bootstrap',
 	'createTripService',
-	'myTripControllers'
+	'myTripControllers',
+	'modalAddTripControllers'
 ]);
 
 tripsterApp.config(['$routeProvider',
