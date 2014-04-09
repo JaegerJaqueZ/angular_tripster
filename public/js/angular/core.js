@@ -1,13 +1,10 @@
+//public/js/angular/core.js
 
 var tripsterApp = angular.module('tripsterApp', [
-'ngRoute',
-'ui.bootstrap',
-'mytripControllers',
-'newtrip01Controllers',
-'newtrip02Controllers',
-'newtrip03Controllers',
-'createtripService',
-'searchControllers'	
+	'ngRoute',
+	'ui.bootstrap',
+	'createTripService',
+	'myTripControllers'
 ]);
 
 tripsterApp.config(['$routeProvider',
@@ -17,12 +14,11 @@ function($routeProvider) {
 		templateUrl: 'partials/home.html'
 	}).
 	when('/mytrip', {
-		templateUrl: 'partials/mytrip.html',
+		templateUrl: 'partials/my_trip.html',
 		controller: 'myTripCtrl'
 	}).
 	when('/search', {
-		templateUrl: 'partials/search.html',
-		controller: 'searchCtrl'
+		templateUrl: 'partials/search.html'
 	}).
 	otherwise({
 		redirectTo: '/home'
