@@ -2,15 +2,26 @@
 
 var createTripService = angular.module('createTripService', []);
 
-createTripService.factory('createTripFactory', function() {
+createTripService.factory('createTripFactory', function($http) {
 
 //=============================== Factory Attributes ===============================
-	var   trips = []
+	var   trips 		 = new Array()
 		, isEditingTrip  = false
 		, isEditingPlace = false
 		, chosenTrip	 = {}
-		, chosenPlace	 = {};
+		, chosenPlace	 = {}
+		, dateBegin		 = new Date().getTime()
+		, dateEnd		 = new Date().getTime();
 
+	var	  DEFAULT_TRIP	 = 0
+		, PRIVATE_TRIP 	 = 10
+		, PUBLIC_TRIP	 = 20;
+
+//=============================== Mock up ===============================
+
+	function getUserId(){
+		return "5336d2ebf121c5e05456126e";
+	}
 
 //=============================== Factory Methods ===============================
 
@@ -30,7 +41,21 @@ createTripService.factory('createTripFactory', function() {
 		for(i = 0; i < trips_server.length; i++) {
 			trips.push(jQuery.extend({}, trips_server[i]));
 		}
-	}		
+	}
+
+	function updateTrips(){
+		$http({
+			method:'GET', 
+			url: getOriginPath() + "trips/deep?user_id=" + getUserId()
+		})
+		.success(function(data, status, headers, config) {
+			trips = new Array();
+			setTrips(data);
+		})
+		.error(function(data, status, headers, config) {
+			alert("Cannot load your trip(s), please Refresh");
+		});
+	}
 
 	function getIsEditingTrip(){
 		return isEditingTrip;
@@ -64,11 +89,36 @@ createTripService.factory('createTripFactory', function() {
 		chosenPlace = place;
 	}
 
+	function getDateBegin(){
+		return dateBegin;
+	}
+
+	function setDateBegin(date){
+		dateBegin = date;
+	}
+
+	function getDateEnd(){
+		return dateEnd;
+	}
+
+	function setDateEnd(date){
+		dateEnd = date;
+	}
+
+
+
 //=============================== Factory Return ===============================
 	return{
+		getUserId: getUserId,
+
+
+		DEFAULT_TRIP: DEFAULT_TRIP,
+		PRIVATE_TRIP: PRIVATE_TRIP,
+		PUBLIC_TRIP: PUBLIC_TRIP,
 		getOriginPath: getOriginPath,
 		getTrips: getTrips,
 		setTrips: setTrips,
+		updateTrips: updateTrips,
 		getIsEditingTrip: getIsEditingTrip,
 		setIsEditingTrip: setIsEditingTrip,
 		getIsEditingPlace: getIsEditingPlace,
@@ -76,7 +126,11 @@ createTripService.factory('createTripFactory', function() {
 		getChosenTrip: getChosenTrip,
 		setChosenTrip: setChosenTrip,
 		getChosenPlace: getChosenPlace,
-		setChosenPlace: setChosenPlace
+		setChosenPlace: setChosenPlace,
+		getDateBegin: getDateBegin,
+		setDateBegin: setDateBegin,
+		getDateEnd: getDateEnd,
+		setDateEnd: setDateEnd
 	}
 
 });
