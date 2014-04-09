@@ -4,11 +4,9 @@ var myTripControllers = angular.module('myTripControllers', []);
 
 myTripControllers.controller('myTripCtrl', function ($scope, $http, createTripFactory, $modal) {
 
-	var mock_user_id = "5336d2ebf121c5e05456126e";
-
 	$http({
 		method:'GET', 
-		url: createTripFactory.getOriginPath() + "trips/deep?user_id=" + mock_user_id
+		url: createTripFactory.getOriginPath() + "trips/deep?user_id=" + createTripFactory.getUserId()
 	})
 	.success(function(data, status, headers, config) {
 		createTripFactory.setTrips(data);
@@ -54,17 +52,35 @@ myTripControllers.controller('myTripCtrl', function ($scope, $http, createTripFa
 				controller: editTripModalInstanceCtrl,
 				backdrop: false
 			});
-		}
-
-		
+		}		
 	};
 
 });
 
+//=============================== Modal Controller ===============================
+
 var addTripModalInstanceCtrl = function ($scope, $modalInstance, createTripFactory) {
 
 	$scope.cancel = function () {
-		$modalInstance.dismiss('cancel');
+		if(createTripFactory.setIsEditingTrip()){
+			$http({
+				method: 'DELETE',
+				url: createTripFactory.getOriginPath() + "trip/delete/deep?trip_id=" + createTripFactory.getChosenTrip()._id
+			}).
+			success(function(data, status, headers, config) {
+				createTripFactory.setIsEditingTrip(false);
+				createTripFactory.setChosenTrip({});
+				$scope.cancel();
+			}).
+			error(function(data, status, headers, config) {
+				alert("Save Failed, Please Try Again.");
+				$scope.isDisabled = false;
+			});
+		}
+		else {
+			$modalInstance.dismiss('cancel');	
+		}
+		
 	};
 };
 
