@@ -1,0 +1,82 @@
+<title>Search Trip</title>
+
+<div class="container-fluid animated slideInLeft" >	
+
+	<p></p>
+
+	<!-- Search Trip -->
+	<div class="input-group">
+		<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+		<input ng-model="key" type="text" class="form-control" style="width:75%" placeholder="Search Trip Name">
+		<button type="button" class="btn btn-default" style="margin-left:2%;width:23%;" ng-click="search()">Search</button>
+	</div>	
+
+
+	<table width="100%">
+		<tr>
+			<td><hr /></td>
+			<td style="width:1px; padding: 0 10px; white-space: nowrap;color:grey;"><strong>Result</strong></td>
+			<td><hr /></td>
+		</tr>
+	</table>​		
+
+	<div>
+		<accordion close-others="oneAtATime">
+
+		  <accordion-group is-open="isopen" ng-repeat="trip in trips">
+
+			 <accordion-heading>
+				<div class="row">
+				  	<div class="col-xs-3 col-sm-3">
+				  		<!-- author photo -->
+				  		<img border="0" class="img-circle" src="{{trip.photo}}" alt="{{trip.title}} photo" width="50" height="50">
+				  	</div>
+
+				  	<div class="col-xs-7 col-sm-7">
+				  		<!-- trip name -->
+				  		<span style="margin-left:2%">{{trip.title}}  </span>						  		
+				  		<br>
+				  		<!-- author name -->
+				  		<span style="margin-left:10%">by {{trip.name}} </span>						  		
+
+				  	</div>
+				  	<div class="col-xs-2 col-sm-2">
+				  		<!-- icon -->
+				  		<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+				  	</div>
+				</div>
+			</accordion-heading>
+
+			<!-- carousel -->
+			<div ng-controller="CarouselDemoCtrl" >
+				<div style="height: 10%">
+					<carousel interval="myInterval">
+						<slide ng-repeat="slide in slides" active="slide.active">
+							<img ng-src="{{slide.image}}" style="margin:auto;">
+							<div class="carousel-caption">
+								<!-- <h4>place {{$index+1}}</h4> -->
+								<p>place {{$index+1}} : {{slide.text}}</p>
+							</div>
+						</slide>
+					</carousel>
+				</div>
+			</div>
+
+			<p></p>
+			{{trip.content}}
+			<p></p>
+
+			<a class="btn btn-default btn-lg btn-block" href="#trip">Read More</a>
+		  </accordion-group>
+
+		</accordion>
+	</div>
+	<button type="button" class="btn btn-default btn-lg btn-block" ng-click="load()">Load More</button>
+
+<!-- 	<center>
+		<div ng-controller="PaginationDemoCtrl">
+			<pagination total-items="bigTotalItems" page="bigCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+		</div>
+	</center> -->
+
+</div>
