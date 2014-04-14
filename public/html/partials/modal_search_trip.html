@@ -1,0 +1,103 @@
+
+<!-- NavBar for Modal-->
+<nav class="navbar navbar-static-top navbar-default" role="navigation">
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle" id="fix-btn" style="height:40px; width:80px" ng-click="cancel()">
+			Cancel
+		</button>    
+
+		<a class="navbar-brand" href="#"><b>Preview Trip</b></a> 
+
+		<button type="button" class="navbar-toggle" id="fix-btn" style="height:40px; width:80px; float:right" ng-click="cancel()">
+			bookmark
+		</button>
+	</div>
+</nav>
+<!-- Modal -->
+<div class="modal-body animated slideInLeft" ng-controller="modalSearchTripCtrl">
+	<form class="container-fluid">
+
+		<fieldset >
+			<legend ><strong>Author</strong></legend>
+
+			<span class="form" style="width:75%" type="text">
+				<!-- authir photo -->
+				<img border="0" class="img-circle" src="{{trip.authorPhoto}}" alt="{{trip.author}} photo" width="40" height="40">
+				<!-- author name -->
+				<span style="margin-left:3%">	
+					{{trip.author}}
+				</span >
+				<!-- follow button -->
+				<button type="button" class="btn btn-primary" style="margin-left:2%;width:22%;float: right;" ng-model="follow" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="follow()">
+			        {{followingstate}}
+			    </button>
+
+			</span>	
+		</fieldset >
+
+		<br/>
+
+		<fieldset>
+			<legend ><strong>Trip</strong></legend>
+			<!-- trip name name -->
+			<!-- <p class="text-center"><strong>{{trip.tripName}}</strong></p> -->
+				<span style="margin-left:3%">	
+					{{trip.tripName}}
+				</span >
+				<!-- follow button -->
+				<button type="button" class="btn btn-primary" style="margin-left:2%;width:25%;float: right;" ng-model="bookmark" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="follow()">
+			        {{bookmarkstate}}
+			    </button>
+			    <br><br>
+			<!-- trip description -->
+			<p> &emsp;{{trip.tripDesc}}</p> 
+		</fieldset>
+
+		<fieldset>
+			<div  ng-repeat="place in trip.places">
+				<!-- place detail  -->
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<!-- place name -->
+						<span style="margin-right:2%;">{{place.name}}</span> 
+						<!-- time  -->
+						<span class="glyphicon glyphicon-time"></span> {{place.beginTime}} - {{place.endTime}}
+						<!-- foursquare link -->
+						<a href="http://www.foursquare.com/v/{{place.place_id}}">
+							<span class="pull-right glyphicon glyphicon-chevron-right"></span>
+						</a>
+					</div>
+				</div>				
+
+				<!-- Place Photo Carousel -->
+
+				<div style="height: 10%">
+					<carousel interval="myInterval">
+						<slide ng-repeat="figure in place.figures" active="slide.active">
+							<img ng-src="{{figure}}" style="margin:auto;" width="420" height="260">
+							<div class="carousel-caption">
+								<p>pic {{$index+1}} : {{place.name}}</p>
+							</div>
+						</slide>
+					</carousel>
+				</div>
+				<!-- place description -->	
+				<br>
+				<p>{{place.placeDesc}}</p>
+				
+			</div>
+		</fieldset >
+
+		<fieldset >
+
+			<legend ><strong>Map</strong></legend>
+
+			<p> ....</p> 	
+
+		</fieldset >
+
+
+	</form>
+
+
+</div>
