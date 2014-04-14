@@ -4,8 +4,13 @@ var tripsterApp = angular.module('tripsterApp', [
 	'ngRoute',
 	'ui.bootstrap',
 	'createTripService',
+	'searchTripService',
+	'bookmarkService',
 	'myTripControllers',
-	'modalAddTripControllers'
+	'modalAddTripControllers',
+	'searchTripControllers',
+	'modalSearchTripControllers',
+	'bookmarkControllers'
 ]);
 
 tripsterApp.config(['$routeProvider',
@@ -19,7 +24,12 @@ function($routeProvider) {
 		controller: 'myTripCtrl'
 	}).
 	when('/search', {
-		templateUrl: 'partials/search.html'
+		templateUrl: 'partials/search_trip.html',
+		controller: 'searchTripCtrl'
+	}).
+	when('/bookmark', {
+		templateUrl: 'partials/bookmark.html',
+		controller: 'bookmarkCtrl'
 	}).
 	otherwise({
 		redirectTo: '/home'

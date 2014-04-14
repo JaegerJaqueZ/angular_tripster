@@ -37,9 +37,15 @@
 	<script src="../js/angular/controllers/my_trip.js"></script>
 	<script src="../js/angular/controllers/create_trip/modal_add_trip.js"></script>
 	<script src="../js/angular/controllers/create_trip/date_picker.js"></script>
+	<script src="../js/angular/controllers/search_trip.js"></script>
+	<script src="../js/angular/controllers/modal_search_trip.js"></script>
+	<script src="../js/angular/controllers/bookmark.js"></script>
+	<script src="../js/angular/controllers/modal_bookmark.js"></script>
 
 	<!-- service -->
 	<script src="../js/angular/services/create_trip.js"></script>
+	<script src="../js/angular/services/search_trip.js"></script>
+	<script src="../js/angular/services/bookmark.js"></script>
 
 </head>
 <body>
@@ -54,44 +60,46 @@
 						<li><a href="noDrag.html">No Drag</a></li>
 						<li><a href="#/mytrip"><span class="glyphicon glyphicon-pencil" style="margin-right:5px"></span> My Trip</a></li>
 						<li><a href="#/search"><span class="glyphicon glyphicon-search" style="margin-right:5px"></span> Search</a></li>
+						<li><a href="#/bookmark"><span class="glyphicon glyphicon-book" style="margin-right:5px"></span> Bookmark</a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
 
-		<!-- Main Content -->
-		<div id="content" class="snap-content">
+
 
 			<!-- Top Nav Bar -->
 			<!-- <nav class="navbar navbar-static-top navbar-inverse" role="navigation"> -->
-				<nav class="navbar navbar-static-top navbar-default" role="navigation">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle" style="height:40px" id="open-left">
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>    
-						<a class="navbar-brand" href="#/home"><b>Tripster</b></a> 
-					</div>
-				</nav>
+			<nav class="navbar navbar-fixed-top navbar-default" role="navigation">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" style="height:40px" id="open-left">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>    
+					<a class="navbar-brand" href="#/home"><b>Tripster</b></a> 
+				</div>
+			</nav>
 
+		<!-- Main Content -->
+		<div id="content" class="snap-content">
 
-				<!-- Angular ng-view -->
-				<div ng-view></div>
-			</div>
+			<!-- Angular ng-view -->
+			<div ng-view style="padding-top:70px"></div>
 		</div>
+	</div>
 
 
-		<!--============================ SPELLS(cont.) ============================-->
-		<!-- snap -->
-		<script src="../js/snap/snap.js"></script>
-		<script src="../js/snap/snap.min.js"></script>
-		<script src="../js/snap/mysnap.js"></script>
-		<script type="text/javascript">
-		var snapper = new Snap({
-			element: document.getElementById('content'),
-			disable: 'right'
-		});
-		</script>
-	</body>
-	</html>
+	<!--============================ SPELLS(cont.) ============================-->
+	<!-- snap -->
+	<script src="../js/snap/snap.js"></script>
+	<script src="../js/snap/snap.min.js"></script>
+	<script src="../js/snap/mysnap.js"></script>
+	<script type="text/javascript">
+	var snapper = new Snap({
+		element: document.getElementById('content'),
+		disable: 'right'
+	});
+	</script>		
+</body>
+</html>
