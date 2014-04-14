@@ -14,7 +14,7 @@
 	<br>
 	<!-- List Trips -->
 	<div class="list-group">
-		<a ng-repeat="trip in trips | filter:query" href="" class="list-group-item" ng-click="open(trip)">
+		<a ng-repeat="trip in trips | filter:query" class="list-group-item" ng-click="open(trip)">
 			{{trip.title}}
 			<span class="glyphicon glyphicon-chevron-right" style="float: right"></span>
 		</a>
