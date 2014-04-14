@@ -1,10 +1,15 @@
+//public/js/angular/controllers/search_trip.js
+
 var searchTripControllers = angular.module('searchTripControllers', []);
 
-searchTripControllers.controller('searchTripCtrl', function ($scope, $http, searchTripFactory) {
+searchTripControllers.controller('searchTripCtrl', function ($scope, $http, searchTripFactory, $modal) {
 
   $scope.range = 9;
   $scope.from = 0;
   $scope.to = $scope.from + $scope.range;
+
+  //accordian
+  $scope.oneAtATime = true;
 
   $scope.$watchCollection(
 
@@ -21,21 +26,23 @@ searchTripControllers.controller('searchTripCtrl', function ($scope, $http, sear
 	
   $scope.search = function () {
 
-    //reset
-    $scope.from = 0;
-    $scope.to = $scope.from + $scope.range;
+       $scope.trips = searchTripFactory.getResultList();
 
-    $http({
-      method:'GET', 
-      url: searchTripFactory.getOriginPath() + "trips/search?key=" + $scope.key + "&from=" + $scope.from + "&to=" + $scope.to
-    })
-    .success(function(data, status, headers, config) {
-        searchTripFactory.clearResultList();
-        searchTripFactory.setResultList(data);
-    })
-    .error(function(data, status, headers, config) {
-        alert("Failed to search trip(s), please Try Again");
-    }); 
+    // //reset
+    // $scope.from = 0;
+    // $scope.to = $scope.from + $scope.range;
+
+    // $http({
+    //   method:'GET', 
+    //   url: searchTripFactory.getOriginPath() + "trips/search?key=" + $scope.key + "&from=" + $scope.from + "&to=" + $scope.to
+    // })
+    // .success(function(data, status, headers, config) {
+    //     searchTripFactory.clearResultList();
+    //     searchTripFactory.setResultList(data);
+    // })
+    // .error(function(data, status, headers, config) {
+    //     alert("Failed to search trip(s), Please Try Again");
+    // }); 
 
   };
 
@@ -49,48 +56,44 @@ searchTripControllers.controller('searchTripCtrl', function ($scope, $http, sear
       url: searchTripFactory.getOriginPath() + "trips/search?key=" + $scope.key + "&from=" + $scope.from + "&to=" + $scope.to
     })
     .success(function(data, status, headers, config) {
-        searchTripFactory.setResultList(data);     
+      //TODO check whether data == {} or not; so, the load more button will be hidden
+        searchTripFactory.setResultList(data);  
     })
     .error(function(data, status, headers, config) {
-        alert("Failed to search trip(s), please Try Again");
+        alert("Failed to load trip(s), Please Try Again");
     }); 
 
   };
 
+  $scope.readmore = function (trip) {
 
-  $scope.oneAtATime = false;
+    // $http({
+    //   method:'GET', 
+    //   url: searchTripFactory.getOriginPath() + "trips/deep?trip_id=" + trip.trip_id,
+    //   data: searchTripFactory.getUserId(), trip.author_id
+    // })
+    // .success(function(data, status, headers, config) {
+        
+    //     createTripFactory.setChosenTrip(data);
 
-  
+        var modalInstance = $modal.open({
+          templateUrl: 'partials/modal_search_trip.html',
+          controller: searchTripModalInstanceCtrl,
+          backdrop: true
+        });
+  //   })
+  //   .error(function(data, status, headers, config) {
+  //       alert("Failed to open the trip, Please Try Again");
+  //   }); 
 
-  //==================================== Carousel ====================================//
-  // $scope.myInterval = 5000;
-
-  // var slides = $scope.slides = [];
-  // $scope.addSlide = function() {
-  //   var newWidth = 600 + slides.length;
-  //   slides.push({
-  //     image: '../img/place' + newWidth + '.jpg',
-  //     text: ['เกาะเสม็ด','หาดA','หาดB','หาดC'][slides.length % 4]
-  //   });
-  // };
-  // for (var i = 0; i < 4; i++) {
-  //   $scope.addSlide();
-  // }
+  };  
 
 });
 
-function CarouselDemoCtrl($scope) {
-  // $scope.myInterval = 5000;
-  var slides = $scope.slides = [];
-  $scope.addSlide = function() {
-    var newWidth = 600 + slides.length;
-    slides.push({
-      image: '../img/place' + newWidth + '.jpg',
-      text: ['เกาะเสม็ด','หาดA','หาดB','หาดC'][slides.length % 4]
-    });
+var searchTripModalInstanceCtrl = function ($scope, $modalInstance) {
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
   };
-  for (var i = 0; i < 4; i++) {
-    $scope.addSlide();
-  }
-}
+};
 
