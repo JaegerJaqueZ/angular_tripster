@@ -1,0 +1,77 @@
+<title>Bookmark</title>
+
+<div class="container-fluid animated slideInLeft" >	
+
+	<p></p>
+
+	<!-- Search Trip -->
+	<div class="input-group">
+		<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+		<input ng-model="query" type="text" class="form-control" placeholder="Search Trip Title">
+	</div>
+	<br>
+	<button ng-click="toggle = !toggle">Toggle!</button>
+
+	<table width="100%">
+		<tr>
+			<td><hr /></td>
+			<td style="width:1px; padding: 0 10px; white-space: nowrap;color:grey;"><strong>Result</strong></td>
+			<td><hr /></td>
+		</tr>
+	</table>​		
+
+	<div>
+		<accordion close-others="oneAtATime">
+
+			<accordion-group is-open="isopen" ng-repeat="trip in trips | filter:query">
+
+			<accordion-heading>
+			<div class="row">
+				<div class="col-xs-3 col-sm-3">
+					<!-- author photo -->
+					<img border="0" class="img-circle" src="{{trip.authorphoto}}" alt="{{trip.authortitle}} photo" width="50" height="50">
+				</div>
+
+				<div class="col-xs-7 col-sm-7">
+					<!-- trip name -->
+					<span style="margin-left:2%">{{trip.title}}  </span>						  		
+					<br>
+					<!-- author name -->
+					<span style="margin-left:10%">by {{trip.authorname}} </span>						  		
+				</div>
+				<!-- follow button -->
+					<button type="button" class="btn btn-danger" style="float: right" ng-show="toggle">Delete</button>
+
+				<div class="col-xs-2 col-sm-2">
+					<!-- icon -->
+					<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+				</div>
+			</div>
+		</accordion-heading>
+
+		<!-- carousel -->
+		<div>
+			<div style="height: 10%">
+				<carousel interval="myInterval">
+					<slide ng-repeat="place in trip.places" active="slide.active">
+						<img ng-src="{{place.figure_cover}}" style="margin:auto;" width="420" height="260">
+						<div class="carousel-caption">
+							<!-- <h4>place {{$index+1}}</h4> -->
+							<p>place {{$index+1}} : {{place.name}}</p>
+						</div>
+					</slide>
+				</carousel>
+			</div>
+		</div>
+
+		<p></p>
+		{{trip.content}}
+		<p></p>
+
+		<a class="btn btn-default btn-lg btn-block" ng-click="readmore(trip)">Read More</a>
+	</accordion-group>
+
+</accordion>
+</div>
+
+</div>
