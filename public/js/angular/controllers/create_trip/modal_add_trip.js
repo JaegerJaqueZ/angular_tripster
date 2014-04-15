@@ -1,3 +1,5 @@
+//public/js/angular/controllers/create_trip/modal_add_trip.js
+
 var modalAddTripControllers = angular.module('modalAddTripControllers', []);
 
 modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, createTripFactory, $modal) {
@@ -24,6 +26,7 @@ modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, 
 		}
 	);
 
+	//add new place
 	$scope.open = function (place) {
 		
 		if(typeof(place) === 'undefined') {
@@ -115,6 +118,9 @@ modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, 
 var addTripAddPlaceModalInstanceCtrl = function ($scope, $modalInstance, createTripFactory) {
 
 	$scope.cancel = function () {
+
+		createTripFactory.setIsEditingPlace(false);
+		createTripFactory.setChosenPlace({});
 		$modalInstance.dismiss('cancel');
 
 	};
@@ -123,6 +129,8 @@ var addTripAddPlaceModalInstanceCtrl = function ($scope, $modalInstance, createT
 var addTripEditPlaceModalInstanceCtrl = function ($scope, $modalInstance, createTripFactory) {
 
 	$scope.cancel = function () {
+		createTripFactory.setIsEditingPlace(false);
+		createTripFactory.setChosenPlace({});
 		$modalInstance.dismiss('cancel');
 
 	};
