@@ -6,11 +6,11 @@ myTripControllers.controller('myTripCtrl', function ($scope, $http, createTripFa
 
 	$http({
 		method:'GET', 
-		url: createTripFactory.getOriginPath() + "trips/deep?user_id=" + createTripFactory.getUserId()
+		url: createTripFactory.getOriginPath() + "user/trips?user_id=" + createTripFactory.getUserId()
 	})
 	.success(function(data, status, headers, config) {
 		createTripFactory.setTrips(data);
-		$scope.trips = createTripFactory.getTrips();	
+		$scope.trips = createTripFactory.getTrips();
 	})
 	.error(function(data, status, headers, config) {
 		alert("Cannot load your trip(s), please Refresh");
@@ -59,15 +59,18 @@ myTripControllers.controller('myTripCtrl', function ($scope, $http, createTripFa
 
 //=============================== Modal Controller ===============================
 
-var addTripModalInstanceCtrl = function ($scope, $modalInstance, createTripFactory) {
+var addTripModalInstanceCtrl = function ($scope, $modalInstance, createTripFactory, $http) {
 
 	$scope.cancel = function () {
-		if(createTripFactory.setIsEditingTrip()){
+		//isEditingTrip == true when place was added and default trip is created 
+		//so we have to delete in server when user click cancel
+		if(createTripFactory.getIsEditingTrip()){
 			$http({
 				method: 'DELETE',
-				url: createTripFactory.getOriginPath() + "trip/delete/deep?trip_id=" + createTripFactory.getChosenTrip()._id
+				url: createTripFactory.getOriginPath() + "trip/delete?trip_id=" + createTripFactory.getChosenTrip()._id
 			}).
 			success(function(data, status, headers, config) {
+				createTripFactory.updateTrips();
 				createTripFactory.setIsEditingTrip(false);
 				createTripFactory.setChosenTrip({});
 				$scope.cancel();
@@ -88,5 +91,7 @@ var editTripModalInstanceCtrl = function ($scope, $modalInstance, createTripFact
 
 	$scope.cancel = function () {
 		$modalInstance.dismiss('cancel');
+		createTripFactory.setIsEditingTrip(false);
+		createTripFactory.setChosenTrip({});
 	};
 };
