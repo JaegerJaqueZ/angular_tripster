@@ -1,3 +1,5 @@
+<!-- public/html/partials/modal_add_trip_add_place.html -->
+
 <!-- NavBar for Modal-->
 <nav class="navbar navbar-static-top navbar-default" role="navigation">
 	<div class="navbar-header">
@@ -9,32 +11,32 @@
 </nav>
 <!-- Modal -->
 <!--div class="modal-header"></div-->
-<div class="modal-body animated slideInLeft" ng-controller="newtrip02Ctrl">
+<div class="modal-body animated slideInLeft" ng-controller="modalAddTripAddPlaceCtrl">
 	<fieldset ng-disabled="isDisabled">
 		<form role="form">
 			<!-- Search Trip -->
 			<div class="form-group">
-				<div class="input-group" ng-controller="newtrip03ModalCtrl">
+				<div class="input-group">
 					<span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
-					<input type="text" ng-click="open()" class="form-control" placeholder='Please Select Place' value="{{value}}">
+					<input type="text" ng-click="open()" class="form-control" placeholder='Please Select Place' value="{{name}}">
 				</div>
 				<br>
 				<label for="Date">Figure(s)</label><br>
 				<img src="../img/exmap.png" class="img-responsive img-thumbnail" alt="" style="margin-bottom: 15px">
 				<br>
 
-				<div ng-controller="timepickerCtrl">
+				<div ng-controller="timePickerCtrl">
 					<label for="Date">Time Begin</label><br>
 					<center>
-						<div ng-model="begintime" ng-change="begintimechanged()" style="display:inline-block">
-							<timepicker hour-step="hstep" minute-step="mstep" show-meridian="begintimeismeridian"></timepicker>
+						<div ng-model="timeBegin" ng-change="beginTimeChanged()" style="display:inline-block">
+							<timepicker hour-step="hstep" minute-step="mstep" show-meridian="beginTimeIsMeridian"></timepicker>
 						</div>
 					</center>
 					<br>
 					<label for="Date">Time End</label><br>
 					<center>
-						<div ng-model="endtime" ng-change="endtimechanged()" style="display:inline-block">
-							<timepicker hour-step="hstep" minute-step="mstep" show-meridian="endtimeismeridian"></timepicker>
+						<div ng-model="timeEnd" ng-change="endTimeChanged()" style="display:inline-block">
+							<timepicker hour-step="hstep" minute-step="mstep" show-meridian="endTimeIsMeridian"></timepicker>
 						</div>
 					</center>
 				</div>
@@ -47,7 +49,7 @@
 		</form>
 
 		<hr>
-		<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="confirmPlace()">Done</button>
+		<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="confirmPlace()">Add New Place</button>
 	</fieldset>
 	
 </div>
