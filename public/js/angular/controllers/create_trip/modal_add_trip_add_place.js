@@ -98,7 +98,9 @@ modalAddTripAddPlaceControllers.controller('modalAddTripAddPlaceCtrl', function 
 			if(!createTripFactory.getIsEditingTrip()) {
 				deleteTrip(myjson);
 			}
-			$scope.isDisabled = false;
+			else {
+				$scope.isDisabled = false;
+			}
 		});
 
 	}

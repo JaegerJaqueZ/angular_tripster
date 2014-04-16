@@ -1,3 +1,5 @@
+//public/js/angular/controllers/modal_edit_trip.js
+
 var modalEditTripControllers = angular.module('modalEditTripControllers', []);
 
 modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http, createTripFactory, $modal) {
@@ -52,7 +54,7 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 	};
 
 	$scope.save = function (){
-
+		console.log(1);
 		$scope.isDisabled = true;
 
 	 	var myjson = {
@@ -72,10 +74,11 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 			'Content-Type': 'application/json'}
 		}).
 		success(function(data, status, headers, config) {
+			console.log(2);
 			createTripFactory.updateTrips();
 			createTripFactory.setIsEditingTrip(false);
 			createTripFactory.setChosenTrip({});
-			$scope.cancel();
+			$scope.done();
 		}).
 		error(function(data, status, headers, config) {
 			alert("Save Failed, Please Try Again.");
@@ -84,7 +87,7 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 		
 	}
 
-	$scope.delete = function (){
+	$scope.deleteTrip = function (){
 
 		$scope.isDisabled = true;
 
@@ -93,9 +96,10 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 				url: createTripFactory.getOriginPath() + "trip/delete?trip_id=" + createTripFactory.getChosenTrip()._id
 		}).
 		success(function(data, status, headers, config) {
+			createTripFactory.updateTrips();
 			createTripFactory.setIsEditingTrip(false);
 			createTripFactory.setChosenTrip({});
-			$scope.cancel();
+			$scope.done();
 		}).
 		error(function(data, status, headers, config) {
 			alert("Save Failed, Please Try Again.");
