@@ -5,10 +5,11 @@ var createTripService = angular.module('createTripService', []);
 createTripService.factory('createTripFactory', function($http) {
 
 //=============================== Factory Attributes ===============================
-	var   trips 		 = new Array()
+	var   trips 		 = new Array()		
 		, isEditingTrip  = false
 		, isEditingPlace = false
 		, chosenTrip	 = {}
+		, backUpTrip	 = {}
 		, chosenPlace	 = {}
 		, dateBegin		 = new Date().getTime()
 		, dateEnd		 = new Date().getTime()
@@ -28,7 +29,7 @@ createTripService.factory('createTripFactory', function($http) {
 //=============================== Factory Methods ===============================
 
 	function getOriginPath() {
-		return 'http://192.168.0.25:3000/';
+		return 'http://158.108.208.174:3000/';
 	}
 
 	function getTrips() {
@@ -41,7 +42,7 @@ createTripService.factory('createTripFactory', function($http) {
 		trips.length = 0;
 		var i;
 		for(i = 0; i < trips_server.length; i++) {
-			trips.push(jQuery.extend({}, trips_server[i]));
+			trips.push(jQuery.extend(true, {}, trips_server[i]));
 		}
 	}
 
@@ -57,6 +58,7 @@ createTripService.factory('createTripFactory', function($http) {
 			alert("Cannot load your trip(s), please Refresh");
 		});
 	}
+	
 
 	function getIsEditingTrip(){
 		return isEditingTrip;
@@ -80,6 +82,14 @@ createTripService.factory('createTripFactory', function($http) {
 
 	function setChosenTrip(trip){
 		chosenTrip = trip;
+	}
+
+	function getBackUpTrip(){
+		return backUpTrip;
+	}
+
+	function setBackUpTrip(trip){
+		backUpTrip = jQuery.extend(true, {}, trip);
 	}
 
 	function getChosenPlace(){
@@ -155,6 +165,8 @@ createTripService.factory('createTripFactory', function($http) {
 		setIsEditingPlace: setIsEditingPlace,
 		getChosenTrip: getChosenTrip,
 		setChosenTrip: setChosenTrip,
+		getBackUpTrip: getBackUpTrip,
+		setBackUpTrip: setBackUpTrip,
 		getChosenPlace: getChosenPlace,
 		setChosenPlace: setChosenPlace,
 		getDateBegin: getDateBegin,
