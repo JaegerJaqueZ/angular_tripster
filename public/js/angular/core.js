@@ -10,9 +10,11 @@ var tripsterApp = angular.module('tripsterApp', [
 	'modalAddTripControllers',
 	'modalEditTripControllers',
 	'modalAddTripAddPlaceControllers',
-	'modalAddPlaceFoursquareControllers',
-	'modalEditPlaceFoursquareControllers',
 	'modalAddTripEditPlaceControllers',
+	'modalEditTripAddPlaceControllers',
+	'modalEditTripEditPlaceControllers',
+	'modalAddPlaceFoursquareControllers',
+	'modalEditPlaceFoursquareControllers',	
 	'searchTripControllers',
 	'modalSearchTripControllers',
 	'bookmarkControllers'
