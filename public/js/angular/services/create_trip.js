@@ -5,7 +5,7 @@ var createTripService = angular.module('createTripService', []);
 createTripService.factory('createTripFactory', function($http) {
 
 //=============================== Factory Attributes ===============================
-	var   trips 		 = new Array()		
+	var   trips 		 = new Array()	
 		, isEditingTrip  = false
 		, isEditingPlace = false
 		, chosenTrip	 = {}
@@ -14,7 +14,11 @@ createTripService.factory('createTripFactory', function($http) {
 		, dateBegin		 = new Date().getTime()
 		, dateEnd		 = new Date().getTime()
 		, timeBegin		 = new Date().getTime()
-		, timeEnd		 = new Date().getTime();
+		, timeEnd		 = new Date().getTime()
+		, deleteRequest	 = {
+			"figures":[],
+			"places":[]
+		};
 
 	var	  DEFAULT_TRIP	 = 0
 		, PRIVATE_TRIP 	 = 10
@@ -146,6 +150,24 @@ createTripService.factory('createTripFactory', function($http) {
 		};
 	}
 
+	function getDeleteRequest(){
+		return deleteRequest;
+	}
+
+	function pushDeletedRequestPlace(place_id){
+		deleteRequest.places.push(place_id);
+	}
+
+	function pushDeletedRequestFigure(figure_id){
+		deleteRequest.figures.push(figure_id);
+	}
+
+	function clearDeleteRequest(){
+		deleteRequest = {
+			"figures":[],
+			"places":[]
+		};
+	}
 
 //=============================== Factory Return ===============================
 	return{
@@ -177,7 +199,11 @@ createTripService.factory('createTripFactory', function($http) {
 		setTimeBegin: setTimeBegin,
 		getTimeEnd: getTimeEnd,
 		setTimeEnd: setTimeEnd,
-		adjustPlaceObject: adjustPlaceObject
+		adjustPlaceObject: adjustPlaceObject,
+		getDeleteRequest: getDeleteRequest,
+		pushDeletedRequestPlace: pushDeletedRequestPlace,
+		pushDeletedRequestFigure: pushDeletedRequestFigure,
+		clearDeleteRequest: clearDeleteRequest
 	}
 
 });

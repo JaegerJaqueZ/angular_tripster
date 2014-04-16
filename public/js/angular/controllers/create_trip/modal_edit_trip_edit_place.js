@@ -29,24 +29,21 @@ modalEditTripEditPlaceControllers.controller('modalEditTripEditPlaceCtrl', funct
 	};
 
 	$scope.deletePlace = function () {
-
-		$scope.isDisabled = true;
 		
-		$http({
-			method: 'DELETE', 
-			url: createTripFactory.getOriginPath() + "place/delete?place_id=" + chosenPlaceTemp._id,
-			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-		})
-		.success(function(data, status, headers, config) {
-			updateTripsInService();
-		})
-		.error(function(data, status, headers, config) {
+		$scope.isDisabled = true;
+		var chosenTripTemp = createTripFactory.getChosenTrip();
+
+		createTripFactory.pushDeletedRequestPlace(chosenPlaceTemp._id);
+
+		for(var i = 0 ; i < chosenTripTemp.places.length ; i++) {
+			if(chosenTripTemp.places[i]._id === chosenPlaceTemp._id) {
+				chosenTripTemp.places.splice(i,1);	
+				break;
+			}
 			
-			$scope.isDisabled = false;
-			alert("Failed to delete place, please try again"); 
-
-		});
-
+		}		
+		
+		$scope.cancel();
 	};
 
 	$scope.confirmPlace = function () {
