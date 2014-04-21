@@ -107,8 +107,21 @@ modalEditTripAddPlaceControllers.controller('modalEditTripAddPlaceCtrl', functio
 					createTripFactory.setChosenTrip(tripsTemp[i]);
 					break;
 				}
+			}			
+
+			var   chosenTripTemp2 = createTripFactory.getChosenTrip()
+				, deleteRequest = createTripFactory.getDeleteRequest();
+
+			//remove deleteRequest from chosenTrip
+			for(var i = 0; i < deleteRequest.places.length; i++) {
+				for(var j = 0; j < chosenTripTemp2.places.length; j++) {
+					if(chosenTripTemp2.places[j]._id === deleteRequest.places[i]){
+						chosenTripTemp2.places.splice(j,1);
+						break;
+					}
+				}				
 			}
-			
+
 			$scope.cancel();
 
 		}, function(err) {
