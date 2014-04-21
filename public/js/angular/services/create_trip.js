@@ -33,7 +33,7 @@ createTripService.factory('createTripFactory', function($http) {
 //=============================== Factory Methods ===============================
 
 	function getOriginPath() {
-		return 'http://158.108.208.174:3000/';
+		return 'http://158.108.142.147:3000/';
 	}
 
 	function getTrips() {
@@ -101,7 +101,7 @@ createTripService.factory('createTripFactory', function($http) {
 	}
 
 	function setChosenPlace(place){
-		chosenPlace = place;
+		chosenPlace = jQuery.extend(true, {}, place);;
 	}
 
 	function getDateBegin(){
@@ -155,7 +155,17 @@ createTripService.factory('createTripFactory', function($http) {
 	}
 
 	function pushDeletedRequestPlace(place_id){
-		deleteRequest.places.push(place_id);
+		var dup = false;
+		for(var id in deleteRequest.places){
+			if(place_id === id){
+				dup = true;
+				break;
+			}
+		}
+
+		if(!dup){
+			deleteRequest.places.push(place_id);
+		}
 	}
 
 	function pushDeletedRequestFigure(figure_id){
