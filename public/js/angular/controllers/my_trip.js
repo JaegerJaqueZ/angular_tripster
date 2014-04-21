@@ -6,7 +6,7 @@ myTripControllers.controller('myTripCtrl', function ($scope, $http, createTripFa
 
 	$http({
 		method:'GET', 
-		url: createTripFactory.getOriginPath() + "user/trips?user_id=" + createTripFactory.getUserId()
+		url: createTripFactory.getOriginPath() + "user/trips"
 	})
 	.success(function(data, status, headers, config) {
 		createTripFactory.setTrips(data);
@@ -179,6 +179,7 @@ var editTripModalInstanceCtrl = function ($scope, $modalInstance, createTripFact
 				createTripFactory.updateTrips();
 				createTripFactory.setIsEditingTrip(false);
 				createTripFactory.setChosenTrip({});
+				createTripFactory.clearDeleteRequest();
 				$modalInstance.dismiss('cancel');
 			},function(err){
 				alert("Problem Occurred, Please Try Again.");

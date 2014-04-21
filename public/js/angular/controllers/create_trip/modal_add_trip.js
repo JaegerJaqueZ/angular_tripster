@@ -62,7 +62,6 @@ modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, 
 	 		"description": $scope.description,
 	 		"date_begin": createTripFactory.getDateBegin(),
 	 		"date_end": createTripFactory.getDateEnd(),
-	 		"user_id": createTripFactory.getUserId(),
 	 		"status": createTripFactory.PRIVATE_TRIP
 	 	};
 

@@ -36,14 +36,14 @@ modalAddTripAddPlaceControllers.controller('modalAddTripAddPlaceCtrl', function 
 		});
 	};
 
-	function createDefaultTrip(user_id){
+	function createDefaultTrip(){
 
 		var deferred = $q.defer();
 
 		$http({
 			method: 'POST', 
 			url: createTripFactory.getOriginPath() + "trip/default/create",
-			data: {user_id: createTripFactory.getUserId()},
+			data: {},
 			headers: {'Content-Type': 'application/x-www-form-urlencoded',
 			'Content-Type': 'application/json'}
 		})
@@ -136,7 +136,7 @@ modalAddTripAddPlaceControllers.controller('modalAddTripAddPlaceCtrl', function 
 
 		$http({
 			method:'GET', 
-			url: createTripFactory.getOriginPath() + "user/trips?user_id=" + createTripFactory.getUserId()
+			url: createTripFactory.getOriginPath() + "user/trips"
 		})
 		.success(function(data, status, headers, config) {
 			deferred.resolve(data);
@@ -188,7 +188,7 @@ modalAddTripAddPlaceControllers.controller('modalAddTripAddPlaceCtrl', function 
 			createPlace(createTripFactory.getChosenTrip());
 		}
 		else {
-			var promise = createDefaultTrip(createTripFactory.getUserId());
+			var promise = createDefaultTrip();
 			promise.then(function(trip){
 			 createPlace(trip); 
 

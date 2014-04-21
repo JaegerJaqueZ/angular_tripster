@@ -99,7 +99,7 @@ modalAddTripEditPlaceControllers.controller('modalAddTripEditPlaceCtrl', functio
 
 		$http({
 			method:'GET', 
-			url: createTripFactory.getOriginPath() + "user/trips?user_id=" + createTripFactory.getUserId()
+			url: createTripFactory.getOriginPath() + "user/trips"
 		})
 		.success(function(data, status, headers, config) {
 			deferred.resolve(data);

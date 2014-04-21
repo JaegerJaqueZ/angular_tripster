@@ -26,14 +26,12 @@ createTripService.factory('createTripFactory', function($http) {
 
 //=============================== Mock up ===============================
 
-	function getUserId(){
-		return "534bd5d550167c1f927ec0e9";
-	}
+	
 
 //=============================== Factory Methods ===============================
 
 	function getOriginPath() {
-		return 'http://158.108.142.147:3000/';
+		return 'http://158.108.230.1:4000/api/';
 	}
 
 	function getTrips() {
@@ -53,7 +51,7 @@ createTripService.factory('createTripFactory', function($http) {
 	function updateTrips(){
 		$http({
 			method:'GET', 
-			url: getOriginPath() + "user/trips?user_id=" + getUserId()
+			url: getOriginPath() + "user/trips"
 		})
 		.success(function(data, status, headers, config) {
 			setTrips(data);
@@ -181,9 +179,6 @@ createTripService.factory('createTripFactory', function($http) {
 
 //=============================== Factory Return ===============================
 	return{
-		getUserId: getUserId,
-
-
 		DEFAULT_TRIP: DEFAULT_TRIP,
 		PRIVATE_TRIP: PRIVATE_TRIP,
 		PUBLIC_TRIP: PUBLIC_TRIP,
