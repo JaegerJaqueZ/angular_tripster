@@ -103,7 +103,7 @@ var editTripModalInstanceCtrl = function ($scope, $modalInstance, createTripFact
 			
 			var promises = back_up_trip.places.map(function(place){
 
-				console.log(place.foursquare);
+				// console.log(place.foursquare);
 
 				var deferred = $q.defer();
 

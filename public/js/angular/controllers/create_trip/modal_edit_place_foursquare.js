@@ -25,7 +25,7 @@ modalEditPlaceFoursquareControllers.controller('modalEditPlaceFoursquareCtrl', f
 	$scope.selectPlace = function (chosenplace){	
 
 		var temp = createTripFactory.getChosenPlace();
-		temp.foursquare = jQuery.extend({}, createTripFactory.adjustPlaceObject(chosenplace).foursquare);	
+		temp.foursquare = jQuery.extend(true, {}, createTripFactory.adjustPlaceObject(chosenplace).foursquare);	
 		
 		$scope.cancel();
 	}

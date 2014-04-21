@@ -25,8 +25,7 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 			}
 		}
 	);
-
-	//add new place
+	
 	$scope.open = function (place) {
 		
 		if(typeof(place) === 'undefined') {
@@ -78,7 +77,7 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 
 			return $q.all(promises).then(function(result){
 				if(createTripFactory.getDeleteRequest().places.length > 0){
-					promiseDeletePlace(reateTripFactory.getDeleteRequest().places);
+					promiseDeletePlace(createTripFactory.getDeleteRequest().places);
 				}
 				else{
 					promiseUpdateTrip();	
