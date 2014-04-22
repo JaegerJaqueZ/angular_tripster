@@ -2,10 +2,16 @@
 
 var tripsterApp = angular.module('tripsterApp', [
 	'ngRoute',
+	'ngCookies',
 	'ui.bootstrap',
+	'angularFileUpload',
+
+	'authService',
 	'createTripService',
 	'searchTripService',
 	'bookmarkService',
+
+	'loginControllers',
 	'myTripControllers',
 	'modalAddTripControllers',
 	'modalEditTripControllers',
@@ -17,10 +23,7 @@ var tripsterApp = angular.module('tripsterApp', [
 	'modalEditPlaceFoursquareControllers',	
 	'searchTripControllers',
 	'modalSearchTripControllers',
-	'bookmarkControllers',
-	'ngCookies',
-	'authService',
-	'loginControllers'
+	'bookmarkControllers'	
 ]);
 
 tripsterApp.config(['$routeProvider', '$locationProvider', '$httpProvider',

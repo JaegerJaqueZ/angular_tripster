@@ -12,7 +12,7 @@ authService.factory('authFactory', function($location, $rootScope, $cookieStore,
 //============================== Factory Methods ===============================
 
 	function getOriginPath() {
-		return 'http://158.108.230.1:4000';
+		return 'http://158.108.227.246:4000';
 	}
 
 	function getCurrentUser() {

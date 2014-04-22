@@ -31,7 +31,7 @@ createTripService.factory('createTripFactory', function($http) {
 //=============================== Factory Methods ===============================
 
 	function getOriginPath() {
-		return 'http://158.108.230.1:4000/api/';
+		return 'http://158.108.227.246:4000/api/';
 	}
 
 	function getTrips() {
