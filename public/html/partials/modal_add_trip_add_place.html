@@ -21,8 +21,51 @@
 					<input type="text" ng-click="open()" class="form-control" placeholder='Please Select Place' value="{{name}}">
 				</div>
 				<br>
+
+
+
+				
 				<label for="Date">Figure(s)</label><br>
-				<img src="../img/exmap.png" class="img-responsive img-thumbnail" alt="" style="margin-bottom: 15px">
+				<div class="col-md-12" style="margin-bottom: 40px">
+	                
+                    <span class="btn btn-primary fileinput-button">
+                        <i class="icon-plus icon-white"></i>
+                        <input ng-file-select type="file" multiple  />
+                        <span>
+                            <span class="glyphicon glyphicon-plus-sign"></span> Add files &nbsp
+                        </span>
+                    </span>
+                    
+                
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="80%">Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in uploader.queue">
+                                <td>
+                                    <div ng-show="uploader.isHTML5" ng-thumb="{ file: item.file, height: 100 }"></div>
+                                </td>
+                                <td nowrap>
+                                    <br>
+                                    <button type="button" class="btn btn-danger btn-s" ng-click="item.remove()">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+
+
+
 				<br>
 
 				<div ng-controller="timePickerCtrl">
