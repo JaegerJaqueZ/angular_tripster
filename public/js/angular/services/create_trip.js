@@ -167,7 +167,17 @@ createTripService.factory('createTripFactory', function($http) {
 	}
 
 	function pushDeletedRequestFigure(figure_id){
-		deleteRequest.figures.push(figure_id);
+		var dup = false;
+		for(var id in deleteRequest.figures){
+			if(figure_id === id){
+				dup = true;
+				break;
+			}
+		}
+
+		if(!dup){
+			deleteRequest.figures.push(figure_id);
+		}		
 	}
 
 	function clearDeleteRequest(){

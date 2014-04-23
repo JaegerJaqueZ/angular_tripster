@@ -61,14 +61,14 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 
 				$http({
 					method: 'DELETE', 
-					url: createTripFactory.getOriginPath() + "place/delete?figure_id=" + figure_id,
+					url: createTripFactory.getOriginPath() + "figure/delete?figure_id=" + figure_id,
 					headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 				})
 				.success(function(data, status, headers, config) {
-					referred.resolve(data);
+					deferred.resolve(data);
 				})
 				.error(function(data, status, headers, config) {
-					referred.reject(data);
+					deferred.reject(data);
 				});
 
 				return deferred.promise;

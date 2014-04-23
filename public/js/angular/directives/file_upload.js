@@ -37,6 +37,7 @@ angular.module('tripsterApp')
                 if (!helper.isImage(params.file)) return;
 
                 var canvas = element.find('canvas');
+                $( "canvas" ).addClass( "img-responsive" );
                 var reader = new FileReader();
 
                 reader.onload = onLoadFile;
@@ -49,10 +50,11 @@ angular.module('tripsterApp')
                 }
 
                 function onLoadImage() {
-                    var width = params.width || this.width / this.height * params.height;
-                    var height = params.height || this.height / this.width * params.width;
-                    canvas.attr({ width: width, height: height });
-                    canvas[0].getContext('2d').drawImage(this, 0, 0, width, height);
+                    // var width = params.width || this.width / this.height * params.height;
+                    // var height = params.height || this.height / this.width * params.width;
+                    
+                    canvas.attr({ width: this.width, height: this.height });
+                    canvas[0].getContext('2d').drawImage(this, 0, 0, this.width, this.height);
                 }
             }
         };

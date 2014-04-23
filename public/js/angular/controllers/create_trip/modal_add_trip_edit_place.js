@@ -2,7 +2,7 @@
 
 var modalAddTripEditPlaceControllers = angular.module('modalAddTripEditPlaceControllers', []);
 
-modalAddTripEditPlaceControllers.controller('modalAddTripEditPlaceCtrl', function ($scope, $http, $modal, createTripFactory, $q) {
+modalAddTripEditPlaceControllers.controller('modalAddTripEditPlaceCtrl', function ($scope, $http, $modal, createTripFactory, $q, $fileUploader) {
 
 	var chosenPlaceTemp = createTripFactory.getChosenPlace();
 	$scope.name = chosenPlaceTemp.foursquare.name;
@@ -18,6 +18,62 @@ modalAddTripEditPlaceControllers.controller('modalAddTripEditPlaceCtrl', functio
 			}
 		}
 	);
+
+//= Figure Uploader =====================================================================================
+	
+
+	//queue
+	var uploader = $scope.uploader = $fileUploader.create({
+        scope: $scope,
+        queueLimit: 3
+    });
+
+
+    // ADDING FILTERS
+
+    // Images only
+    uploader.filters.push(function(item /*{File|HTMLInputElement}*/) {
+        var type = uploader.isHTML5 ? item.type : '/' + item.value.slice(item.value.lastIndexOf('.') + 1);
+        type = '|' + type.toLowerCase().slice(type.lastIndexOf('/') + 1) + '|';
+        return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+    });
+
+
+    // REGISTER HANDLERS
+
+    uploader.bind('afteraddingfile', function (event, item) {
+        console.info('After adding a file', item);
+    });
+
+    uploader.bind('whenaddingfilefailed', function (event, item) {
+        console.info('When adding a file failed', item);
+    });
+
+    uploader.bind('afteraddingall', function (event, items) {
+        console.info('After adding all files', items);
+    });
+
+
+//= Figure(s) on Server ================================================================================
+	
+	$scope.figuresArr = chosenPlaceTemp.figures;
+
+	$scope.deleteFigure = function (figure) {
+		
+		for( var i = 0 ; i < $scope.figuresArr.length ; i++ ){
+			if($scope.figuresArr[i]._id === figure._id){
+				$scope.figuresArr.splice(i,1);
+				break;
+			}
+		}
+
+		createTripFactory.pushDeletedRequestFigure(figure._id);
+		
+	};
+		
+
+
+//=========================================================================================================
 
 	$scope.open = function () {
 		
@@ -83,14 +139,70 @@ modalAddTripEditPlaceControllers.controller('modalAddTripEditPlaceCtrl', functio
 			deferred.reject(data);
 		}); 
 
-		return deferred.promise.then(function(result) { 
-			updateTripsInService();
+		return deferred.promise.then(function(place) { 
+			uploadFigures(place);
 			
 		}, function(data) { 
 			alert("Failed to update place, please try again"); 
 			$scope.isDisabled = false;
 		});
 
+	}
+
+	function uploadFigures(place){
+
+		var deferred = $q.defer();
+
+
+		uploader.bind('beforeupload', function (event, item) {
+        console.info('Before upload', item);
+	    });
+
+	    uploader.bind('progress', function (event, item, progress) {
+	        console.info('Progress: ' + progress, item);
+	    });
+
+	    uploader.bind('success', function (event, xhr, item, response) {
+	        console.info('Success', xhr, item, response);
+	    });
+
+	    uploader.bind('cancel', function (event, xhr, item) {
+	        console.info('Cancel', xhr, item);
+	    });
+
+	    uploader.bind('error', function (event, xhr, item, response) {
+	        console.info('Error', xhr, item, response);
+	        deferred.reject(response);
+	    });
+
+	    uploader.bind('complete', function (event, xhr, item, response) {
+	        console.info('Complete', xhr, item, response);
+	    });
+
+	    uploader.bind('progressall', function (event, progress) {
+	        console.info('Total progress: ' + progress);
+	    });
+
+	    uploader.bind('completeall', function (event, items) {
+	    	deferred.resolve(items);
+	        console.info('Complete all', items);
+	    });
+
+
+
+		uploader.fixItemUrl(createTripFactory.getOriginPath() + 'figure/upload?place_id=' + place._id);
+
+        //Execute
+        uploader.uploadAll();
+
+        return deferred.promise.then(function(result) { 
+			updateTripsInService();
+			
+		}, function(myjson) { 
+			alert("Failed to upload figures, please try again"); 
+			updateTripsInService();
+			$scope.isDisabled = false;
+		});
 	}
 
 	function updateTripsInService() {
