@@ -25,7 +25,7 @@ modalEditTripEditPlaceControllers.controller('modalEditTripEditPlaceCtrl', funct
 	//queue
 	var uploader = $scope.uploader = $fileUploader.create({
         scope: $scope,
-        queueLimit: 3
+        queueLimit: createTripFactory.FIGURES_LIMIT
     });
 
 
@@ -58,6 +58,8 @@ modalEditTripEditPlaceControllers.controller('modalEditTripEditPlaceCtrl', funct
 	
 	$scope.figuresArr = chosenPlaceTemp.figures;
 
+	uploader.setQueueLimit(createTripFactory.FIGURES_LIMIT - $scope.figuresArr.length);
+	
 	$scope.deleteFigure = function (figure) {
 		
 		for( var i = 0 ; i < $scope.figuresArr.length ; i++ ){
@@ -68,6 +70,7 @@ modalEditTripEditPlaceControllers.controller('modalEditTripEditPlaceCtrl', funct
 		}
 
 		createTripFactory.pushDeletedRequestFigure(figure._id);
+		uploader.setQueueLimit(++uploader.queueLimit);
 		
 	};
 		
@@ -161,6 +164,7 @@ modalEditTripEditPlaceControllers.controller('modalEditTripEditPlaceCtrl', funct
 
 	    uploader.bind('success', function (event, xhr, item, response) {
 	        console.info('Success', xhr, item, response);
+	        createTripFactory.pushAddedFigure(response._id);
 	    });
 
 	    uploader.bind('cancel', function (event, xhr, item) {
@@ -185,7 +189,9 @@ modalEditTripEditPlaceControllers.controller('modalEditTripEditPlaceCtrl', funct
 	        console.info('Complete all', items);
 	    });
 
-
+	    if(uploader.getQueueSize() === 0) {
+	    	deferred.resolve({});
+	    }
 
 		uploader.fixItemUrl(createTripFactory.getOriginPath() + 'figure/upload?place_id=' + place._id);
 

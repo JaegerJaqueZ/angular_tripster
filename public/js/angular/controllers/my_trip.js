@@ -75,7 +75,7 @@ var addTripModalInstanceCtrl = function ($scope, $modalInstance, createTripFacto
 				createTripFactory.updateTrips();
 				createTripFactory.setIsEditingTrip(false);
 				createTripFactory.setChosenTrip({});
-				$scope.cancel();
+				$modalInstance.dismiss('cancel');
 			}).
 			error(function(data, status, headers, config) {
 				alert("Save Failed, Please Try Again.");
@@ -125,14 +125,14 @@ var editTripModalInstanceCtrl = function ($scope, $modalInstance, createTripFact
 					'Content-Type': 'application/json'}
 				}).
 				success(function(data, status, headers, config) {
-
+					// remove places that are the same between back up and update 
+					// in order to get unwanted place for deleting on server
 					for(var i = 0 ; i < updated_trip.places.length ; i++) {
 						if(updated_trip.places[i]._id === place._id) {
 							updated_trip.places.splice(i,1);	
 							// console.log(updated_trip.places);
 							break;
-						}
-						
+						}						
 					}
 
 					deferred.resolve(data);
@@ -176,10 +176,41 @@ var editTripModalInstanceCtrl = function ($scope, $modalInstance, createTripFact
 			});
 			
 			return $q.all(promises).then(function(results){
+				deleteUnwantedFigure();
+			},function(err){
+				alert("Problem Occurred, Please Try Again.");
+				$scope.isDisabled = false;
+			});
+
+		}
+
+		function deleteUnwantedFigure(){
+			var promises = createTripFactory.getAddedFigureArr().map(function(figure_id){
+
+				var deferred = $q.defer();
+
+				$http({
+					method: 'DELETE',
+					url: createTripFactory.getOriginPath() + "figure/delete?figure_id=" + figure_id,
+					headers: {'Content-Type': 'application/x-www-form-urlencoded',
+					'Content-Type': 'application/json'}
+				}).
+				success(function(data, status, headers, config) {
+					deferred.resolve(data);
+				}).
+				error(function(data, status, headers, config) {
+					deferred.reject(data);
+				});  
+
+				return deferred.promise;
+			});
+			
+			return $q.all(promises).then(function(results){
 				createTripFactory.updateTrips();
 				createTripFactory.setIsEditingTrip(false);
 				createTripFactory.setChosenTrip({});
 				createTripFactory.clearDeleteRequest();
+				createTripFactory.clearAddedFigureArr();
 				$modalInstance.dismiss('cancel');
 			},function(err){
 				alert("Problem Occurred, Please Try Again.");

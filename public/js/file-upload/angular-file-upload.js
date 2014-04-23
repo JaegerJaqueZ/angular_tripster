@@ -92,6 +92,15 @@ app.factory('$fileUploader', [ '$compile', '$rootScope', '$http', '$window', fun
 
         },
 
+        getQueueSize: function() {
+            return this.queue.length;
+        },
+
+        setQueueLimit: function(limit) {
+            this.queueLimit = limit;
+            this.filters.unshift(this._queueLimitFilter);
+        },
+
         /**
          * Returns "true" if item is DOMElement or a file with size > 0
          * @param {File|Input} item

@@ -18,11 +18,13 @@ createTripService.factory('createTripFactory', function($http) {
 		, deleteRequest	 = {
 			"figures":[],
 			"places":[]
-		};
+		}
+		, addedFigureArr = new Array();
 
 	var	  DEFAULT_TRIP	 = 0
 		, PRIVATE_TRIP 	 = 10
-		, PUBLIC_TRIP	 = 20;
+		, PUBLIC_TRIP	 = 20
+		, FIGURES_LIMIT	 = 3;
 
 //=============================== Mock up ===============================
 
@@ -187,11 +189,28 @@ createTripService.factory('createTripFactory', function($http) {
 		};
 	}
 
+	function getAddedFigureArr(){
+		return addedFigureArr;
+	}
+
+	function pushAddedFigure(figure_id){
+		
+		addedFigureArr.push(figure_id);
+				
+	}
+
+	function clearAddedFigureArr(){
+		
+		addedFigureArr = [];
+				
+	}
+
 //=============================== Factory Return ===============================
 	return{
 		DEFAULT_TRIP: DEFAULT_TRIP,
 		PRIVATE_TRIP: PRIVATE_TRIP,
 		PUBLIC_TRIP: PUBLIC_TRIP,
+		FIGURES_LIMIT: FIGURES_LIMIT,
 		getOriginPath: getOriginPath,
 		getTrips: getTrips,
 		setTrips: setTrips,
@@ -218,7 +237,10 @@ createTripService.factory('createTripFactory', function($http) {
 		getDeleteRequest: getDeleteRequest,
 		pushDeletedRequestPlace: pushDeletedRequestPlace,
 		pushDeletedRequestFigure: pushDeletedRequestFigure,
-		clearDeleteRequest: clearDeleteRequest
+		clearDeleteRequest: clearDeleteRequest,
+		pushAddedFigure: pushAddedFigure,
+		clearAddedFigureArr: clearAddedFigureArr,
+		getAddedFigureArr: getAddedFigureArr
 	}
 
 });

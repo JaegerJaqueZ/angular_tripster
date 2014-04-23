@@ -31,7 +31,7 @@ modalAddTripAddPlaceControllers.controller('modalAddTripAddPlaceCtrl', function 
 
 	var uploader = $scope.uploader = $fileUploader.create({
         scope: $scope,
-        queueLimit: 3
+        queueLimit: createTripFactory.FIGURES_LIMIT
     });
 
 
@@ -180,7 +180,9 @@ modalAddTripAddPlaceControllers.controller('modalAddTripAddPlaceCtrl', function 
 	        console.info('Complete all', items);
 	    });
 
-
+	    if(uploader.getQueueSize() === 0) {
+	    	deferred.resolve({});
+	    }
 
 		uploader.fixItemUrl(createTripFactory.getOriginPath() + 'figure/upload?place_id=' + place._id);
 
