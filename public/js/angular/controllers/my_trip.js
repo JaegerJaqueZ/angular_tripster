@@ -146,37 +146,7 @@ var editTripModalInstanceCtrl = function ($scope, $modalInstance, createTripFact
 			});
 			
 			return $q.all(promises).then(function(result){
-				deleteUnwantedPlace(createTripFactory.getChosenTrip());
-			},function(err){
-				alert("Problem Occurred, Please Try Again.");
-				$scope.isDisabled = false;
-			});
-
-		}
-
-		function deleteUnwantedPlace(updated_trip){
-			var promises = updated_trip.places.map(function(place){
-
-				var deferred = $q.defer();
-
-				$http({
-					method: 'DELETE',
-					url: createTripFactory.getOriginPath() + "place/delete?place_id=" + place._id,
-					headers: {'Content-Type': 'application/x-www-form-urlencoded',
-					'Content-Type': 'application/json'}
-				}).
-				success(function(data, status, headers, config) {
-					deferred.resolve(data);
-				}).
-				error(function(data, status, headers, config) {
-					deferred.reject(data);
-				});  
-
-				return deferred.promise;
-			});
-			
-			return $q.all(promises).then(function(results){
-				deleteUnwantedFigure();
+				deleteUnwantedFigure();				
 			},function(err){
 				alert("Problem Occurred, Please Try Again.");
 				$scope.isDisabled = false;
@@ -206,6 +176,36 @@ var editTripModalInstanceCtrl = function ($scope, $modalInstance, createTripFact
 			});
 			
 			return $q.all(promises).then(function(results){
+				deleteUnwantedPlace(createTripFactory.getChosenTrip());
+			},function(err){
+				alert("Problem Occurred, Please Try Again.");
+				$scope.isDisabled = false;
+			});
+
+		}
+
+		function deleteUnwantedPlace(updated_trip){
+			var promises = updated_trip.places.map(function(place){
+
+				var deferred = $q.defer();
+
+				$http({
+					method: 'DELETE',
+					url: createTripFactory.getOriginPath() + "place/delete?place_id=" + place._id,
+					headers: {'Content-Type': 'application/x-www-form-urlencoded',
+					'Content-Type': 'application/json'}
+				}).
+				success(function(data, status, headers, config) {
+					deferred.resolve(data);
+				}).
+				error(function(data, status, headers, config) {
+					deferred.reject(data);
+				});  
+
+				return deferred.promise;
+			});
+			
+			return $q.all(promises).then(function(results){				
 				createTripFactory.updateTrips();
 				createTripFactory.setIsEditingTrip(false);
 				createTripFactory.setChosenTrip({});
@@ -218,6 +218,8 @@ var editTripModalInstanceCtrl = function ($scope, $modalInstance, createTripFact
 			});
 
 		}
+
+
 
 		//Execute
 		revertTripFromBackUp(createTripFactory.getBackUpTrip(), createTripFactory.getChosenTrip());
