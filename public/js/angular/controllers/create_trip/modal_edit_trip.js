@@ -52,120 +52,39 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 		}		
 	};
 
-	$scope.save = function (){
-
-		function promiseDeleteFigure(figures){
-
-			var promises = figures.map(function(figure_id){
-				var deferred = $q.defer();	
-
-				$http({
-					method: 'DELETE', 
-					url: createTripFactory.getOriginPath() + "figure/delete?figure_id=" + figure_id,
-					headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-				})
-				.success(function(data, status, headers, config) {
-					deferred.resolve(data);
-				})
-				.error(function(data, status, headers, config) {
-					deferred.reject(data);
-				});
-
-				return deferred.promise;
-
-			});	
-
-			return $q.all(promises).then(function(result){
-				if(createTripFactory.getDeleteRequest().places.length > 0){
-					promiseDeletePlace(createTripFactory.getDeleteRequest().places);
-				}
-				else{
-					promiseUpdateTrip();	
-				}
-
-			},function(err){
-				$scope.isDisabled = false;
-				alert("Update Incomplete");
-			});
-
-		}
-
-		function promiseDeletePlace(places){
-
-			var promises = places.map(function(place_id){
-				var deferred = $q.defer();	
-
-				$http({
-					method: 'DELETE', 
-					url: createTripFactory.getOriginPath() + "place/delete?place_id=" + place_id,
-					headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-				})
-				.success(function(data, status, headers, config) {
-					deferred.resolve(data);
-				})
-				.error(function(data, status, headers, config) {
-					deferred.reject(data);
-				});
-
-				return deferred.promise;
-
-			});	
-
-			return $q.all(promises).then(function(result){
-				promiseUpdateTrip();
-			},function(err){
-				$scope.isDisabled = false;
-				alert("Update Incomplete");
-			});
-		}
-
-		function promiseUpdateTrip(){
-
-			var myjson = {
-		 		"title": $scope.title,
-		 		"description": $scope.description,
-		 		"date_begin": createTripFactory.getDateBegin(),
-		 		"date_end": createTripFactory.getDateEnd(),
-		 		"status": createTripFactory.PRIVATE_TRIP
-		 	};
-			
-			$http({
-				method: 'PUT',
-				url: createTripFactory.getOriginPath() + "trip/update?trip_id=" + createTripFactory.getChosenTrip()._id,
-				data: myjson,
-				headers: {'Content-Type': 'application/x-www-form-urlencoded',
-				'Content-Type': 'application/json'}
-			}).
-			success(function(data, status, headers, config) {
-				
-				createTripFactory.updateTrips();
-				createTripFactory.setIsEditingTrip(false);
-				createTripFactory.setChosenTrip({});
-				createTripFactory.clearDeleteRequest();
-				$scope.done();
-			}).
-			error(function(data, status, headers, config) {
-				alert("Save Failed, Please Try Again.");
-				$scope.isDisabled = false;
-			});  
-		}
-			
+	$scope.save = function (){			
 		
 		$scope.isDisabled = true;
 
 		if(createTripFactory.getDeleteRequest().figures.length > 0){
-			promiseDeleteFigure(createTripFactory.getDeleteRequest().figures);
+			promiseDeleteFigure(createTripFactory.getDeleteRequest().figures, createTripFactory.PRIVATE_TRIP);
 		}
 		else{
 			if(createTripFactory.getDeleteRequest().places.length > 0){
-				promiseDeletePlace(createTripFactory.getDeleteRequest().places);
+				promiseDeletePlace(createTripFactory.getDeleteRequest().places, createTripFactory.PRIVATE_TRIP);
 			}
 			else{
-				promiseUpdateTrip();
+				promiseUpdateTrip(createTripFactory.PRIVATE_TRIP);
 			}
-		}
+		}	 	
+		
+	}
 
-	 	
+	$scope.publish = function (){
+		//TODO VALIDATE DATA FIRST
+		$scope.isDisabled = true;
+
+		if(createTripFactory.getDeleteRequest().figures.length > 0){
+			promiseDeleteFigure(createTripFactory.getDeleteRequest().figures, createTripFactory.PUBLIC_TRIP);
+		}
+		else{
+			if(createTripFactory.getDeleteRequest().places.length > 0){
+				promiseDeletePlace(createTripFactory.getDeleteRequest().places, createTripFactory.PUBLIC_TRIP);
+			}
+			else{
+				promiseUpdateTrip(createTripFactory.PUBLIC_TRIP);
+			}
+		}	
 		
 	}
 
@@ -189,9 +108,110 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 		});
 	}
 
+//=============================== save and publish method ==========================================
+
+	function promiseDeleteFigure(figures, trip_status){
+
+		var promises = figures.map(function(figure_id){
+			var deferred = $q.defer();	
+
+			$http({
+				method: 'DELETE', 
+				url: createTripFactory.getOriginPath() + "figure/delete?figure_id=" + figure_id,
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+			})
+			.success(function(data, status, headers, config) {
+				deferred.resolve(data);
+			})
+			.error(function(data, status, headers, config) {
+				deferred.reject(data);
+			});
+
+			return deferred.promise;
+
+		});	
+
+		return $q.all(promises).then(function(result){
+			if(createTripFactory.getDeleteRequest().places.length > 0){
+				promiseDeletePlace(createTripFactory.getDeleteRequest().places, trip_status);
+			}
+			else{
+				promiseUpdateTrip(trip_status);	
+			}
+
+		},function(err){
+			$scope.isDisabled = false;
+			alert("Update Incomplete");
+		});
+
+	}
+
+	function promiseDeletePlace(places, trip_status){
+
+		var promises = places.map(function(place_id){
+			var deferred = $q.defer();	
+
+			$http({
+				method: 'DELETE', 
+				url: createTripFactory.getOriginPath() + "place/delete?place_id=" + place_id,
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+			})
+			.success(function(data, status, headers, config) {
+				deferred.resolve(data);
+			})
+			.error(function(data, status, headers, config) {
+				deferred.reject(data);
+			});
+
+			return deferred.promise;
+
+		});	
+
+		return $q.all(promises).then(function(result){
+			promiseUpdateTrip(trip_status);
+		},function(err){
+			$scope.isDisabled = false;
+			alert("Update Incomplete");
+		});
+	}
+
+	function promiseUpdateTrip(trip_status){
+
+		var myjson = {
+	 		"title": $scope.title,
+	 		"description": $scope.description,
+	 		"date_begin": createTripFactory.getDateBegin(),
+	 		"date_end": createTripFactory.getDateEnd(),
+	 		"status": trip_status
+	 	};
+		
+		$http({
+			method: 'PUT',
+			url: createTripFactory.getOriginPath() + "trip/update?trip_id=" + createTripFactory.getChosenTrip()._id,
+			data: myjson,
+			headers: {'Content-Type': 'application/x-www-form-urlencoded',
+			'Content-Type': 'application/json'}
+		}).
+		success(function(data, status, headers, config) {
+			
+			createTripFactory.updateTrips();
+			createTripFactory.setIsEditingTrip(false);
+			createTripFactory.setChosenTrip({});
+			createTripFactory.clearDeleteRequest();
+			$scope.done();
+		}).
+		error(function(data, status, headers, config) {
+			alert("Save Failed, Please Try Again.");
+			$scope.isDisabled = false;
+		});  
+	}
+//==================================================================================================
+
 });
 
-//=============================== Modal Controller ===============================
+
+
+//=============================== Modal Controller =================================================
 
 var editTripAddPlaceModalInstanceCtrl = function ($scope, $modalInstance, createTripFactory) {
 

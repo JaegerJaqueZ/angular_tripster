@@ -108,7 +108,57 @@ modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, 
 	}
 
 	$scope.publish = function (){
-		//TODO	
+		//TODO VALIDATE DATA FIRST
+		$scope.isDisabled = true;
+
+	 	var myjson = {
+	 		"title": $scope.title,
+	 		"description": $scope.description,
+	 		"date_begin": createTripFactory.getDateBegin(),
+	 		"date_end": createTripFactory.getDateEnd(),
+	 		"status": createTripFactory.PUBLIC_TRIP
+	 	};
+
+		if(createTripFactory.getIsEditingTrip()) {
+			$http({
+				method: 'PUT',
+				url: createTripFactory.getOriginPath() + "trip/update?trip_id=" + createTripFactory.getChosenTrip()._id,
+				data: myjson,
+				headers: {'Content-Type': 'application/x-www-form-urlencoded',
+				'Content-Type': 'application/json'}
+			}).
+			success(function(data, status, headers, config) {
+				createTripFactory.updateTrips();
+				createTripFactory.setIsEditingTrip(false);
+				createTripFactory.setChosenTrip({});
+				$scope.cancel();
+			}).
+			error(function(data, status, headers, config) {
+				alert("Save Failed, Please Try Again.");
+				$scope.isDisabled = false;
+			});  
+		}
+		else{
+
+			$http({
+				method: 'POST',
+				url: createTripFactory.getOriginPath() + "trip/create",
+				data: myjson,
+				headers: {'Content-Type': 'application/x-www-form-urlencoded',
+				'Content-Type': 'application/json'}
+			}).
+			success(function(data, status, headers, config) {
+				createTripFactory.updateTrips();
+				createTripFactory.setIsEditingTrip(false);
+				createTripFactory.setChosenTrip({});
+				$scope.cancel();	
+			}).
+			error(function(data, status, headers, config) {
+				alert("Save Failed, Please Try Again.");
+				$scope.isDisabled = false;
+			});
+
+		}
 	}
 });
 
