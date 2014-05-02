@@ -23,7 +23,8 @@ var tripsterApp = angular.module('tripsterApp', [
 	'modalEditPlaceFoursquareControllers',	
 	'searchTripControllers',
 	'modalSearchTripControllers',
-	'bookmarkControllers'	
+	'bookmarkControllers',
+	'modalBookmarkControllers'	
 ]);
 
 tripsterApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
