@@ -18,17 +18,9 @@ a {
 	border-radius: 0;
 }
 
-/*.modal.fade {
-  top: 200%;
-  -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
-     -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
-       -o-transition: opacity 0.3s linear, left 0.3s ease-out;
-          transition: opacity 0.3s linear, left 0.3s ease-out;
+.modal.fade.in{
+  background:gray;
 }
-
-.modal.fade.in {
-  left: 0%;
-}​*/
 
 
 .navbar-header {
