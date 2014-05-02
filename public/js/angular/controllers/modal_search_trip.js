@@ -2,37 +2,55 @@
 
 var modalSearchTripControllers = angular.module('modalSearchTripControllers', []);
 
-modalSearchTripControllers.controller('modalSearchTripCtrl', function ($scope, $http, searchTripFactory) {
+modalSearchTripControllers.controller('modalSearchTripCtrl', function ($rootScope, $scope, $http, searchTripFactory) {
 
   $scope.trip = searchTripFactory.getChosenTrip();
+  console.log( $scope.trip );
 
-  //initialize follow button
-  // if(!$scope.trip.follow){
-      $scope.follow = 1;
-      $scope.followingstate = "following";      
-    // }
-    // else{
-    //   $scope.singleModel = 0;
-    //   $scope.followingstate = "follow"; 
-    // }   
+
+
+  // initialize follow button
+  if(!$scope.trip.isFollowingAuthor){
+      // $scope.follow = 1;
+      $scope.followingstate = "follow";      
+    }
+    else{
+      // $scope.singleModel = 0;
+      $scope.followingstate = "following"; 
+    }   
 
   //initialize bookmark button
   //TODO maybe like follow button
-      $scope.bookmark = 0;
-      $scope.bookmarkstate = "bookmark"; 
-
+ 
+  if(!$scope.trip.isBookmarkedTrip){
+      // $scope.bookmark = 0;
+      $scope.bookmarkstate = "bookmark";    
+    }
+    else{
+      // $scope.singleModel = 0;
+      $scope.bookmarkstate = "bookmarked"; 
+    } 
   
-  //follow button
-  $scope.follow = function () {
+  // check user id with author id 
+  $scope.checkIsOwner = function(){
+    if($rootScope.currentUser._id == $scope.trip.user_id._id) 
+      return true;
+    else 
+      return false;
+  };
 
-    if(!$scope.trip.follow){
+  //follow button
+  $scope.following = function () {
+
+    if(!$scope.trip.isFollowingAuthor){
       $http({
-        method:'POST', 
-        url: searchTripFactory.getOriginPath() + "follow",
-        data: { "user_id": searchTripFactory.getUserId(),"follow_user": trip.author_id}
-      })
+        method:'PUT', 
+        url: searchTripFactory.getOriginPath() + "follow?author_id="+$scope.trip.user_id._id    
+      })  
       .success(function(data, status, headers, config) {
-          $scope.singleModel = 1;
+          // console.log(data);
+          // $scope.singleModel = 1;
+          $scope.trip.isFollowingAuthor = true;
           $scope.followingstate = "following";
       })
       .error(function(data, status, headers, config) {
@@ -41,11 +59,12 @@ modalSearchTripControllers.controller('modalSearchTripCtrl', function ($scope, $
     }
     else{
       $http({
-        method:'DELETE', 
-        url: searchTripFactory.getOriginPath() + "unfollow?user_id=" + searchTripFactory.getUserId() + "&following_user=" + trip.author_id        
+        method:'PUT', 
+        url: searchTripFactory.getOriginPath() + "unfollow?author_id="+$scope.trip.user_id._id        
       })
       .success(function(data, status, headers, config) {
-          $scope.singleModel = 0;
+          // $scope.singleModel = 0;
+          $scope.trip.isFollowingAuthor = false;
           $scope.followingstate = "follow";
       })
       .error(function(data, status, headers, config) {
@@ -56,9 +75,39 @@ modalSearchTripControllers.controller('modalSearchTripCtrl', function ($scope, $
   };
 
   //bookmark button
-  $scope.bookmark = function () {
+  $scope.bookmarking = function () {
   //TODO maybe like follow function
-
+    if(!$scope.trip.isBookmarkedTrip){
+      $http({
+        method:'PUT', 
+        url: searchTripFactory.getOriginPath() + "bookmark?trip_id="+$scope.trip._id    
+      })  
+      .success(function(data, status, headers, config) {
+        console.log(data);
+          // $scope.singleModel = 1;
+          $scope.trip.isBookmarkedTrip = true;
+          $scope.bookmarkstate = "bookmarked";
+      })
+      .error(function(data, status, headers, config) {
+        console.log(data);
+          alert("Failed to bookmark, please Try Again");
+      }); 
+    }
+    else{
+      $http({
+        method:'PUT', 
+        url: searchTripFactory.getOriginPath() + "unbookmark?trip_id="+$scope.trip._id        
+      })
+      .success(function(data, status, headers, config) {
+          // $scope.singleModel = 0;
+          $scope.trip.isBookmarkedTrip = false;
+          $scope.bookmarkstate = "bookmark";
+      })
+      .error(function(data, status, headers, config) {
+        console.log(data);
+          alert("Failed to bookmark, please Try Again");
+      }); 
+    }
   };
 
 });
