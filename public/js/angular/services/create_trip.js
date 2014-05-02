@@ -33,7 +33,7 @@ createTripService.factory('createTripFactory', function($http) {
 //=============================== Factory Methods ===============================
 
 	function getOriginPath() {
-		return 'http://158.108.227.246:4000/api/';
+		return 'http://158.108.137.230:4000/api/';
 	}
 
 	function getTrips() {
@@ -143,9 +143,19 @@ createTripService.factory('createTripFactory', function($http) {
 				"id":selectedplace.venue.id,
 				"location":{
 					"lng":selectedplace.venue.location.lng,
-					"lat":selectedplace.venue.location.lat
+					"lat":selectedplace.venue.location.lat,
+					"address":selectedplace.venue.location.address,
+					// district
+					"city":selectedplace.venue.location.city,
+					"country":selectedplace.venue.location.country,
+					"postalCode":selectedplace.venue.location.postalCode,
+					// province
+					"state":selectedplace.venue.location.state,
+					// country code
+					"cc":selectedplace.venue.location.cc
 				},
-				"rate":selectedplace.venue.rating
+				"rate":selectedplace.venue.rating,
+				"categories":selectedplace.venue.categories
 			}			
 		};
 	}
