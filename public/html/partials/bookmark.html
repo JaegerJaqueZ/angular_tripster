@@ -10,7 +10,8 @@
 		<input ng-model="query" type="text" class="form-control" placeholder="Search Trip Title">
 	</div>
 	<br>
-	<button ng-click="toggle = !toggle">Toggle!</button>
+	<!-- TODO edit button -->
+	<!-- <button ng-click="toggle = !toggle">Toggle!</button> -->
 
 	<table width="100%">
 		<tr>
@@ -25,39 +26,39 @@
 
 			<accordion-group is-open="isopen" ng-repeat="trip in trips | filter:query">
 
-			<accordion-heading>
-			<div class="row">
-				<div class="col-xs-3 col-sm-3">
-					<!-- author photo -->
-					<img border="0" class="img-circle" src="{{trip.authorphoto}}" alt="{{trip.authortitle}} photo" width="50" height="50">
-				</div>
+			 <accordion-heading>
+				<div class="row">
+				  	<div class="col-xs-1 col-sm-1">
+				  		<!-- author photo -->
+				  		<img border="0" class="img-circle" src="{{trip.user_id.profile_figure}}" width="50" height="50">
+				  	</div>
+				  	
+				  	<div class="col-xs-9 col-sm-9" style="text-align:center">
+				  		<p></p>
+				  		<!-- trip name -->
+				  		<span style="margin-left:3%;text-align:center" ><strong >{{trip.title}}</strong>  </span>						  		
+				  		<br>
+				  		<!-- author name -->
+				  		<span style="margin-left:10%">by <strong>{{trip.user_id.first_name}} {{trip.user_id.last_name}}</strong> </span>						  		
 
-				<div class="col-xs-7 col-sm-7">
-					<!-- trip name -->
-					<span style="margin-left:2%">{{trip.title}}  </span>						  		
-					<br>
-					<!-- author name -->
-					<span style="margin-left:10%">by {{trip.authorname}} </span>						  		
+				  	</div>
+				  	<div class="col-xs-0.5 col-sm-0.5" style="align: right;padding-right:2%">
+				  		<p></p>
+				  		<!-- icon -->
+				  		<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+				  	</div>
 				</div>
-				<!-- follow button -->
-					<button type="button" class="btn btn-danger" style="float: right" ng-show="toggle">Delete</button>
-
-				<div class="col-xs-2 col-sm-2">
-					<!-- icon -->
-					<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
-				</div>
-			</div>
-		</accordion-heading>
+			</accordion-heading>
 
 		<!-- carousel -->
 		<div>
 			<div style="height: 10%">
 				<carousel interval="myInterval">
 					<slide ng-repeat="place in trip.places" active="slide.active">
-						<img ng-src="{{place.figure_cover}}" style="margin:auto;" width="420" height="260">
+						<img ng-src="{{place.cover_figure}}" style="margin:auto;" width="420" height="260">
 						<div class="carousel-caption">
 							<!-- <h4>place {{$index+1}}</h4> -->
-							<p>place {{$index+1}} : {{place.name}}</p>
+							<p>place {{$index+1}} : {{place.foursquare.name}}</p>
 						</div>
 					</slide>
 				</carousel>
@@ -65,7 +66,7 @@
 		</div>
 
 		<p></p>
-		{{trip.content}}
+		{{trip.description}}
 		<p></p>
 
 		<a class="btn btn-default btn-lg btn-block" ng-click="readmore(trip)">Read More</a>
