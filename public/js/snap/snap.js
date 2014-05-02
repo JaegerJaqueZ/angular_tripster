@@ -307,112 +307,112 @@
                         }
                     };
                 },
-                dragging: function(e) {
-                    if (cache.isDragging && settings.touchToDrag) {
+                // dragging: function(e) {
+                //     if (cache.isDragging && settings.touchToDrag) {
 
-                        var thePageX = utils.page('X', e),
-                            thePageY = utils.page('Y', e),
-                            translated = cache.translation,
-                            absoluteTranslation = action.translate.get.matrix(4),
-                            whileDragX = thePageX - cache.startDragX,
-                            openingLeft = absoluteTranslation > 0,
-                            translateTo = whileDragX,
-                            diff;
+                //         var thePageX = utils.page('X', e),
+                //             thePageY = utils.page('Y', e),
+                //             translated = cache.translation,
+                //             absoluteTranslation = action.translate.get.matrix(4),
+                //             whileDragX = thePageX - cache.startDragX,
+                //             openingLeft = absoluteTranslation > 0,
+                //             translateTo = whileDragX,
+                //             diff;
 
-                        // Shown no intent already
-                        if((cache.intentChecked && !cache.hasIntent)){
-                            return;
-                        }
+                //         // Shown no intent already
+                //         if((cache.intentChecked && !cache.hasIntent)){
+                //             return;
+                //         }
 
-                        if(settings.addBodyClasses){
-                            if((absoluteTranslation)>0){
-                                utils.klass.add(doc.body, 'snapjs-left');
-                                utils.klass.remove(doc.body, 'snapjs-right');
-                            } else if((absoluteTranslation)<0){
-                                utils.klass.add(doc.body, 'snapjs-right');
-                                utils.klass.remove(doc.body, 'snapjs-left');
-                            }
-                        }
+                //         if(settings.addBodyClasses){
+                //             if((absoluteTranslation)>0){
+                //                 utils.klass.add(doc.body, 'snapjs-left');
+                //                 utils.klass.remove(doc.body, 'snapjs-right');
+                //             } else if((absoluteTranslation)<0){
+                //                 utils.klass.add(doc.body, 'snapjs-right');
+                //                 utils.klass.remove(doc.body, 'snapjs-left');
+                //             }
+                //         }
 
-                        if (cache.hasIntent === false || cache.hasIntent === null) {
-                            var deg = utils.angleOfDrag(thePageX, thePageY),
-                                inRightRange = (deg >= 0 && deg <= settings.slideIntent) || (deg <= 360 && deg > (360 - settings.slideIntent)),
-                                inLeftRange = (deg >= 180 && deg <= (180 + settings.slideIntent)) || (deg <= 180 && deg >= (180 - settings.slideIntent));
-                            if (!inLeftRange && !inRightRange) {
-                                cache.hasIntent = false;
-                            } else {
-                                cache.hasIntent = true;
-                            }
-                            cache.intentChecked = true;
-                        }
+                //         if (cache.hasIntent === false || cache.hasIntent === null) {
+                //             var deg = utils.angleOfDrag(thePageX, thePageY),
+                //                 inRightRange = (deg >= 0 && deg <= settings.slideIntent) || (deg <= 360 && deg > (360 - settings.slideIntent)),
+                //                 inLeftRange = (deg >= 180 && deg <= (180 + settings.slideIntent)) || (deg <= 180 && deg >= (180 - settings.slideIntent));
+                //             if (!inLeftRange && !inRightRange) {
+                //                 cache.hasIntent = false;
+                //             } else {
+                //                 cache.hasIntent = true;
+                //             }
+                //             cache.intentChecked = true;
+                //         }
 
-                        if (
-                            (settings.minDragDistance>=Math.abs(thePageX-cache.startDragX)) || // Has user met minimum drag distance?
-                            (cache.hasIntent === false)
-                        ) {
-                            return;
-                        }
+                //         if (
+                //             (settings.minDragDistance>=Math.abs(thePageX-cache.startDragX)) || // Has user met minimum drag distance?
+                //             (cache.hasIntent === false)
+                //         ) {
+                //             return;
+                //         }
 
-                        utils.events.prevent(e);
-                        utils.dispatchEvent('drag');
+                //         utils.events.prevent(e);
+                //         utils.dispatchEvent('drag');
 
-                        cache.dragWatchers.current = thePageX;
-                        // Determine which direction we are going
-                        if (cache.dragWatchers.last > thePageX) {
-                            if (cache.dragWatchers.state !== 'left') {
-                                cache.dragWatchers.state = 'left';
-                                cache.dragWatchers.hold = thePageX;
-                            }
-                            cache.dragWatchers.last = thePageX;
-                        } else if (cache.dragWatchers.last < thePageX) {
-                            if (cache.dragWatchers.state !== 'right') {
-                                cache.dragWatchers.state = 'right';
-                                cache.dragWatchers.hold = thePageX;
-                            }
-                            cache.dragWatchers.last = thePageX;
-                        }
-                        if (openingLeft) {
-                            // Pulling too far to the right
-                            if (settings.maxPosition < absoluteTranslation) {
-                                diff = (absoluteTranslation - settings.maxPosition) * settings.resistance;
-                                translateTo = whileDragX - diff;
-                            }
-                            cache.simpleStates = {
-                                opening: 'left',
-                                towards: cache.dragWatchers.state,
-                                hyperExtending: settings.maxPosition < absoluteTranslation,
-                                halfway: absoluteTranslation > (settings.maxPosition / 2),
-                                flick: Math.abs(cache.dragWatchers.current - cache.dragWatchers.hold) > settings.flickThreshold,
-                                translation: {
-                                    absolute: absoluteTranslation,
-                                    relative: whileDragX,
-                                    sinceDirectionChange: (cache.dragWatchers.current - cache.dragWatchers.hold),
-                                    percentage: (absoluteTranslation/settings.maxPosition)*100
-                                }
-                            };
-                        } else {
-                            // Pulling too far to the left
-                            if (settings.minPosition > absoluteTranslation) {
-                                diff = (absoluteTranslation - settings.minPosition) * settings.resistance;
-                                translateTo = whileDragX - diff;
-                            }
-                            cache.simpleStates = {
-                                opening: 'right',
-                                towards: cache.dragWatchers.state,
-                                hyperExtending: settings.minPosition > absoluteTranslation,
-                                halfway: absoluteTranslation < (settings.minPosition / 2),
-                                flick: Math.abs(cache.dragWatchers.current - cache.dragWatchers.hold) > settings.flickThreshold,
-                                translation: {
-                                    absolute: absoluteTranslation,
-                                    relative: whileDragX,
-                                    sinceDirectionChange: (cache.dragWatchers.current - cache.dragWatchers.hold),
-                                    percentage: (absoluteTranslation/settings.minPosition)*100
-                                }
-                            };
-                        }
-                        action.translate.x(translateTo + translated);
-                    }
-                },
+                //         cache.dragWatchers.current = thePageX;
+                //         // Determine which direction we are going
+                //         if (cache.dragWatchers.last > thePageX) {
+                //             if (cache.dragWatchers.state !== 'left') {
+                //                 cache.dragWatchers.state = 'left';
+                //                 cache.dragWatchers.hold = thePageX;
+                //             }
+                //             cache.dragWatchers.last = thePageX;
+                //         } else if (cache.dragWatchers.last < thePageX) {
+                //             if (cache.dragWatchers.state !== 'right') {
+                //                 cache.dragWatchers.state = 'right';
+                //                 cache.dragWatchers.hold = thePageX;
+                //             }
+                //             cache.dragWatchers.last = thePageX;
+                //         }
+                //         if (openingLeft) {
+                //             // Pulling too far to the right
+                //             if (settings.maxPosition < absoluteTranslation) {
+                //                 diff = (absoluteTranslation - settings.maxPosition) * settings.resistance;
+                //                 translateTo = whileDragX - diff;
+                //             }
+                //             cache.simpleStates = {
+                //                 opening: 'left',
+                //                 towards: cache.dragWatchers.state,
+                //                 hyperExtending: settings.maxPosition < absoluteTranslation,
+                //                 halfway: absoluteTranslation > (settings.maxPosition / 2),
+                //                 flick: Math.abs(cache.dragWatchers.current - cache.dragWatchers.hold) > settings.flickThreshold,
+                //                 translation: {
+                //                     absolute: absoluteTranslation,
+                //                     relative: whileDragX,
+                //                     sinceDirectionChange: (cache.dragWatchers.current - cache.dragWatchers.hold),
+                //                     percentage: (absoluteTranslation/settings.maxPosition)*100
+                //                 }
+                //             };
+                //         } else {
+                //             // Pulling too far to the left
+                //             if (settings.minPosition > absoluteTranslation) {
+                //                 diff = (absoluteTranslation - settings.minPosition) * settings.resistance;
+                //                 translateTo = whileDragX - diff;
+                //             }
+                //             cache.simpleStates = {
+                //                 opening: 'right',
+                //                 towards: cache.dragWatchers.state,
+                //                 hyperExtending: settings.minPosition > absoluteTranslation,
+                //                 halfway: absoluteTranslation < (settings.minPosition / 2),
+                //                 flick: Math.abs(cache.dragWatchers.current - cache.dragWatchers.hold) > settings.flickThreshold,
+                //                 translation: {
+                //                     absolute: absoluteTranslation,
+                //                     relative: whileDragX,
+                //                     sinceDirectionChange: (cache.dragWatchers.current - cache.dragWatchers.hold),
+                //                     percentage: (absoluteTranslation/settings.minPosition)*100
+                //                 }
+                //             };
+                //         }
+                //         action.translate.x(translateTo + translated);
+                //     }
+                // },
                 endDrag: function(e) {
                     if (cache.isDragging) {
                         utils.dispatchEvent('end');
