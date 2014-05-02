@@ -4,6 +4,8 @@ var myTripControllers = angular.module('myTripControllers', []);
 
 myTripControllers.controller('myTripCtrl', function ($scope, $http, createTripFactory, $modal) {
 
+	snapper.close();
+
 	$http({
 		method:'GET', 
 		url: createTripFactory.getOriginPath() + "user/trips"
