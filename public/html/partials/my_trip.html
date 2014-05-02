@@ -1,3 +1,4 @@
+<title>My trip</title>
 <div class="container-fluid animated slideInLeft">	
 	<!-- Search Trip -->
 	<div class="input-group">
@@ -16,7 +17,7 @@
 	<div class="list-group">
 		<a ng-repeat="trip in trips | filter:query" class="list-group-item" ng-click="open(trip)">
 			{{trip.title}}
-			<span class="glyphicon glyphicon-chevron-right" style="float: right"></span>
+			<!-- <span class="glyphicon glyphicon-chevron-right" style="float: right"></span> -->
 		</a>
 	</div>
 </div>
