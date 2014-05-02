@@ -5,7 +5,7 @@ var modalEditPlaceFoursquareControllers = angular.module('modalEditPlaceFoursqua
 modalEditPlaceFoursquareControllers.controller('modalEditPlaceFoursquareCtrl', function ($scope, $http, createTripFactory) {
 
 	//initialze search (can delete if want)
-	$scope.input = {name:'paragon', province:'กรุงเทพมหานคร'};
+	$scope.input = {province:"กรุงเทพมหานคร"};
 
 	$scope.findPlace = function (){
 
