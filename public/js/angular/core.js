@@ -78,6 +78,9 @@ tripsterApp.config(['$httpProvider', function($httpProvider) {
 
 tripsterApp.run(function ($rootScope, $location, authFactory) {
 
+	// extension
+	FastClick.attach(document.body);
+	
     //watching the value of the currentUser variable.
     $rootScope.$watch('currentUser', function(currentUser) {
       // if no currentUser and on a page that requires authorization then try to update it
