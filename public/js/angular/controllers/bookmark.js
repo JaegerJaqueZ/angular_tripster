@@ -63,14 +63,17 @@ bookmarkControllers.controller('bookmarkCtrl', function ($scope, $http, bookmark
 
         console.log(data.places);
 
-        for (var i=0;i<data.places.length;i++)
-        {
-          var startTime = data.places[i].time_arrive;
-          var endTime = data.places[i].time_leave;
-          data.places[i].time_arrive = calDate(startTime);
-          data.places[i].time_leave = calDate(endTime);
-          // console.log(startTime);
-          // console.log(endTime);
+        if(typeof(data.places) !== "undefined"){
+          for (var i=0;i<data.places.length;i++)
+          {
+            var startTime = data.places[i].time_arrive;
+            var endTime = data.places[i].time_leave;
+            data.places[i].time_arrive = calDate(startTime);
+            data.places[i].time_leave = calDate(endTime);
+          }
+        }
+        else{
+          // TODO
         }
 
         bookmarkFactory.setChosenTrip(data);

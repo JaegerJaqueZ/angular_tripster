@@ -51,7 +51,7 @@ modalSearchTripControllers.controller('modalSearchTripCtrl', function ($rootScop
           // console.log(data);
           // $scope.singleModel = 1;
           $scope.trip.isFollowingAuthor = true;
-          $scope.followingstate = "following";
+          $scope.followingstate = "Following";
       })
       .error(function(data, status, headers, config) {
           alert("Failed to follow, please Try Again");
@@ -65,7 +65,7 @@ modalSearchTripControllers.controller('modalSearchTripCtrl', function ($rootScop
       .success(function(data, status, headers, config) {
           // $scope.singleModel = 0;
           $scope.trip.isFollowingAuthor = false;
-          $scope.followingstate = "follow";
+          $scope.followingstate = "Follow";
       })
       .error(function(data, status, headers, config) {
           alert("Failed to follow, please Try Again");
@@ -86,7 +86,7 @@ modalSearchTripControllers.controller('modalSearchTripCtrl', function ($rootScop
         console.log(data);
           // $scope.singleModel = 1;
           $scope.trip.isBookmarkedTrip = true;
-          $scope.bookmarkstate = "bookmarked";
+          $scope.bookmarkstate = "Bookmarked";
       })
       .error(function(data, status, headers, config) {
         console.log(data);
@@ -101,7 +101,7 @@ modalSearchTripControllers.controller('modalSearchTripCtrl', function ($rootScop
       .success(function(data, status, headers, config) {
           // $scope.singleModel = 0;
           $scope.trip.isBookmarkedTrip = false;
-          $scope.bookmarkstate = "bookmark";
+          $scope.bookmarkstate = "Bookmark";
       })
       .error(function(data, status, headers, config) {
         console.log(data);

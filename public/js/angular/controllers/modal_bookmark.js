@@ -50,7 +50,7 @@ modalBookmarkControllers.controller('modalBookmarkCtrl', function ($rootScope, $
           // console.log(data);
           // $scope.singleModel = 1;
           $scope.trip.isFollowingAuthor = true;
-          $scope.followingstate = "following";
+          $scope.followingstate = "Following";
       })
       .error(function(data, status, headers, config) {
           alert("Failed to follow, please Try Again");
@@ -64,7 +64,7 @@ modalBookmarkControllers.controller('modalBookmarkCtrl', function ($rootScope, $
       .success(function(data, status, headers, config) {
           // $scope.singleModel = 0;
           $scope.trip.isFollowingAuthor = false;
-          $scope.followingstate = "follow";
+          $scope.followingstate = "Follow";
       })
       .error(function(data, status, headers, config) {
           alert("Failed to follow, please Try Again");
@@ -85,7 +85,7 @@ modalBookmarkControllers.controller('modalBookmarkCtrl', function ($rootScope, $
         console.log(data);
           // $scope.singleModel = 1;
           $scope.trip.isBookmarkedTrip = true;
-          $scope.bookmarkstate = "bookmarked";
+          $scope.bookmarkstate = "Bookmarked";
           bookmarkFactory.setBookmarkState(true);          
       })
       .error(function(data, status, headers, config) {
@@ -102,7 +102,7 @@ modalBookmarkControllers.controller('modalBookmarkCtrl', function ($rootScope, $
           // $scope.singleModel = 0;
           $scope.trip.isBookmarkedTrip = false;
           bookmarkFactory.setBookmarkState(false);
-          $scope.bookmarkstate = "bookmark";
+          $scope.bookmarkstate = "Bookmark";
       })
       .error(function(data, status, headers, config) {
         console.log(data);

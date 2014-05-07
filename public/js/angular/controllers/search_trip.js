@@ -40,7 +40,7 @@ searchTripControllers.controller('searchTripCtrl', function ($scope, $http, sear
       url: searchTripFactory.getOriginPath() + "trips/search?key=" + $scope.key + "&skip=" + $scope.from + "&limit=" + $scope.range
     })
     .success(function(data, status, headers, config) {
-      console.log(data);
+        console.log(data);
         searchTripFactory.clearResultList();
 
       if(data !=""){
@@ -113,12 +113,17 @@ searchTripControllers.controller('searchTripCtrl', function ($scope, $http, sear
     .success(function(data, status, headers, config) {
         console.log(data);
 
-        for (var i=0;i<data.places.length;i++)
-        {
-          var startTime = data.places[i].time_arrive;
-          var endTime = data.places[i].time_leave;
-          data.places[i].time_arrive = calDate(startTime);
-          data.places[i].time_leave = calDate(endTime);
+        if(typeof(data.places) !== "undefined"){
+          for (var i=0;i<data.places.length;i++)
+          {
+            var startTime = data.places[i].time_arrive;
+            var endTime = data.places[i].time_leave;
+            data.places[i].time_arrive = calDate(startTime);
+            data.places[i].time_leave = calDate(endTime);
+          }
+        }
+        else{
+          // TODO
         }
 
         searchTripFactory.setChosenTrip(data);

@@ -13,14 +13,14 @@
  <div class="row">
  	<div class="col-xs-1 col-sm-1">
  		<!-- author photo -->
- 		<img border="0" class="img-circle" src="../img/Skipper_2.jpg" alt="{{group.title}} photo" width="40" height="40">
+ 		<img border="0" class="img-circle" src="{{trip.user_id.profile_figure}}" width="40" height="40">
  	</div>
 
  	<div class="col-xs-8 col-sm-8" style="margin-left:5%">
 
  		<!-- user + activity -->
  		<span >
- 			<small><a>{{trip.user_id.first_name}} {{trip.user_id.last_name}}</a>  followed trip</small> 
+ 			<small><a>{{trip.user_id.first_name}} {{trip.user_id.last_name}}</a>  {{trip.act_code}}</small> 
  		</span>						  		
  		<br>
  		<!-- trip's name -->
@@ -40,62 +40,20 @@
  <div >
  	<div style="height: 10%">
  		<carousel interval="myInterval">
- 			<slide ng-repeat="slide in slides" active="slide.active">
- 				<img ng-src="{{slide.image}}" style="margin:auto;">
+ 			<slide ng-repeat="place in trip.trip_id.places" active="place.active">
+ 				<img ng-src="{{place.cover_figure}}" style="margin:auto;">
  				<div class="carousel-caption">
  					<!-- <h4>place {{$index+1}}</h4> -->
- 					<p>place {{$index+1}} : {{slide.text}}</p>
+ 					<p>place {{$index+1}} : {{place.foursquare.name}}</p>
  				</div>
  			</slide>
  		</carousel>
  	</div>
  </div>
+ <hr>
 </div>
 
- <hr>
  
-
- <div class="row">
- 	<div class="col-xs-1 col-sm-1">
- 		<!-- author photo -->
- 		<img border="0" class="img-circle" src="../img/Skipper_2.jpg" alt="{{group.title}} photo" width="40" height="40">
- 	</div>
-
- 	<div class="col-xs-8 col-sm-8" style="margin-left:5%">
-
- 		<!-- user + activity -->
- 		<span >
- 			<small><a>Captain Skipper </a>  followed trip</small> 
- 		</span>						  		
- 		<br>
- 		<!-- trip's name -->
- 		<span style="margin-left:10%">
- 			<a>ทริปเที่ยวทะเลภูเก็ต</a>
- 		</span>						  		
- 		
- 	</div>
- 	<div class="col-xs-2 col-sm-2">
- 		<!-- icon -->
- 		<i class="pull-right glyphicon" ng-class="{'glyphicon-heart': isopen, 'glyphicon-heart': !isopen}"></i>
- 	</div>
- </div>
-  <p></p>
- <div ng-controller="CarouselDemoCtrl">
- 	<div style="height: 10%">
- 		<carousel interval="myInterval">
- 			<slide ng-repeat="slide in slides" active="slide.active">
- 				<img ng-src="{{slide.image}}" style="margin:auto;">
- 				<div class="carousel-caption">
- 					<!-- <h4>place {{$index+1}}</h4> -->
- 					<p>place {{$index+1}} : {{slide.text}}</p>
- 				</div>
- 			</slide>
- 		</carousel>
- 	</div>
- </div>
- <hr>
-
-
 
 
 </div>	
