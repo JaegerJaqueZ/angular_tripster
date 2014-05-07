@@ -11,7 +11,7 @@ searchTripService.factory('searchTripFactory', function($http) {
 //=============================== Factory Methods ===============================
 
 	function getOriginPath() {
-		return 'http://158.108.137.230:4000/api/';
+		return 'http://158.108.230.150:4000/api/';
 	}
 
 	function getResultList() {

@@ -36,26 +36,46 @@ angular.module('tripsterApp')
                 if (!helper.isFile(params.file)) return;
                 if (!helper.isImage(params.file)) return;
 
-                var canvas = element.find('canvas');
-                $( "canvas" ).addClass( "img-responsive" );
-                var reader = new FileReader();
+				var fr = new FileReader;
+				var exif;
+				
+				fr.onloadend = function() {
 
-                reader.onload = onLoadFile;
-                reader.readAsDataURL(params.file);
+					exif = EXIF.readFromBinaryFile(new BinaryFile(this.result));
+					
+					// canvas
+	                var canvas = element.find('canvas');
+	                $( "canvas" ).addClass( "img-responsive" );
 
-                function onLoadFile(event) {
-                    var img = new Image();
-                    img.onload = onLoadImage;
-                    img.src = event.target.result;
-                }
+				    // MegaPixImage constructor accepts File/Blob object.
+				    var mpImg = new MegaPixImage(params.file);
+				    // Render resized image into canvas element.
+				    mpImg.render(canvas[0], { maxHeight: 500, maxWidth: 500, orientation: exif.Orientation });
+				};
+				
+				fr.readAsBinaryString(params.file);
 
-                function onLoadImage() {
-                    // var width = params.width || this.width / this.height * params.height;
-                    // var height = params.height || this.height / this.width * params.width;
-                    
-                    canvas.attr({ width: this.width, height: this.height });
-                    canvas[0].getContext('2d').drawImage(this, 0, 0, this.width, this.height);
-                }
+
+                // var canvas = element.find('canvas');
+                // $( "canvas" ).addClass( "img-responsive" );
+                // var reader = new FileReader();
+                // 
+                // reader.onload = onLoadFile;
+                // reader.readAsDataURL(params.file);
+                // 
+                // function onLoadFile(event) {
+                //     var img = new Image();
+                //     img.onload = onLoadImage;
+                //     img.src = event.target.result;
+                // }
+                // 
+                // function onLoadImage() {
+                //     // var width = params.width || this.width / this.height * params.height;
+                //     // var height = params.height || this.height / this.width * params.width;
+                //     
+                //     canvas.attr({ width: this.width, height: this.height });
+                //     canvas[0].getContext('2d').drawImage(this, 0, 0, this.width, this.height);
+                // }
             }
         };
     }]);

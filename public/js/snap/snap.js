@@ -204,9 +204,9 @@
 
                         settings.element.style[cache.vendor+'Transition'] = 'all ' + settings.transitionSpeed + 's ' + settings.easing;
 
-                        cache.animatingInterval = setInterval(function() {
-                            utils.dispatchEvent('animating');
-                        }, 1);
+                        // cache.animatingInterval = setInterval(function() {
+                        //     utils.dispatchEvent('animating');
+                        // }, 1);
                         
                         utils.events.addEvent(settings.element, utils.transitionCallback(), action.translate.easeCallback);
                         action.translate.x(n);
