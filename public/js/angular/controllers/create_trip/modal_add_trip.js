@@ -116,8 +116,9 @@ modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, 
 	 		"description": $scope.description,
 	 		"date_begin": createTripFactory.getDateBegin(),
 	 		"date_end": createTripFactory.getDateEnd(),
-	 		"status": createTripFactory.PUBLIC_TRIP
+	 		"status": 10
 	 	};
+
 
 		if(createTripFactory.getIsEditingTrip()) {
 			$http({
@@ -128,10 +129,25 @@ modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, 
 				'Content-Type': 'application/json'}
 			}).
 			success(function(data, status, headers, config) {
-				createTripFactory.updateTrips();
-				createTripFactory.setIsEditingTrip(false);
-				createTripFactory.setChosenTrip({});
-				$scope.cancel();
+				$http({
+					method: 'PUT',
+					url: createTripFactory.getOriginPath() + "trip/publish?trip_id=" + createTripFactory.getChosenTrip()._id,
+					headers: {'Content-Type': 'application/x-www-form-urlencoded',
+					'Content-Type': 'application/json'}
+				}).
+				success(function(data, status, headers, config) {
+					createTripFactory.updateTrips();
+					createTripFactory.setIsEditingTrip(false);
+					createTripFactory.setChosenTrip({});
+					$scope.cancel();
+				}).
+				error(function(data, status, headers, config) {
+					alert("Save Success, but unable to publish. Please Try Again.");
+					$scope.isDisabled = false;
+				});  
+				
+
+
 			}).
 			error(function(data, status, headers, config) {
 				alert("Save Failed, Please Try Again.");
