@@ -11,11 +11,11 @@ modalBookmarkControllers.controller('modalBookmarkCtrl', function ($rootScope, $
   // initialize follow button
   if(!$scope.trip.isFollowingAuthor){
       // $scope.follow = 1;
-      $scope.followingstate = "follow";      
+      $scope.followingstate = "Follow";      
     }
     else{
       // $scope.singleModel = 0;
-      $scope.followingstate = "following"; 
+      $scope.followingstate = "Following"; 
     }   
 
   //initialize bookmark button
@@ -23,11 +23,11 @@ modalBookmarkControllers.controller('modalBookmarkCtrl', function ($rootScope, $
  
   if(!$scope.trip.isBookmarkedTrip){
       // $scope.bookmark = 0;
-      $scope.bookmarkstate = "bookmark";    
+      $scope.bookmarkstate = "Bookmark";    
     }
     else{
       // $scope.singleModel = 0;
-      $scope.bookmarkstate = "bookmarked"; 
+      $scope.bookmarkstate = "Bookmarked"; 
     } 
   
   // check user id with author id 
