@@ -1,0 +1,87 @@
+<title>Profile</title>
+
+<div class="animated slideInLeft" >	
+
+		<!-- profile photo -->
+		<center><img src="..." alt="..." class="img-circle"></center>
+		<!-- profile name -->	
+		<center><strong><h2>Watza2014</h2></strong> </center>
+
+ 	<div class="container-fluid">	
+ 		<!-- edit button -->
+		<button type="button" class="btn btn-default btn-lg btn-block" >Edit Your Profile</button>
+	</div>
+	<p>
+	<!-- stats -->
+	<table class="table table-bordered" style="text-align:center;padding:0px;" >
+		<tr>
+			<td>
+				<strong>100</strong>
+				<br>					
+				FOLLOWERS					
+			</td>
+			<td>
+				<strong>100</strong>
+				<br>
+				FOLLOWING					
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<strong>100</strong>
+				<br>
+				TRIPS					
+			</td>
+			<td>
+				<strong>100</strong>
+				<br>
+				BOOKMARKS					
+			</td>				
+		</tr>
+	</table>		
+	<div class="container">
+		<b>History</b><p>
+		 <div ng-repeat="activityLog in activityLogs">
+		 <div class="row">
+		 	<div class="col-xs-1 col-sm-1">
+		 		<!-- author photo -->
+		 		<img border="0" class="img-circle" src="{{activityLog.user_id.profile_figure}}" width="40" height="40">
+		 	</div>
+
+		 	<div class="col-xs-8 col-sm-8" style="margin-left:5%">
+
+		 		<!-- user + activity -->
+		 		<span >
+		 			<small><a>{{activityLog.user_id.first_name}} {{activityLog.user_id.last_name}}</a>  {{activityLog.act_code}}</small> 
+		 		</span>						  		
+		 		<br>
+		 		<!-- trip's name -->
+		 		<span style="margin-left:10%" >
+		 			<a ng-click="readmore(activityLog.trip_id)">{{activityLog.trip_id.title}}</a>
+		 		</span>						  		
+
+		 	</div>
+		 	<div class="col-xs-2 col-sm-2">
+		 		<!-- icon & time -->
+		 		<i class="pull-right glyphicon glyphicon-time">{{activityLog.created}}</i>
+		 	</div>
+		 </div>
+		 <p></p>
+
+		 <!-- photo -->
+<!-- 		 <div >
+		 	<div style="height: 10%">
+		 		<carousel interval="myInterval">
+		 			<slide ng-repeat="place in activityLog.trip_id.places" active="place.active">
+		 				<img ng-src="{{place.cover_figure}}" style="margin:auto;">
+		 				<div class="carousel-caption">
+		 					<p>place {{$index+1}} : {{place.foursquare.name}}</p>
+		 				</div>
+		 			</slide>
+		 		</carousel>
+		 	</div>
+		 </div> -->
+		 <hr>
+		</div>
+	</div>
+</div>
