@@ -34,7 +34,7 @@
 				  		<img border="0" class="img-circle" src="{{trip.user_id.profile_figure}}" width="50" height="50">
 				  	</div>
 				  	
-				  	<div class="col-xs-7 col-sm-7">
+				  	<div class="col-xs-6 col-sm-6">
 				  		<p></p>
 				  		<!-- author name -->
 				  		<span style="padding-left:10%"><strong> {{trip.user_id.first_name}} {{trip.user_id.last_name}}</strong> </span>						  		
@@ -42,7 +42,7 @@
 				  	</div>
 				  	<div class="col-xs-3 col-sm-3" style="padding-left:0px">
 						<!-- follow button -->
-						<button type="button" ng-hide="checkIsOwner	()" class="btn "  ng-model="follow" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="following()">
+						<button type="button" ng-hide="checkIsOwner	()" class="btn btn-default"  ng-model="follow" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="following()">
 					        {{followingstate}}
 					    </button>
 				  	</div>
