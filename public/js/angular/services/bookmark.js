@@ -14,7 +14,7 @@ bookmarkService.factory('bookmarkFactory', function($http) {
 
 
 	function getOriginPath() {
-		return 'http://158.108.230.150:4000/api/';
+		return 'http://158.108.228.106:4000/api/';
 	}
 
 	function getResultList() {
