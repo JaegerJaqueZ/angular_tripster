@@ -10,6 +10,8 @@ var tripsterApp = angular.module('tripsterApp', [
 	'createTripService',
 	'searchTripService',
 	'bookmarkService',
+	'timelineService',
+	'profileService',
 
 	'loginControllers',
 	'myTripControllers',
@@ -24,14 +26,18 @@ var tripsterApp = angular.module('tripsterApp', [
 	'searchTripControllers',
 	'modalSearchTripControllers',
 	'bookmarkControllers',
-	'modalBookmarkControllers'	
+	'modalBookmarkControllers',
+	'timelineControllers',
+	'modalTimelineControllers',
+	'profileControllers',	
 ]);
 
 tripsterApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
 function($routeProvider, $locationProvider, $httpProvider) {
 	$routeProvider.
-	when('/home', {
-		templateUrl: 'partials/home.html'
+	when('/timeline', {
+		templateUrl: 'partials/timeline.html',
+		controller: 'timelineCtrl'
 	}).
 	when('/mytrip', {
 		templateUrl: 'partials/my_trip.html',
@@ -49,8 +55,12 @@ function($routeProvider, $locationProvider, $httpProvider) {
 			templateUrl: 'partials/login.html',
 			controller: 'loginCtrl'
 	}).
+	when('/profile', {
+			templateUrl: 'partials/profile.html',
+			controller: 'profileCtrl'
+	}).	
 	otherwise({
-		redirectTo: '/home'
+		redirectTo: '/timeline'
 	});
 
 	// $locationProvider.html5Mode(true);
