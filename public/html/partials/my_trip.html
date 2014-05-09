@@ -14,10 +14,18 @@
 	</div>
 	<br>
 	<!-- List Trips -->
-	<div class="list-group">
-		<a ng-repeat="trip in trips | filter:query" class="list-group-item" ng-click="open(trip)">
-			{{trip.title}}
-			<!-- <span class="glyphicon glyphicon-chevron-right" style="float: right"></span> -->
-		</a>
-	</div>
+	
+	<tabset>
+		<tab heading="Publish" style="width:50%">
+			<a ng-repeat="trip in trips[2] | filter:query" class="list-group-item" ng-click="open(trip)">
+				{{trip.title}}
+			</a>
+		</tab>
+		<tab heading="Draft" style="width:50%">
+			<a ng-repeat="trip in trips[0] | filter:query" class="list-group-item" ng-click="open(trip)">
+				{{trip.title}}
+			</a>
+		</tab>
+</tabset>
+
 </div>
