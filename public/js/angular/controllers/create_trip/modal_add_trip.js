@@ -55,83 +55,23 @@ modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, 
 
 	$scope.save = function (){
 
-		$scope.isDisabled = true;
+		if(validate()){
 
-	 	var myjson = {
-	 		"title": $scope.title,
-	 		"description": $scope.description,
-	 		"date_begin": createTripFactory.getDateBegin(),
-	 		"date_end": createTripFactory.getDateEnd(),
-	 		"status": createTripFactory.PRIVATE_TRIP
-	 	};
+			$scope.isDisabled = true;
 
-		if(createTripFactory.getIsEditingTrip()) {
-			$http({
-				method: 'PUT',
-				url: createTripFactory.getOriginPath() + "trip/update?trip_id=" + createTripFactory.getChosenTrip()._id,
-				data: myjson,
-				headers: {'Content-Type': 'application/x-www-form-urlencoded',
-				'Content-Type': 'application/json'}
-			}).
-			success(function(data, status, headers, config) {
-				createTripFactory.updateTrips();
-				createTripFactory.setIsEditingTrip(false);
-				createTripFactory.setChosenTrip({});
-				$scope.cancel();
-			}).
-			error(function(data, status, headers, config) {
-				alert("Save Failed, Please Try Again.");
-				$scope.isDisabled = false;
-			});  
-		}
-		else{
+		 	var myjson = {
+		 		"title": $scope.title,
+		 		"description": $scope.description,
+		 		"date_begin": createTripFactory.getDateBegin(),
+		 		"date_end": createTripFactory.getDateEnd(),
+		 		"status": createTripFactory.PRIVATE_TRIP
+		 	};
 
-			$http({
-				method: 'POST',
-				url: createTripFactory.getOriginPath() + "trip/create",
-				data: myjson,
-				headers: {'Content-Type': 'application/x-www-form-urlencoded',
-				'Content-Type': 'application/json'}
-			}).
-			success(function(data, status, headers, config) {
-				createTripFactory.updateTrips();
-				createTripFactory.setIsEditingTrip(false);
-				createTripFactory.setChosenTrip({});
-				$scope.cancel();	
-			}).
-			error(function(data, status, headers, config) {
-				alert("Save Failed, Please Try Again.");
-				$scope.isDisabled = false;
-			});
-
-		}
-	}
-
-	$scope.publish = function (){
-		//TODO VALIDATE DATA FIRST
-		$scope.isDisabled = true;
-
-	 	var myjson = {
-	 		"title": $scope.title,
-	 		"description": $scope.description,
-	 		"date_begin": createTripFactory.getDateBegin(),
-	 		"date_end": createTripFactory.getDateEnd(),
-	 		"status": 10
-	 	};
-
-
-		if(createTripFactory.getIsEditingTrip()) {
-			$http({
-				method: 'PUT',
-				url: createTripFactory.getOriginPath() + "trip/update?trip_id=" + createTripFactory.getChosenTrip()._id,
-				data: myjson,
-				headers: {'Content-Type': 'application/x-www-form-urlencoded',
-				'Content-Type': 'application/json'}
-			}).
-			success(function(data, status, headers, config) {
+			if(createTripFactory.getIsEditingTrip()) {
 				$http({
 					method: 'PUT',
-					url: createTripFactory.getOriginPath() + "trip/publish?trip_id=" + createTripFactory.getChosenTrip()._id,
+					url: createTripFactory.getOriginPath() + "trip/update?trip_id=" + createTripFactory.getChosenTrip()._id,
+					data: myjson,
 					headers: {'Content-Type': 'application/x-www-form-urlencoded',
 					'Content-Type': 'application/json'}
 				}).
@@ -139,43 +79,126 @@ modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, 
 					createTripFactory.updateTrips();
 					createTripFactory.setIsEditingTrip(false);
 					createTripFactory.setChosenTrip({});
+					alert("Save Success.");
+					alert("In order to make this trip visible to other people, you have to publish this trip in 'Draft' first");
 					$scope.cancel();
 				}).
 				error(function(data, status, headers, config) {
-					alert("Save Success, but unable to publish. Please Try Again.");
+					alert("Save Failed, Please Try Again.");
 					$scope.isDisabled = false;
 				});  
+			}
+			else{
+
+				$http({
+					method: 'POST',
+					url: createTripFactory.getOriginPath() + "trip/create",
+					data: myjson,
+					headers: {'Content-Type': 'application/x-www-form-urlencoded',
+					'Content-Type': 'application/json'}
+				}).
+				success(function(data, status, headers, config) {
+					createTripFactory.updateTrips();
+					createTripFactory.setIsEditingTrip(false);
+					createTripFactory.setChosenTrip({});
+					alert("Save Success.");
+					alert("In order to make this trip visible to other people, you have to publish this trip in 'Draft' first");
+					$scope.cancel();	
+				}).
+				error(function(data, status, headers, config) {
+					alert("Save Failed, Please Try Again.");
+					$scope.isDisabled = false;
+				});
+			}
+		}
+	}
+
+	// $scope.publish = function (){
+	// 	//TODO VALIDATE DATA FIRST
+	// 	$scope.isDisabled = true;
+
+	//  	var myjson = {
+	//  		"title": $scope.title,
+	//  		"description": $scope.description,
+	//  		"date_begin": createTripFactory.getDateBegin(),
+	//  		"date_end": createTripFactory.getDateEnd(),
+	//  		"status": 10
+	//  	};
+
+
+	// 	if(createTripFactory.getIsEditingTrip()) {
+	// 		$http({
+	// 			method: 'PUT',
+	// 			url: createTripFactory.getOriginPath() + "trip/update?trip_id=" + createTripFactory.getChosenTrip()._id,
+	// 			data: myjson,
+	// 			headers: {'Content-Type': 'application/x-www-form-urlencoded',
+	// 			'Content-Type': 'application/json'}
+	// 		}).
+	// 		success(function(data, status, headers, config) {
+	// 			$http({
+	// 				method: 'PUT',
+	// 				url: createTripFactory.getOriginPath() + "trip/publish?trip_id=" + createTripFactory.getChosenTrip()._id,
+	// 				headers: {'Content-Type': 'application/x-www-form-urlencoded',
+	// 				'Content-Type': 'application/json'}
+	// 			}).
+	// 			success(function(data, status, headers, config) {
+	// 				createTripFactory.updateTrips();
+	// 				createTripFactory.setIsEditingTrip(false);
+	// 				createTripFactory.setChosenTrip({});
+	// 				$scope.cancel();
+	// 			}).
+	// 			error(function(data, status, headers, config) {
+	// 				alert("Save Success, but unable to publish. Please Try Again.");
+	// 				$scope.isDisabled = false;
+	// 			});  
 				
 
 
-			}).
-			error(function(data, status, headers, config) {
-				alert("Save Failed, Please Try Again.");
-				$scope.isDisabled = false;
-			});  
-		}
-		else{
+	// 		}).
+	// 		error(function(data, status, headers, config) {
+	// 			alert("Save Failed, Please Try Again.");
+	// 			$scope.isDisabled = false;
+	// 		});  
+	// 	}
+	// 	else{
 
-			$http({
-				method: 'POST',
-				url: createTripFactory.getOriginPath() + "trip/create",
-				data: myjson,
-				headers: {'Content-Type': 'application/x-www-form-urlencoded',
-				'Content-Type': 'application/json'}
-			}).
-			success(function(data, status, headers, config) {
-				createTripFactory.updateTrips();
-				createTripFactory.setIsEditingTrip(false);
-				createTripFactory.setChosenTrip({});
-				$scope.cancel();	
-			}).
-			error(function(data, status, headers, config) {
-				alert("Save Failed, Please Try Again.");
-				$scope.isDisabled = false;
-			});
+	// 		$http({
+	// 			method: 'POST',
+	// 			url: createTripFactory.getOriginPath() + "trip/create",
+	// 			data: myjson,
+	// 			headers: {'Content-Type': 'application/x-www-form-urlencoded',
+	// 			'Content-Type': 'application/json'}
+	// 		}).
+	// 		success(function(data, status, headers, config) {
+	// 			createTripFactory.updateTrips();
+	// 			createTripFactory.setIsEditingTrip(false);
+	// 			createTripFactory.setChosenTrip({});
+	// 			$scope.cancel();	
+	// 		}).
+	// 		error(function(data, status, headers, config) {
+	// 			alert("Save Failed, Please Try Again.");
+	// 			$scope.isDisabled = false;
+	// 		});
 
+	// 	}
+	// }
+
+	function validate(){
+		if($scope.title === ''){
+			alert("Trip name is not defined, Please enter trip name.");
+			return false;
 		}
+		else if($scope.description === ''){
+			alert("Trip description is not defined, Please enter trip description.");
+			return false;
+		}
+		else if(createTripFactory.getDateBegin() > createTripFactory.getDateEnd()){
+			alert("Please make sure Begin date come before End date.");
+			return false;
+		}
+		return true;
 	}
+
 });
 
 //=============================== Modal Controller ===============================

@@ -7,6 +7,11 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 	$scope.places      = createTripFactory.getChosenTrip().places || new Array();
 	$scope.title       = createTripFactory.getChosenTrip().title || '';
 	$scope.description = createTripFactory.getChosenTrip().description || '';
+	$scope.publishShow = true;
+
+	if(createTripFactory.getChosenTrip().status === 20){
+		$scope.publishShow = false;		
+	}
 
 	$scope.$watchCollection(
 		
@@ -52,39 +57,44 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 		}		
 	};
 
-	$scope.save = function (){			
-		
-		$scope.isDisabled = true;
+	$scope.save = function (){	
 
-		if(createTripFactory.getDeleteRequest().figures.length > 0){
-			promiseDeleteFigure(createTripFactory.getDeleteRequest().figures, createTripFactory.PRIVATE_TRIP);
-		}
-		else{
-			if(createTripFactory.getDeleteRequest().places.length > 0){
-				promiseDeletePlace(createTripFactory.getDeleteRequest().places, createTripFactory.PRIVATE_TRIP);
+		if(validate()){		
+		
+			$scope.isDisabled = true;
+
+			if(createTripFactory.getDeleteRequest().figures.length > 0){
+				promiseDeleteFigure(createTripFactory.getDeleteRequest().figures, createTripFactory.PRIVATE_TRIP);
 			}
 			else{
-				promiseUpdateTrip(createTripFactory.PRIVATE_TRIP);
+				if(createTripFactory.getDeleteRequest().places.length > 0){
+					promiseDeletePlace(createTripFactory.getDeleteRequest().places, createTripFactory.PRIVATE_TRIP);
+				}
+				else{
+					promiseUpdateTrip(createTripFactory.PRIVATE_TRIP);
+				}
 			}
-		}	 	
+		}	
 		
 	}
 
 	$scope.publish = function (){
-		//TODO VALIDATE DATA FIRST
-		$scope.isDisabled = true;
+		
+		if(validate() && validatePlace()){
+			$scope.isDisabled = true;
 
-		if(createTripFactory.getDeleteRequest().figures.length > 0){
-			promiseDeleteFigure(createTripFactory.getDeleteRequest().figures, createTripFactory.PUBLIC_TRIP);
-		}
-		else{
-			if(createTripFactory.getDeleteRequest().places.length > 0){
-				promiseDeletePlace(createTripFactory.getDeleteRequest().places, createTripFactory.PUBLIC_TRIP);
+			if(createTripFactory.getDeleteRequest().figures.length > 0){
+				promiseDeleteFigure(createTripFactory.getDeleteRequest().figures, createTripFactory.PUBLIC_TRIP);
 			}
 			else{
-				promiseUpdateTrip(createTripFactory.PUBLIC_TRIP);
+				if(createTripFactory.getDeleteRequest().places.length > 0){
+					promiseDeletePlace(createTripFactory.getDeleteRequest().places, createTripFactory.PUBLIC_TRIP);
+				}
+				else{
+					promiseUpdateTrip(createTripFactory.PUBLIC_TRIP);
+				}
 			}
-		}	
+		}
 		
 	}
 
@@ -206,6 +216,7 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 					createTripFactory.setIsEditingTrip(false);
 					createTripFactory.setChosenTrip({});
 					createTripFactory.clearDeleteRequest();
+					alert("Publish Success, Now this trip is visible to other people.");
 					$scope.done();
 				}).
 				error(function(data, status, headers, config) {
@@ -228,7 +239,30 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 			$scope.isDisabled = false;
 		});  
 	}
-//==================================================================================================
+
+	function validate(){
+		if($scope.title === ''){
+			alert("Trip name is not defined, Please enter trip name.");
+			return false;
+		}
+		else if($scope.description === ''){
+			alert("Trip description is not defined, Please enter trip description.");
+			return false;
+		}
+		else if(createTripFactory.getDateBegin() > createTripFactory.getDateEnd()){
+			alert("Please make sure Begin date come before End date.");
+			return false;
+		}
+		return true;
+	}
+
+	function validatePlace(){
+		if($scope.places.length === 0){
+			alert("In order to publish, at least 1 place must be defined")
+			return false;
+		}
+		return true;
+	}
 
 });
 
