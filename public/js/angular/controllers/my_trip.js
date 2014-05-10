@@ -13,7 +13,7 @@ myTripControllers.controller('myTripCtrl', function ($scope, $http, createTripFa
 	.success(function(data, status, headers, config) {
 		console.log(data);
 		createTripFactory.setTrips(data);
-		$scope.trips = createTripFactory.getTrips();
+		$scope.trips = splitTripsArray(createTripFactory.getTrips());
 	})
 	.error(function(data, status, headers, config) {
 		alert("Cannot load your trip(s), please Refresh");
@@ -27,10 +27,28 @@ myTripControllers.controller('myTripCtrl', function ($scope, $http, createTripFa
 		
 		function(newValue, oldValue) {
 			if(newValue!==oldValue) {
-				$scope.trips = newValue;
+				$scope.trips = splitTripsArray(newValue);
 			}
 		}
 	);
+
+	function splitTripsArray(trips){
+		var trips_split = [[],[],[]];
+
+		for(var i = 0 ; i < trips.length ; i ++) {
+			if(trips[i].status === 0) {
+				trips_split[0].push(trips[i]);
+			}
+			else if(trips[i].status === 10) {
+				trips_split[1].push(trips[i]);
+			}
+			else if(trips[i].status === 20) {
+				trips_split[2].push(trips[i]);
+			}
+		}
+		
+		return trips_split;
+	}
 
 	$scope.open = function (trip) {
 		
