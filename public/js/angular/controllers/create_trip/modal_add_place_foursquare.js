@@ -24,28 +24,34 @@ modalAddPlaceFoursquareControllers.controller('modalAddPlaceFoursquareCtrl', fun
 		});
 	}	
 
-	function getLocation(location) {
-	    lat = location.coords.latitude;
-	    lng = location.coords.longitude;
-				console.log(lat+','+lng);
-	}	
-
 	// search nearby place
 	$scope.findNearbyPlace = function (){
-		navigator.geolocation.getCurrentPosition(getLocation);
-		$http({method: 'GET', url: 'https://api.foursquare.com/v2/venues/explore?client_id=FSEL5ZQNNTPR4RHCVJMQ53541XJPZM4LIHBCNJVBVHRJTE4O&client_secret=KBIQX2U1X4LZ5GWRSAELWH2CFSTPBBNK4NBQZCGB2KQE1ENQ&v=20130619&ll=' +lat+','+lng+''}).
+		navigator.geolocation.getCurrentPosition(geoSuccess, geoFail);
+	}		
+
+	function geoSuccess(location) {
+	    lat = location.coords.latitude;
+	    lng = location.coords.longitude;
+		
+	    $http({method: 'GET', url: 'https://api.foursquare.com/v2/venues/explore?client_id=FSEL5ZQNNTPR4RHCVJMQ53541XJPZM4LIHBCNJVBVHRJTE4O&client_secret=KBIQX2U1X4LZ5GWRSAELWH2CFSTPBBNK4NBQZCGB2KQE1ENQ&v=20130619&ll=' +lat+','+lng+''}).
 		//$http({method: 'GET', url: 'https://api.foursquare.com/v2/venues/explore?client_id=FSEL5ZQNNTPR4RHCVJMQ53541XJPZM4LIHBCNJVBVHRJTE4O&client_secret=KBIQX2U1X4LZ5GWRSAELWH2CFSTPBBNK4NBQZCGB2KQE1ENQ&v=20130619&query=' + $scope.input.name + '&near=' + $scope.input.province}).
 		success(function(data, status, headers, config) {
-			console.log( data.response.groups[0].items);
+			console.log( data.response.groups);
 			$scope.foursqplaces = data.response.groups[0].items;
 
 		}).
 		error(function(data, status, headers, config) {
-
-			alert("error");
-
+			console.log(data);
+			alert('Something went wrong. Please try again.');
 		});
-	}		
+
+	}
+
+	function geoFail() {
+		alert('Cannot get your current location. Please try again.');
+	}
+
+
 
 	$scope.selectPlace = function (chosenplace){		
 		
