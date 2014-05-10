@@ -9,6 +9,7 @@ searchTripControllers.controller('searchTripCtrl', function ($scope, $http, sear
   $scope.range = 10;
   $scope.from = 0;
   $scope.loadShow = false;
+  $scope.trips = [];
   // $scope.to = $scope.from + $scope.range;
 
   //accordian
@@ -40,7 +41,7 @@ searchTripControllers.controller('searchTripCtrl', function ($scope, $http, sear
       url: searchTripFactory.getOriginPath() + "trips/search?key=" + $scope.key + "&skip=" + $scope.from + "&limit=" + $scope.range
     })
     .success(function(data, status, headers, config) {
-        console.log(data);
+        // console.log(data);
         searchTripFactory.clearResultList();
 
       if(data !=""){
@@ -79,14 +80,14 @@ searchTripControllers.controller('searchTripCtrl', function ($scope, $http, sear
     $scope.from += $scope.range;
 
     // $scope.to = $scope.from + $scope.range;
-    console.log($scope.from);
+    // console.log($scope.from);
 
     $http({
       method:'GET', 
       url: searchTripFactory.getOriginPath() + "trips/search?key=" + $scope.key + "&skip=" + $scope.from + "&limit=" + $scope.range
     })
     .success(function(data, status, headers, config) {
-      console.log(data);
+      // console.log(data);
       //TODO check whether data == [] or not; so, the load more button will be hidden
       if(data != ""){
         searchTripFactory.setResultList(data); 
@@ -111,7 +112,7 @@ searchTripControllers.controller('searchTripCtrl', function ($scope, $http, sear
       url: searchTripFactory.getOriginPath() + "trip?trip_id=" + trip._id,
     })
     .success(function(data, status, headers, config) {
-        console.log(data);
+        // console.log(data);
 
         if(typeof(data.places) !== "undefined"){
           for (var i=0;i<data.places.length;i++)
@@ -136,7 +137,7 @@ searchTripControllers.controller('searchTripCtrl', function ($scope, $http, sear
     })
     .error(function(data, status, headers, config) {
         alert("Failed to open the trip, Please Try Again");
-        console.log(data);
+        // console.log(data);
     }); 
 
   };  

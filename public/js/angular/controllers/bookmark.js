@@ -59,9 +59,9 @@ bookmarkControllers.controller('bookmarkCtrl', function ($scope, $http, bookmark
       url: bookmarkFactory.getOriginPath() + "trip?trip_id=" + trip._id,
     })
     .success(function(data, status, headers, config) {
-        console.log(data);
+        // console.log(data);
 
-        console.log(data.places);
+        // console.log(data.places);
 
         if(typeof(data.places) !== "undefined"){
           for (var i=0;i<data.places.length;i++)
@@ -86,7 +86,7 @@ bookmarkControllers.controller('bookmarkCtrl', function ($scope, $http, bookmark
     })
     .error(function(data, status, headers, config) {
         alert("Failed to open the trip, Please Try Again");
-        console.log(data);
+        // console.log(data);
     }); 
 
   };  

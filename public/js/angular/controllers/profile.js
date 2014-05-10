@@ -28,7 +28,7 @@ profileControllers.controller('profileCtrl', function ($scope, $http, profileFac
       url: profileFactory.getOriginPath() + "timeline"+ "?skip=" + $scope.from + "&limit=" + $scope.range
     })
     .success(function(data, status, headers, config) {
-      console.log(data);
+      // console.log(data);
         profileFactory.clearResultList(data);
         for (var i=0;i<data.length;i++)
         { 
@@ -91,7 +91,7 @@ profileControllers.controller('profileCtrl', function ($scope, $http, profileFac
       var diffHour = Math.floor((diffTimeMillisec%one_day)/one_hour);
       var diffMinute = Math.floor(((diffTimeMillisec%one_day)%one_hour)/one_minute);
 
-      console.log(diffDay+" "+diffHour+" "+diffMinute);
+      // console.log(diffDay+" "+diffHour+" "+diffMinute);
 
       var result;
 
@@ -118,9 +118,9 @@ profileControllers.controller('profileCtrl', function ($scope, $http, profileFac
         url: profileFactory.getOriginPath() + "trip?trip_id=" + trip._id,
       })
       .success(function(data, status, headers, config) {
-          console.log(data);
+          // console.log(data);
 
-          console.log(data.places);
+          // console.log(data.places);
 
           if(typeof(data.places) !== "undefined"){
             for (var i=0;i<data.places.length;i++)
@@ -145,7 +145,7 @@ profileControllers.controller('profileCtrl', function ($scope, $http, profileFac
       })
       .error(function(data, status, headers, config) {
           alert("Failed to open the trip, Please Try Again");
-          console.log(data);
+          // console.log(data);
       }); 
   };
 
@@ -156,14 +156,14 @@ profileControllers.controller('profileCtrl', function ($scope, $http, profileFac
     $scope.from += $scope.range;
 
     // $scope.to = $scope.from + $scope.range;
-    console.log($scope.from);
+    // console.log($scope.from);
 
     $http({
       method:'GET', 
       url: profileFactory.getOriginPath() + "timeline?skip=" + $scope.from + "&limit=" + $scope.range
     })
     .success(function(data, status, headers, config) {
-      console.log(data);
+      // console.log(data);
       //TODO check whether data == [] or not; so, the load more button will be hidden
       if(data != ""){
         profileFactory.setResultList(data); 
@@ -177,7 +177,7 @@ profileControllers.controller('profileCtrl', function ($scope, $http, profileFac
     })
     .error(function(data, status, headers, config) {
 
-        console.log(data);
+        // console.log(data);
     }); 
 
   };

@@ -82,14 +82,14 @@ modalBookmarkControllers.controller('modalBookmarkCtrl', function ($rootScope, $
         url: bookmarkFactory.getOriginPath() + "bookmark?trip_id="+$scope.trip._id    
       })  
       .success(function(data, status, headers, config) {
-        console.log(data);
+        // console.log(data);
           // $scope.singleModel = 1;
           $scope.trip.isBookmarkedTrip = true;
           $scope.bookmarkstate = "Bookmarked";
           bookmarkFactory.setBookmarkState(true);          
       })
       .error(function(data, status, headers, config) {
-        console.log(data);
+        // console.log(data);
           alert("Failed to bookmark, please Try Again");
       }); 
     }
@@ -105,7 +105,7 @@ modalBookmarkControllers.controller('modalBookmarkCtrl', function ($rootScope, $
           $scope.bookmarkstate = "Bookmark";
       })
       .error(function(data, status, headers, config) {
-        console.log(data);
+        // console.log(data);
           alert("Failed to bookmark, please Try Again");
       }); 
     }

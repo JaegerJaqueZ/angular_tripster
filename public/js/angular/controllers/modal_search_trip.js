@@ -5,7 +5,7 @@ var modalSearchTripControllers = angular.module('modalSearchTripControllers', []
 modalSearchTripControllers.controller('modalSearchTripCtrl', function ($rootScope, $scope, $http, searchTripFactory) {
 
   $scope.trip = searchTripFactory.getChosenTrip();
-  console.log( $scope.trip );
+  // console.log( $scope.trip );
 
 
 
@@ -83,13 +83,13 @@ modalSearchTripControllers.controller('modalSearchTripCtrl', function ($rootScop
         url: searchTripFactory.getOriginPath() + "bookmark?trip_id="+$scope.trip._id    
       })  
       .success(function(data, status, headers, config) {
-        console.log(data);
+        // console.log(data);
           // $scope.singleModel = 1;
           $scope.trip.isBookmarkedTrip = true;
           $scope.bookmarkstate = "Bookmarked";
       })
       .error(function(data, status, headers, config) {
-        console.log(data);
+        // console.log(data);
           alert("Failed to bookmark, please Try Again");
       }); 
     }
@@ -104,7 +104,7 @@ modalSearchTripControllers.controller('modalSearchTripCtrl', function ($rootScop
           $scope.bookmarkstate = "Bookmark";
       })
       .error(function(data, status, headers, config) {
-        console.log(data);
+        // console.log(data);
           alert("Failed to bookmark, please Try Again");
       }); 
     }

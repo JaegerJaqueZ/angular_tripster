@@ -17,18 +17,18 @@ authService.factory('authFactory', function($location, $rootScope, $cookieStore,
 
 	function getCurrentUser() {
 
-		console.log("getCurrentUser");
+		// console.log("getCurrentUser");
 		
 		$http({
 			method:'GET', 
 			url: getOriginPath() + "/api/session"
 		})
 		.success(function(data, status, headers, config) {
-			console.log(data);
+			// console.log(data);
 			$rootScope.currentUser = data;
 		})
 		.error(function(data, status, headers, config) {
-			console.log(data);
+			// console.log(data);
 			alert("Failed to login, Please Try Again");
 		}); 
 		

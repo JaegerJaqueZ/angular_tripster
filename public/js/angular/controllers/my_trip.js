@@ -11,7 +11,7 @@ myTripControllers.controller('myTripCtrl', function ($scope, $http, createTripFa
 		url: createTripFactory.getOriginPath() + "user/trips"
 	})
 	.success(function(data, status, headers, config) {
-		console.log(data);
+		// console.log(data);
 		createTripFactory.setTrips(data);
 		$scope.trips = splitTripsArray(createTripFactory.getTrips());
 	})
