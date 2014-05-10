@@ -110,10 +110,13 @@ modalAddTripEditPlaceControllers.controller('modalAddTripEditPlaceCtrl', functio
 
 	$scope.confirmPlace = function () {
 
-		$scope.isDisabled = true;
+		if(validate()){
 
-		//Execute
-		updatePlace();		
+			$scope.isDisabled = true;
+
+			//Execute
+			updatePlace();		
+		}
 		
 	};
 
@@ -267,6 +270,22 @@ modalAddTripEditPlaceControllers.controller('modalAddTripEditPlaceCtrl', functio
 		}, function(err) {
 			$scope.cancel();
 		});
+	}
+
+	function validate(){
+		if($scope.name === ''){
+			alert("Place is not defined, Please select place.");
+			return false;
+		}
+		else if($scope.description === ''){
+			alert("Trip description is not defined, Please enter trip description.");
+			return false;
+		}
+		else if(uploader.queue.length === 0){
+			alert("In order to save place, at least 1 figure must be added.");
+			return false;
+		}
+		return true;
 	}
 
 });

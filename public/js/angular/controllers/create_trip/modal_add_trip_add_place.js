@@ -276,25 +276,42 @@ modalAddTripAddPlaceControllers.controller('modalAddTripAddPlaceCtrl', function 
 
 	$scope.confirmPlace = function () {
 
-		$scope.isDisabled = true;
-		
-		if(createTripFactory.getIsEditingTrip()) {
-			createPlace(createTripFactory.getChosenTrip());
-		}
-		else {
-			var promise = createDefaultTrip();
-			promise.then(function(trip){
-			 createPlace(trip); 
+		if(validate()){
 
-			}, function(err){ 
-				alert("Place registration failed, please try again"); 
-				$scope.isDisabled = false;
-			});	
+			$scope.isDisabled = true;
+			
+			if(createTripFactory.getIsEditingTrip()) {
+				createPlace(createTripFactory.getChosenTrip());
+			}
+			else {
+				var promise = createDefaultTrip();
+				promise.then(function(trip){
+				 createPlace(trip); 
+
+				}, function(err){ 
+					alert("Place registration failed, please try again"); 
+					$scope.isDisabled = false;
+				});	
+			}
 		}
 		
 	};
 
-
+	function validate(){
+		if($scope.name === ''){
+			alert("Place is not defined, Please select place.");
+			return false;
+		}
+		else if($scope.description === ''){
+			alert("Trip description is not defined, Please enter trip description.");
+			return false;
+		}
+		else if(uploader.queue.length === 0){
+			alert("In order to save place, at least 1 figure must be added.");
+			return false;
+		}
+		return true;
+	}
 
 });
 
