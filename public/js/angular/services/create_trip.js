@@ -21,7 +21,8 @@ createTripService.factory('createTripFactory', function($http) {
 			"figures":[],
 			"places":[]
 		}
-		, addedFigureArr = new Array();
+		, addedFigureArr = new Array()
+		, foursqplaces   = new Array();
 
 	var	  DEFAULT_TRIP	 = 0
 		, PRIVATE_TRIP 	 = 10
@@ -156,23 +157,23 @@ createTripService.factory('createTripFactory', function($http) {
 	function adjustPlaceObject(selectedplace){
 		return {
 			"foursquare":{
-				"name":selectedplace.venue.name,
-				"id":selectedplace.venue.id,
+				"name":selectedplace.name,
+				"id":selectedplace.id,
 				"location":{
-					"lng":selectedplace.venue.location.lng,
-					"lat":selectedplace.venue.location.lat,
-					"address":selectedplace.venue.location.address,
+					"lng":selectedplace.location.lng,
+					"lat":selectedplace.location.lat,
+					"address":selectedplace.location.address,
 					// district
-					"city":selectedplace.venue.location.city,
-					"country":selectedplace.venue.location.country,
-					"postalCode":selectedplace.venue.location.postalCode,
+					"city":selectedplace.location.city,
+					"country":selectedplace.location.country,
+					"postalCode":selectedplace.location.postalCode,
 					// province
-					"state":selectedplace.venue.location.state,
+					"state":selectedplace.location.state,
 					// country code
-					"cc":selectedplace.venue.location.cc
+					"cc":selectedplace.location.cc
 				},
-				"rate":selectedplace.venue.rating,
-				"categories":selectedplace.venue.categories
+				"rate":selectedplace.rating,
+				"categories":selectedplace.categories
 			}			
 		};
 	}
@@ -232,6 +233,54 @@ createTripService.factory('createTripFactory', function($http) {
 				
 	}
 
+	function getNearByPlaces(query) {
+		// check whether browser supports geolocation api
+		if (navigator.geolocation) {
+	        navigator.geolocation.getCurrentPosition(geoSuccess, geoError, { enableHighAccuracy: true });
+	    } else {
+	        alert('Your browser is out of fashion, there is no geolocation!');
+	    }
+
+	    function geoSuccess(location) {
+		    lat = location.coords.latitude;
+		    lng = location.coords.longitude;
+			
+		    var query_param = '';
+		    if(typeof(query)==='string') {
+		    	query_param = '&query='+ query;
+		    }
+
+		 	$http({	
+				method: 'GET', 
+				url: getOriginPath() + 'fsq/find/nearby?lat=' + lat + '&lng=' + lng + query_param
+			}).
+			success(function(data, status, headers, config) {
+
+				foursqplaces = data;
+				return data;
+
+			}).
+			error(function(data, status, headers, config) {
+
+				alert('Please try again.');
+
+			});
+
+		}
+
+		function geoError() {
+			alert('Cannot get your current location.');
+		}
+	}
+
+	function getFoursqplaces() {
+		return foursqplaces;
+	}
+
+	function setFoursqplaces(places) {
+		foursqplaces = places;
+	}
+
 //=============================== Factory Return ===============================
 	return{
 		DEFAULT_TRIP: DEFAULT_TRIP,
@@ -271,7 +320,10 @@ createTripService.factory('createTripFactory', function($http) {
 		clearDeleteRequest: clearDeleteRequest,
 		pushAddedFigure: pushAddedFigure,
 		clearAddedFigureArr: clearAddedFigureArr,
-		getAddedFigureArr: getAddedFigureArr
+		getAddedFigureArr: getAddedFigureArr,
+		getNearByPlaces: getNearByPlaces,
+		getFoursqplaces: getFoursqplaces,
+		setFoursqplaces: setFoursqplaces
 	}
 
 });

@@ -4,6 +4,8 @@ var modalAddPlaceFoursquareControllers = angular.module('modalAddPlaceFoursquare
 
 modalAddPlaceFoursquareControllers.controller('modalAddPlaceFoursquareCtrl', function ($scope, $http, createTripFactory) {
 
+	createTripFactory.getNearByPlaces();
+
 	//initialze search (can delete if want)
 	$scope.input = {province:"กรุงเทพมหานคร"};
 	var lat="",
@@ -11,55 +13,45 @@ modalAddPlaceFoursquareControllers.controller('modalAddPlaceFoursquareCtrl', fun
 	//initialize loading spinner	
 	$scope.loading = false;
 
-	$scope.findPlace = function (){
+	$scope.$watch(
+		function() {
+			return createTripFactory.getFoursqplaces();
+		},
+		function(newValue, oldValue) {
+			if(newValue!==oldValue){
+				$scope.loading = false;
+				$scope.foursqplaces = newValue;
+			}
+		}
+	);
 
+
+	$scope.findPlace = function (){
 		$scope.loading = true;
 
-		$http({method: 'GET', url: 'https://api.foursquare.com/v2/venues/explore?client_id=FSEL5ZQNNTPR4RHCVJMQ53541XJPZM4LIHBCNJVBVHRJTE4O&client_secret=KBIQX2U1X4LZ5GWRSAELWH2CFSTPBBNK4NBQZCGB2KQE1ENQ&v=20130619&query=' + $scope.input.name + '&near=' + $scope.input.province}).
+		console.log($scope.input.name, $scope.input.province);
+		$http({	
+			method: 'GET', 
+			url: createTripFactory.getOriginPath() + "fsq/find?query=" + $scope.input.name + '&near=' + $scope.input.province
+		}).
 		success(function(data, status, headers, config) {
-			$scope.loading = false;
-			$scope.foursqplaces = data.response.groups[0].items;
-			
+
+			console.log(data);
+			createTripFactory.setFoursqplaces(data);
+
 		}).
 		error(function(data, status, headers, config) {
-			$scope.loading = false;
-			alert("error");
 
+			alert('Please try again.');
 		});
 	}	
 
 	// search nearby place
 	$scope.findNearbyPlace = function (){
 		$scope.loading = true;
-		navigator.geolocation.getCurrentPosition(geoSuccess, geoFail);
+
+		createTripFactory.getNearByPlaces($scope.input.name);
 	}		
-
-	function geoSuccess(location) {
-	    lat = location.coords.latitude;
-	    lng = location.coords.longitude;
-		
-	    $http({method: 'GET', url: 'https://api.foursquare.com/v2/venues/explore?client_id=FSEL5ZQNNTPR4RHCVJMQ53541XJPZM4LIHBCNJVBVHRJTE4O&client_secret=KBIQX2U1X4LZ5GWRSAELWH2CFSTPBBNK4NBQZCGB2KQE1ENQ&v=20130619&ll=' +lat+','+lng+''}).
-		//$http({method: 'GET', url: 'https://api.foursquare.com/v2/venues/explore?client_id=FSEL5ZQNNTPR4RHCVJMQ53541XJPZM4LIHBCNJVBVHRJTE4O&client_secret=KBIQX2U1X4LZ5GWRSAELWH2CFSTPBBNK4NBQZCGB2KQE1ENQ&v=20130619&query=' + $scope.input.name + '&near=' + $scope.input.province}).
-		success(function(data, status, headers, config) {
-			$scope.loading = false;
-			console.log( data.response.groups);
-			$scope.foursqplaces = data.response.groups[0].items;
-			
-		}).
-		error(function(data, status, headers, config) {
-			$scope.loading = false;
-			// console.log(data);
-			alert('Something went wrong. Please try again.');
-		});
-
-	}
-
-	function geoFail() {
-		$scope.loading = false;
-		alert('Cannot get your current location. Please try again.');
-	}
-
-
 
 	$scope.selectPlace = function (chosenplace){		
 		
