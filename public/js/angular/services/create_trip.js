@@ -6,11 +6,13 @@ createTripService.factory('createTripFactory', function($http) {
 
 //=============================== Factory Attributes ===============================
 	var   trips 		 = new Array()	
+		, totalDays		 = 1
 		, isEditingTrip  = false
 		, isEditingPlace = false
 		, chosenTrip	 = {}
 		, backUpTrip	 = {}
 		, chosenPlace	 = {}
+		, chosenDay		 = 0
 		, dateBegin		 = new Date().getTime()
 		, dateEnd		 = new Date().getTime()
 		, timeBegin		 = new Date().getTime()
@@ -63,6 +65,13 @@ createTripService.factory('createTripFactory', function($http) {
 		});
 	}
 	
+	function getTotalDays(){
+		return totalDays;
+	}
+
+	function setTotalDays(days){
+		totalDays = days;
+	}
 
 	function getIsEditingTrip(){
 		return isEditingTrip;
@@ -101,7 +110,15 @@ createTripService.factory('createTripFactory', function($http) {
 	}
 
 	function setChosenPlace(place){
-		chosenPlace = jQuery.extend(true, {}, place);;
+		chosenPlace = jQuery.extend(true, {}, place);
+	}
+
+	function getChosenDay(){
+		return chosenDay;
+	}
+
+	function setChosenDay(day_index){
+		chosenDay = day_index;
 	}
 
 	function getDateBegin(){
@@ -225,6 +242,8 @@ createTripService.factory('createTripFactory', function($http) {
 		getTrips: getTrips,
 		setTrips: setTrips,
 		updateTrips: updateTrips,
+		getTotalDays: getTotalDays,
+		setTotalDays: setTotalDays,
 		getIsEditingTrip: getIsEditingTrip,
 		setIsEditingTrip: setIsEditingTrip,
 		getIsEditingPlace: getIsEditingPlace,
@@ -235,6 +254,8 @@ createTripService.factory('createTripFactory', function($http) {
 		setBackUpTrip: setBackUpTrip,
 		getChosenPlace: getChosenPlace,
 		setChosenPlace: setChosenPlace,
+		getChosenDay: getChosenDay,
+		setChosenDay: setChosenDay,
 		getDateBegin: getDateBegin,
 		setDateBegin: setDateBegin,
 		getDateEnd: getDateEnd,

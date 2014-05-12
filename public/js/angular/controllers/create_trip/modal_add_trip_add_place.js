@@ -101,7 +101,8 @@ modalAddTripAddPlaceControllers.controller('modalAddTripAddPlaceCtrl', function 
 			"description":$scope.description,
 			"time_arrive":createTripFactory.getTimeBegin(),
 			"time_leave":createTripFactory.getTimeEnd(),
-			"trip_id": trip._id
+			"trip_id": trip._id,
+			"day": createTripFactory.getChosenDay()
 		}
 
 		if(trip.places) {

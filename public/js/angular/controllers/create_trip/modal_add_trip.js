@@ -4,7 +4,9 @@ var modalAddTripControllers = angular.module('modalAddTripControllers', []);
 
 modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, createTripFactory, $modal) {
  
-	$scope.places      = createTripFactory.getChosenTrip().places || new Array();
+	var places_temp    = createTripFactory.getChosenTrip().places || new Array();
+
+	$scope.days 	   = splitPlacesArray(places_temp);
 	$scope.title       = createTripFactory.getChosenTrip().title || '';
 	$scope.description = createTripFactory.getChosenTrip().description || '';
 
@@ -21,16 +23,45 @@ modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, 
 		},
 		function(newValue, oldValue) {
 			if(newValue!==oldValue) {
-				$scope.places = newValue;
+				$scope.days = splitPlacesArray(newValue);
 			}
 		}
 	);
 
-	//add new place
-	$scope.open = function (place) {
+	function splitPlacesArray(places){
+
+		var i;
+		var places_split = [];
+
+		for( i = 0 ; i < createTripFactory.getTotalDays() ; i++ ) {
+
+			places_split.push([]);
+		}
+
+		for( i = 0 ; i < places.length ; i ++) {
+			
+			places_split[places[i].day-1].push(places[i]);
+		}
 		
+		return places_split;
+	}
+
+	$scope.addDay = function (){
+		var temp = createTripFactory.getTotalDays() + 1;
+		createTripFactory.setTotalDays(temp);
+		$scope.days.push([]);
+	}
+
+	$scope.deleteDay = function (day){
+		$scope.days.splice(day-1,1);
+	}
+
+	//add new place
+	$scope.open = function (day, place) {
+
 		if(typeof(place) === 'undefined') {
 			//add new place
+			createTripFactory.setChosenDay($scope.days.indexOf(day)+1);
 			createTripFactory.setIsEditingPlace(false);
 			createTripFactory.setChosenPlace({});
 
