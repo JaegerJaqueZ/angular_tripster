@@ -4,6 +4,9 @@ var modalEditTripAddPlaceControllers = angular.module('modalEditTripAddPlaceCont
 
 modalEditTripAddPlaceControllers.controller('modalEditTripAddPlaceCtrl', function ($scope, $http, $modal, createTripFactory, $q, $fileUploader) {
 
+	//prepare for place selection
+	createTripFactory.getNearByPlaces();
+
 	$scope.name = '';
 	$scope.description = '';
 

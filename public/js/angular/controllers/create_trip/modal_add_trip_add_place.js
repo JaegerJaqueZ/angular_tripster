@@ -4,6 +4,9 @@ var modalAddTripAddPlaceControllers = angular.module('modalAddTripAddPlaceContro
 
 modalAddTripAddPlaceControllers.controller('modalAddTripAddPlaceCtrl', function ($scope, $http, $modal, createTripFactory, $q, $fileUploader) {
 
+	//prepare for place selection
+	createTripFactory.getNearByPlaces();
+
 	$scope.name = '';
 	$scope.description = '';
 

@@ -4,6 +4,9 @@ var modalAddTripEditPlaceControllers = angular.module('modalAddTripEditPlaceCont
 
 modalAddTripEditPlaceControllers.controller('modalAddTripEditPlaceCtrl', function ($scope, $http, $modal, createTripFactory, $q, $fileUploader) {
 
+	//prepare for place selection
+	createTripFactory.getNearByPlaces();
+
 	var chosenPlaceTemp = createTripFactory.getChosenPlace();
 	$scope.name = chosenPlaceTemp.foursquare.name;
 	$scope.description = chosenPlaceTemp.description;
