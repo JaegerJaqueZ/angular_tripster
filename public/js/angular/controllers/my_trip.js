@@ -46,6 +46,9 @@ myTripControllers.controller('myTripCtrl', function ($scope, $http, createTripFa
 				trips_split[2].push(trips[i]);
 			}
 		}
+
+		$scope.publishCount = "(" + trips_split[2].length + ")";
+		$scope.draftCount = "(" + trips_split[1].length + ")";
 		
 		return trips_split;
 	}
@@ -70,6 +73,8 @@ myTripControllers.controller('myTripCtrl', function ($scope, $http, createTripFa
 
 			createTripFactory.setBackUpTrip(trip);
 
+			createTripFactory.setTotalDays(trip.days);
+
 			var modalInstance = $modal.open({
 				templateUrl: 'partials/modal_edit_trip.html',
 				controller: editTripModalInstanceCtrl,
@@ -85,6 +90,7 @@ myTripControllers.controller('myTripCtrl', function ($scope, $http, createTripFa
 var addTripModalInstanceCtrl = function ($scope, $modalInstance, createTripFactory, $http) {
 
 	$scope.cancel = function () {
+		createTripFactory.setTotalDays(1);
 		//isEditingTrip == true when place was added and default trip is created 
 		//so we have to delete in server when user click cancel
 		if(createTripFactory.getIsEditingTrip()){
@@ -115,10 +121,13 @@ var addTripModalInstanceCtrl = function ($scope, $modalInstance, createTripFacto
 var editTripModalInstanceCtrl = function ($scope, $modalInstance, createTripFactory, $q, $http) {
 
 	$scope.done = function () {
+		
 		$modalInstance.dismiss('done');
+		createTripFactory.setTotalDays(1);
 	}
 
 	$scope.cancel = function () {
+
 		
 		function revertTripFromBackUp(back_up_trip, updated_trip) {
 			
@@ -233,6 +242,7 @@ var editTripModalInstanceCtrl = function ($scope, $modalInstance, createTripFact
 				createTripFactory.clearDeleteRequest();
 				createTripFactory.clearAddedFigureArr();
 				$modalInstance.dismiss('cancel');
+				createTripFactory.setTotalDays(1);
 			},function(err){
 				alert("Problem Occurred, Please Try Again.");
 				$scope.isDisabled = false;
