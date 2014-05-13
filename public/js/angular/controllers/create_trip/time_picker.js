@@ -18,11 +18,11 @@ var timePickerCtrl = function ($scope, createTripFactory) {
 	};
 
 	//AM PM
-	$scope.beginTimeIsMeridian = true;
+	$scope.beginTimeIsMeridian = false;
 	$scope.toggleMode = function() {
 		$scope.beginTimeIsMeridian = ! $scope.beginTimeIsMeridian;
 	};
-	$scope.endTimeIsMeridian = true;
+	$scope.endTimeIsMeridian = false;
 	$scope.toggleMode = function() {
 		$scope.endTimeIsMeridian = ! $scope.endTimeIsMeridian;
 	};
