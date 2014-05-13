@@ -2,13 +2,16 @@
 
 var modalAddTripControllers = angular.module('modalAddTripControllers', []);
 
-modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, createTripFactory, $modal) {
+modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, createTripFactory, $modal, $q) {
  
 	var places_temp    = createTripFactory.getChosenTrip().places || new Array();
 
 	$scope.days 	   = splitPlacesArray(places_temp);
 	$scope.title       = createTripFactory.getChosenTrip().title || '';
 	$scope.description = createTripFactory.getChosenTrip().description || '';
+	$scope.removeIcon = [];
+	$scope.isopen = true;
+
 
 	$scope.$watchCollection(
 		
@@ -29,18 +32,20 @@ modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, 
 	);
 
 	function splitPlacesArray(places){
+		console.log(places);
 
-		var i;
 		var places_split = [];
 
-		for( i = 0 ; i < createTripFactory.getTotalDays() ; i++ ) {
+		for( var i = 0 ; i < createTripFactory.getTotalDays() ; i++ ) {
 
 			places_split.push([]);
 		}
+		console.log(places_split);
 
-		for( i = 0 ; i < places.length ; i ++) {
+		for( var i = 0 ; i < places.length ; i ++) {
 			
 			places_split[places[i].day-1].push(places[i]);
+			
 		}
 		
 		return places_split;
@@ -52,14 +57,59 @@ modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, 
 		$scope.days.push([]);
 	}
 
-	$scope.deleteDay = function (day){
-		$scope.days.splice(day-1,1);
+	var dayToBeDeleted = [];
+
+	// $scope.deleteDay = function (day){
+
+	// 	dayToBeDeleted.push($scope.days.indexOf(day)+1);
+
+	// 	// $scope.days.splice($scope.days.indexOf(day),1);
+	// 	var temp = createTripFactory.getTotalDays() - 1;
+	// 	createTripFactory.setTotalDays(temp);
+	// }
+
+
+	$scope.deleteDay = function (index){
+
+		console.log(index);
+		if(typeof($scope.removeIcon[index])==='undefined') {
+			$scope.removeIcon[index] = true;
+			if(dayToBeDeleted.indexOf(index+1) === -1) {
+				dayToBeDeleted.push(index+1);
+				// var temp = createTripFactory.getTotalDays() - 1;
+				// createTripFactory.setTotalDays(temp);
+			}
+		}
+		else {
+			if($scope.removeIcon[index] === false) {
+				$scope.removeIcon[index] = true;
+
+				if(dayToBeDeleted.indexOf(index+1) === -1) {
+					dayToBeDeleted.push(index+1);
+					// var temp = createTripFactory.getTotalDays() - 1;
+					// createTripFactory.setTotalDays(temp);
+				}
+			}
+			else {
+				$scope.removeIcon[index] = false;
+				dayToBeDeleted.splice(dayToBeDeleted.indexOf(index+1),1);
+				// var temp = createTripFactory.getTotalDays() + 1;
+				// createTripFactory.setTotalDays(temp);
+			}
+		}
+
+		console.log(dayToBeDeleted);
+		
 	}
+
 
 	//add new place
 	$scope.open = function (day, place) {
 
 		if(typeof(place) === 'undefined') {
+
+			console.log('setChosenDay',$scope.days.indexOf(day)+1);
+
 			//add new place
 			createTripFactory.setChosenDay($scope.days.indexOf(day)+1);
 			createTripFactory.setIsEditingPlace(false);
@@ -90,57 +140,161 @@ modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, 
 
 			$scope.isDisabled = true;
 
-		 	var myjson = {
-		 		"title": $scope.title,
-		 		"description": $scope.description,
-		 		"date_begin": createTripFactory.getDateBegin(),
-		 		"date_end": createTripFactory.getDateEnd(),
-		 		"status": createTripFactory.PRIVATE_TRIP
-		 	};
-
+			// Execute
 			if(createTripFactory.getIsEditingTrip()) {
-				$http({
-					method: 'PUT',
-					url: createTripFactory.getOriginPath() + "trip/update?trip_id=" + createTripFactory.getChosenTrip()._id,
-					data: myjson,
-					headers: {'Content-Type': 'application/x-www-form-urlencoded',
-					'Content-Type': 'application/json'}
-				}).
-				success(function(data, status, headers, config) {
-					createTripFactory.updateTrips();
-					createTripFactory.setIsEditingTrip(false);
-					createTripFactory.setChosenTrip({});
-					alert("Save Success.");
-					alert("In order to make this trip visible to other people, you have to publish this trip in 'Draft' first");
-					$scope.cancel();
-				}).
-				error(function(data, status, headers, config) {
-					alert("Save Failed, Please Try Again.");
-					$scope.isDisabled = false;
-				});  
+				deleteUnwantedDays();
 			}
-			else{
+			else {
+				saveTrip();
+			}
+			
+
+			function deleteUnwantedDays() {
+
+				var deferred = $q.defer();
+
+				var params = '';
+
+				for(var i = 0 ; i < dayToBeDeleted.length ; i++) {
+					
+					params = params + dayToBeDeleted[i];
+					
+					if(i < dayToBeDeleted.length-1) {
+						params = params + ',';
+					}
+				}
+
+				console.log(createTripFactory.getChosenTrip());
 
 				$http({
-					method: 'POST',
-					url: createTripFactory.getOriginPath() + "trip/create",
-					data: myjson,
-					headers: {'Content-Type': 'application/x-www-form-urlencoded',
-					'Content-Type': 'application/json'}
-				}).
-				success(function(data, status, headers, config) {
-					createTripFactory.updateTrips();
-					createTripFactory.setIsEditingTrip(false);
-					createTripFactory.setChosenTrip({});
-					alert("Save Success.");
-					alert("In order to make this trip visible to other people, you have to publish this trip in 'Draft' first");
-					$scope.cancel();	
-				}).
-				error(function(data, status, headers, config) {
-					alert("Save Failed, Please Try Again.");
-					$scope.isDisabled = false;
+					method: 'DELETE', 
+					url: createTripFactory.getOriginPath() + "places/days/delete?trip_id=" + createTripFactory.getChosenTrip()._id + '&days=' + params
+				})
+				.success(function(data, status, headers, config) {
+					deferred.resolve(data);
+				})
+				.error(function(data, status, headers, config) {
+					deferred.reject(data);
+				});
+
+				return deferred.promise.then(function(result) { updateDayEachPlace(); }, function(err) { alert('Error'); });
+			}
+
+			function updateDayEachPlace() {
+
+				var dayUpdateFromTo = [];
+
+				for(var i = 0 ; i < $scope.days.length ; i++) {
+					
+					var curDay = i+1;
+
+					if(dayToBeDeleted.indexOf(curDay) === -1) {
+
+						var countLessThan = 0;
+
+						for(var j = 0 ; j < dayToBeDeleted.length ; j++) {
+
+							if(dayToBeDeleted[j] < curDay) {
+								countLessThan+=1;
+							}
+						}
+
+						var fromTo = [];
+						fromTo.push(curDay);
+						fromTo.push(curDay - countLessThan);
+
+						dayUpdateFromTo.push(fromTo);
+					}
+
+				}
+				
+				var promises = dayUpdateFromTo.map(function(fromTo) {
+					var deferred = $q.defer();
+
+					$http({
+						method: 'PUT', 
+						url: createTripFactory.getOriginPath() + "places/day/update?trip_id=" + createTripFactory.getChosenTrip()._id + "&from="+ fromTo[0] +"&to=" + fromTo[1],
+						headers: {'Content-Type': 'application/x-www-form-urlencoded',
+						'Content-Type': 'application/json'}
+					})
+					.success(function(data, status, headers, config) {
+						deferred.resolve(data);
+					})
+					.error(function(data, status, headers, config) {
+						deferred.reject(data);
+					}); 
+
+					return deferred.promise;
+
+				});
+
+				return $q.all(promises).then(function(result){
+					saveTrip();
+				},function(err){
+					
+					alert("Update Incomplete");
 				});
 			}
+
+			function saveTrip() {
+
+				var myjson = {
+			 		"title": $scope.title,
+			 		"description": $scope.description,
+			 		"date_begin": createTripFactory.getDateBegin(),
+			 		"date_end": createTripFactory.getDateEnd(),
+			 		"status": createTripFactory.PRIVATE_TRIP,
+			 		"days": createTripFactory.getTotalDays() - dayToBeDeleted.length
+			 	};
+
+				if(createTripFactory.getIsEditingTrip()) {
+					$http({
+						method: 'PUT',
+						url: createTripFactory.getOriginPath() + "trip/update?trip_id=" + createTripFactory.getChosenTrip()._id,
+						data: myjson,
+						headers: {'Content-Type': 'application/x-www-form-urlencoded',
+						'Content-Type': 'application/json'}
+					}).
+					success(function(data, status, headers, config) {
+						createTripFactory.updateTrips();
+						createTripFactory.setIsEditingTrip(false);
+						createTripFactory.setChosenTrip({});
+						alert("Save Success.");
+						alert("In order to make this trip visible to other people, you have to publish this trip in 'Draft' first");
+						createTripFactory.setTotalDays(1);
+						$scope.cancel();
+					}).
+					error(function(data, status, headers, config) {
+						alert("Save Failed, Please Try Again.");
+						$scope.isDisabled = false;
+					});  
+				}
+				else{
+
+					$http({
+						method: 'POST',
+						url: createTripFactory.getOriginPath() + "trip/create",
+						data: myjson,
+						headers: {'Content-Type': 'application/x-www-form-urlencoded',
+						'Content-Type': 'application/json'}
+					}).
+					success(function(data, status, headers, config) {
+						createTripFactory.updateTrips();
+						createTripFactory.setIsEditingTrip(false);
+						createTripFactory.setChosenTrip({});
+						alert("Save Success.");
+						alert("In order to make this trip visible to other people, you have to publish this trip in 'Draft' first");
+						createTripFactory.setTotalDays(1);
+						$scope.cancel();	
+					}).
+					error(function(data, status, headers, config) {
+						alert("Save Failed, Please Try Again.");
+						$scope.isDisabled = false;
+					});
+				}
+
+			}
+		 	
 		}
 	}
 

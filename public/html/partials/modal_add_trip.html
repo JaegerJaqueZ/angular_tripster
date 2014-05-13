@@ -66,6 +66,7 @@
 						 <accordion-heading>
 							<div class="row">
 							  	<div class="col-xs-10 col-sm-10">
+							  		<span class="glyphicon glyphicon-remove" ng-show="removeIcon[$index]"></span>
 							  		Day {{$index+1}}
 							  	</div>
 							  	<div class="col-xs-0.5 col-sm-0.5" style="align: right;padding-right:2%">
@@ -89,7 +90,7 @@
 									<button type="button" class="btn btn-default" ng-click="open(day)">
 										<span class="glyphicon glyphicon-plus">AddPlace</span>
 									</button>
-									<button type="button" class="btn btn-danger" ng-click="deleteDay(day)">
+									<button type="button" class="btn btn-danger" ng-click="deleteDay($parent.$index)">
 										<span class="glyphicon glyphicon-trash"></span>
 									</button>
 								</center>
@@ -124,9 +125,10 @@
 		</div> -->
 		<br>
 	</form>
+	<hr>
+	<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="save()">Add New Trip</button>
 </fieldset>
-<hr>
-<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="save()">Add New Trip</button>
+
 <!-- <button type="submit" class="btn btn-success btn-lg btn-block" ng-click="publish()">Publish</button> -->
 </div>
 	<!-- <div class="modal-footer">

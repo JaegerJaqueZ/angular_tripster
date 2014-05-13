@@ -59,19 +59,65 @@
 
 
 			<div class="form-group">
-				<label for="Places">Place(s)</label>		
-				<div class="list-group">
+				<label for="Places">Place(s)</label>
+				<div>
+					<accordion close-others="oneAtATime">
+
+					  <accordion-group is-open="isopen" ng-repeat="day in days">
+
+						 <accordion-heading>
+							<div class="row">
+							  	<div class="col-xs-10 col-sm-10">
+							  		<span class="glyphicon glyphicon-remove" ng-show="removeIcon[$index]"></span>
+							  		Day {{$index+1}}							  		
+							  	</div>
+							  	<div class="col-xs-0.5 col-sm-0.5" style="align: right;padding-right:2%">
+							  		<p></p>
+							  		<!-- icon -->
+							  		<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+							  	</div>
+							</div>
+						</accordion-heading>
+
+						<div class="list-group">
+							<a ng-repeat="place in day" class="list-group-item" ng-click="open(day, place)">
+								{{place.foursquare.name}}
+							</a>
+							<div>
+								<!-- <button class="btn btn-default btn-lg btn-block" ng-click="open(day)">
+									<span class="glyphicon glyphicon-plus"> AddPlace</span>
+								</button> -->
+								<br>
+								<center>
+									<button type="button" class="btn btn-default" ng-click="open(day)">
+										<span class="glyphicon glyphicon-plus">AddPlace</span>
+									</button>
+									<button type="button" class="btn btn-danger" ng-click="deleteDay($parent.$index)">
+										<span class="glyphicon glyphicon-trash"></span>
+									</button>
+								</center>
+							</div>
+						</div>
+					  </accordion-group>
+
+					</accordion>
+
+					<button class="btn btn-default btn-lg btn-block" ng-click="addDay()">
+						<span class="glyphicon glyphicon-plus"> AddDay</span>
+					</button>
+				</div>		
+				<!-- <div class="list-group">
 					<a ng-repeat="place in places" class="list-group-item" ng-click="open(place)">
 						{{place.foursquare.name}}
-						<!-- <span class="glyphicon glyphicon-chevron-right" style="float: right"></span> -->
 					</a>
 					<div>
 						<button class="btn btn-default btn-lg btn-block" ng-click="open()">
 							<span class="glyphicon glyphicon-plus"></span>
 						</button>
 					</div>
-				</div>
+				</div> -->
 			</div>
+
 
 
 		<!-- <div class="form-group">
@@ -82,11 +128,11 @@
 		</div> -->
 		<br>
 	</form>
+	<hr>
+	<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="save()">Save</button>
+	<button type="submit" class="btn btn-success btn-lg btn-block" ng-click="publish()" ng-show="publishShow">Publish</button>
+	<button type="button" class="btn btn-danger btn-lg btn-block" ng-click="deleteTrip()">Delete</button>
 </fieldset>
-<hr>
-<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="save()">Save</button>
-<button type="submit" class="btn btn-success btn-lg btn-block" ng-click="publish()" ng-show="publishShow">Publish</button>
-<button type="button" class="btn btn-danger btn-lg btn-block" ng-click="deleteTrip()">Delete</button>
 </div>
 	<!-- <div class="modal-footer">
 	<button type="button" class="btn btn-primary btn-lg btn-block">Save</button>
