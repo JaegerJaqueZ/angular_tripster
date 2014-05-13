@@ -78,7 +78,7 @@
 						</accordion-heading>
 
 						<div class="list-group">
-							<a ng-repeat="place in day" class="list-group-item" ng-click="open(day, place)">
+							<a ng-repeat="place in day" class="list-group-item" ng-click="open($index, place)">
 								{{place.foursquare.name}}
 							</a>
 							<div>
@@ -87,7 +87,7 @@
 								</button> -->
 								<br>
 								<center>
-									<button type="button" class="btn btn-default" ng-click="open(day)">
+									<button type="button" class="btn btn-default" ng-click="open($index)">
 										<span class="glyphicon glyphicon-plus">AddPlace</span>
 									</button>
 									<button type="button" class="btn btn-danger" ng-click="deleteDay($parent.$index)">

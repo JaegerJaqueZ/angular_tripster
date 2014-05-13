@@ -114,7 +114,7 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 
 		if(typeof(place) === 'undefined') {
 			//add new place
-			createTripFactory.setChosenDay($scope.days.indexOf(day)+1);
+			createTripFactory.setChosenDay(day+1);
 			createTripFactory.setIsEditingPlace(false);
 			createTripFactory.setChosenPlace({});
 
