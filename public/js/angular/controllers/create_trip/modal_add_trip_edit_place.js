@@ -284,7 +284,7 @@ modalAddTripEditPlaceControllers.controller('modalAddTripEditPlaceCtrl', functio
 			alert("Trip description is not defined, Please enter trip description.");
 			return false;
 		}
-		else if(uploader.queue.length === 0){
+		else if(uploader.queue.length === 0 && $scope.figuresArr.length === 0){
 			alert("In order to save place, at least 1 figure must be added.");
 			return false;
 		}

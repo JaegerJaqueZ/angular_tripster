@@ -8,6 +8,7 @@ modalEditTripEditPlaceControllers.controller('modalEditTripEditPlaceCtrl', funct
 	createTripFactory.getNearByPlaces();
 
 	var chosenPlaceTemp = createTripFactory.getChosenPlace();
+	console.log(chosenPlaceTemp);
 	$scope.name = chosenPlaceTemp.foursquare.name;
 	$scope.description = chosenPlaceTemp.description;
 
@@ -293,7 +294,7 @@ modalEditTripEditPlaceControllers.controller('modalEditTripEditPlaceCtrl', funct
 			alert("Trip description is not defined, Please enter trip description.");
 			return false;
 		}
-		else if(uploader.queue.length === 0){
+		else if(uploader.queue.length === 0 && $scope.figuresArr.length === 0){
 			alert("In order to save place, at least 1 figure must be added.");
 			return false;
 		}
