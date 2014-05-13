@@ -4,14 +4,15 @@ var modalEditPlaceFoursquareControllers = angular.module('modalEditPlaceFoursqua
 
 modalEditPlaceFoursquareControllers.controller('modalEditPlaceFoursquareCtrl', function ($scope, $http, createTripFactory) {
 
+	//initialize loading spinner	
+	$scope.loading = true;
+	
 	createTripFactory.getNearByPlaces();
 	
 	//initialze search (can delete if want)
 	$scope.input = {province:"กรุงเทพมหานคร"};
 	var lat="",
-		lng="";		
-	//initialize loading spinner	
-	$scope.loading = false;
+		lng="";	
 
 	$scope.$watch(
 		function() {
@@ -19,6 +20,7 @@ modalEditPlaceFoursquareControllers.controller('modalEditPlaceFoursquareCtrl', f
 		},
 		function(newValue, oldValue) {
 			if(newValue!==oldValue){
+				$scope.loading = false;
 				$scope.foursqplaces = newValue;
 			}
 		}

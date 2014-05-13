@@ -4,14 +4,14 @@ var modalAddPlaceFoursquareControllers = angular.module('modalAddPlaceFoursquare
 
 modalAddPlaceFoursquareControllers.controller('modalAddPlaceFoursquareCtrl', function ($scope, $http, createTripFactory) {
 
+	//initialize loading spinner	
+	$scope.loading = true;
 	createTripFactory.getNearByPlaces();
 
 	//initialze search (can delete if want)
 	$scope.input = {province:"กรุงเทพมหานคร"};
 	var lat="",
 		lng="";	
-	//initialize loading spinner	
-	$scope.loading = false;
 
 	$scope.$watch(
 		function() {
