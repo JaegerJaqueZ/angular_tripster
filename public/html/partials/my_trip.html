@@ -16,12 +16,12 @@
 	<!-- List Trips -->
 	
 	<tabset>
-		<tab heading="Publish" style="width:50%">
+		<tab heading="Publish {{publishCount}}" style="width:50%">
 			<a ng-repeat="trip in trips[2] | filter:query" class="list-group-item" ng-click="open(trip)">
 				{{trip.title}}
 			</a>
 		</tab>
-		<tab heading="Draft" style="width:50%">
+		<tab heading="Draft {{draftCount}}" style="width:50%">
 			<a ng-repeat="trip in trips[1] | filter:query" class="list-group-item" ng-click="open(trip)">
 				{{trip.title}}
 			</a>
