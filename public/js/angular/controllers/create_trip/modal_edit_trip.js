@@ -468,7 +468,6 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 	 		"title": $scope.title,
 	 		"description": $scope.description,
 	 		"date_begin": createTripFactory.getDateBegin(),
-	 		"date_end": createTripFactory.getDateEnd(),
 	 		"status": 10,
 	 		"days": createTripFactory.getTotalDays() - dayToBeDeleted.length
 	 	};
@@ -530,10 +529,10 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 			alert("Trip description is not defined, Please enter trip description.");
 			return false;
 		}
-		else if(createTripFactory.getDateBegin() > createTripFactory.getDateEnd()){
-			alert("Please make sure Begin date come before End date.");
-			return false;
-		}
+		// else if(createTripFactory.getDateBegin() > createTripFactory.getDateEnd()){
+		// 	alert("Please make sure Begin date come before End date.");
+		// 	return false;
+		// }
 		else if(createTripFactory.getChosenTrip().status === createTripFactory.PUBLIC_TRIP){
 			return validatePlace();
 		}

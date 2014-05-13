@@ -14,7 +14,7 @@ createTripService.factory('createTripFactory', function($http) {
 		, chosenPlace	 = {}
 		, chosenDay		 = 0
 		, dateBegin		 = new Date().getTime()
-		, dateEnd		 = new Date().getTime()
+		// , dateEnd		 = new Date().getTime()
 		, timeBegin		 = new Date().getTime()
 		, timeEnd		 = new Date().getTime()
 		, deleteRequest	 = {
@@ -130,13 +130,13 @@ createTripService.factory('createTripFactory', function($http) {
 		dateBegin = date;
 	}
 
-	function getDateEnd(){
-		return dateEnd;
-	}
+	// function getDateEnd(){
+	// 	return dateEnd;
+	// }
 
-	function setDateEnd(date){
-		dateEnd = date;
-	}
+	// function setDateEnd(date){
+	// 	dateEnd = date;
+	// }
 
 	function getTimeBegin(){
 		return timeBegin;
@@ -307,8 +307,8 @@ createTripService.factory('createTripFactory', function($http) {
 		setChosenDay: setChosenDay,
 		getDateBegin: getDateBegin,
 		setDateBegin: setDateBegin,
-		getDateEnd: getDateEnd,
-		setDateEnd: setDateEnd,
+		// getDateEnd: getDateEnd,
+		// setDateEnd: setDateEnd,
 		getTimeBegin: getTimeBegin,
 		setTimeBegin: setTimeBegin,
 		getTimeEnd: getTimeEnd,
