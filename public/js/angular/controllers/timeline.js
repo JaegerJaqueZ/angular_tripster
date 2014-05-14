@@ -28,7 +28,8 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
       url: timelineFactory.getOriginPath() + "timeline"+ "?skip=" + $scope.from + "&limit=" + $scope.range
     })
     .success(function(data, status, headers, config) {
-    	// console.log(data);
+    	  console.log(data);
+
         timelineFactory.clearResultList(data);
       	for (var i=0;i<data.length;i++)
       	{	
@@ -80,16 +81,25 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
 
     function calTime(time){
 
+      
     	var currentTime = new Date().getTime();
+      // console.log("current time: "+currentTime);
+      // console.log("ped time: "+time);
+      if(currentTime<time){
+       currentTime = time; 
+      }
+
     	var diffTimeMillisec = currentTime - time;
 
-    	var one_day=1000*60*60*24;
-    	var one_hour=1000*60*60;
-    	var one_minute=1000*60;
+    	var one_day     =  1000*60*60*24;
+    	var one_hour    =  1000*60*60;
+    	var one_minute  =  1000*60;
+      var one_second  =  1000;
 
-    	var diffDay = Math.floor(diffTimeMillisec/one_day);
-    	var diffHour = Math.floor((diffTimeMillisec%one_day)/one_hour);
+    	var diffDay    = Math.floor(diffTimeMillisec/one_day);
+    	var diffHour   = Math.floor((diffTimeMillisec%one_day)/one_hour);
     	var diffMinute = Math.floor(((diffTimeMillisec%one_day)%one_hour)/one_minute);
+      var diffSecond = Math.floor((((diffTimeMillisec%one_day)%one_hour)%one_minute)/one_second);
 
     	// console.log(diffDay+" "+diffHour+" "+diffMinute);
 
@@ -104,10 +114,17 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
 		    	result= diffHour+"h"; 		    				
     		}
     		else{
-    			result =  diffMinute+"m";
+          if(diffMinute>0)
+          {
+            result =  diffMinute+"m";
+          }
+    			else
+          {
+            result = diffSecond+"s";
+          }
     		}
     	}
-  
+
     	return result;  	
     }
 
@@ -118,7 +135,7 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
 	      url: timelineFactory.getOriginPath() + "trip?trip_id=" + trip._id,
 	    })
 	    .success(function(data, status, headers, config) {
-	        // console.log(data);
+	         console.log(data);
 
 	        // console.log(data.places);
 
