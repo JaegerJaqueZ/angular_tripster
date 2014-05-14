@@ -128,8 +128,18 @@ var editTripModalInstanceCtrl = function ($scope, $modalInstance, createTripFact
 
 	$scope.cancel = function () {
 
-		
-		function revertTripFromBackUp(back_up_trip, updated_trip) {
+
+		// prepare data
+		var back_up_trip = createTripFactory.getBackUpTrip();
+		var updated_places = [];
+		for(var i = 0 ; i < createTripFactory.getChosenTrip().places.length ; i++) {
+			updated_places.push(jQuery.extend(true, {}, createTripFactory.getChosenTrip().places[i]));
+		}
+
+		//Execute
+		revertTripFromBackUp();
+
+		function revertTripFromBackUp() {
 			
 			var promises = back_up_trip.places.map(function(place){
 
@@ -157,10 +167,9 @@ var editTripModalInstanceCtrl = function ($scope, $modalInstance, createTripFact
 				success(function(data, status, headers, config) {
 					// remove places that are the same between back up and update 
 					// in order to get unwanted place for deleting on server
-					for(var i = 0 ; i < updated_trip.places.length ; i++) {
-						if(updated_trip.places[i]._id === place._id) {
-							updated_trip.places.splice(i,1);	
-							// console.log(updated_trip.places);
+					for(var i = 0 ; i < updated_places.length ; i++) {
+						if(updated_places[i]._id === place._id) {
+							updated_places.splice(i,1);	
 							break;
 						}						
 					}
@@ -206,7 +215,7 @@ var editTripModalInstanceCtrl = function ($scope, $modalInstance, createTripFact
 			});
 			
 			return $q.all(promises).then(function(results){
-				deleteUnwantedPlace(createTripFactory.getChosenTrip());
+				deleteUnwantedPlace();
 			},function(err){
 				alert("Problem Occurred, Please Try Again.");
 				$scope.isDisabled = false;
@@ -214,8 +223,8 @@ var editTripModalInstanceCtrl = function ($scope, $modalInstance, createTripFact
 
 		}
 
-		function deleteUnwantedPlace(updated_trip){
-			var promises = updated_trip.places.map(function(place){
+		function deleteUnwantedPlace(){
+			var promises = updated_places.map(function(place){
 
 				var deferred = $q.defer();
 
@@ -250,10 +259,6 @@ var editTripModalInstanceCtrl = function ($scope, $modalInstance, createTripFact
 
 		}
 
-
-
-		//Execute
-		revertTripFromBackUp(createTripFactory.getBackUpTrip(), createTripFactory.getChosenTrip());
 		
 	};
 };
