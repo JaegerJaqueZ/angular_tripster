@@ -37,19 +37,13 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 
 	function splitPlacesArray(places){
 
-		console.log(places);
-
 		var places_split = [];
 
 		for(var i = 0 ; i < createTripFactory.getTotalDays() ; i++ ) {
-
 			places_split.push([]);
 		}
 
-		console.log(places_split);
-
 		for(var i = 0 ; i < places.length ; i ++) {
-			console.log(places[i].day-1);
 			places_split[places[i].day-1].push(places[i]);
 		}
 		
@@ -493,6 +487,7 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 					createTripFactory.setIsEditingTrip(false);
 					createTripFactory.setChosenTrip({});
 					createTripFactory.clearDeleteRequest();
+					createTripFactory.clearAddedFigureArr();
 					createTripFactory.setTotalDays(1);
 					alert("Publish Success, Now this trip is visible to other people.");
 					$scope.done();
@@ -507,6 +502,7 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 				createTripFactory.setIsEditingTrip(false);
 				createTripFactory.setChosenTrip({});
 				createTripFactory.clearDeleteRequest();
+				createTripFactory.clearAddedFigureArr();
 				createTripFactory.setTotalDays(1);
 				$scope.done();					
 			}
