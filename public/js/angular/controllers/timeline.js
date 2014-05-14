@@ -202,6 +202,58 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
   var timelineModalInstanceCtrl = function ($scope, $modalInstance,timelineFactory) {
 
 	  $scope.cancel = function () {
+      var before  = timelineFactory.getBackUpTrip();
+      var after   = timelineFactory.getChosenTrip();
+      console.log(before); 
+      console.log(after);      
+
+      if(before.voteState != after.voteState){
+
+          var path = "";
+          // before like , after unlike
+          if(before.voteState===1 && after.voteState === -1)
+          {
+            path = "vote_up/flip";
+          }
+          // before like , after default
+          else if(before.voteState===1 && after.voteState === 0)
+          {
+            path = "vote_up/cancel";
+          }
+          // before default , after like
+          else if(before.voteState===0 && after.voteState === 1)
+          {
+            path = "vote_up";
+          }
+          // before default , after unlike
+          else if(before.voteState===0 && after.voteState === -1)
+          {
+            path = "vote_down";
+          }
+          // before unlike , after like
+          else if(before.voteState===-1 && after.voteState === 1)
+          {
+            path = "vote_down/flip";
+          }
+          // before unlike , after default
+          else if(before.voteState===-1 && after.voteState === 0)
+          {
+            path = "vote_down/cancel";
+          }
+
+          $http({
+            method:'PUT', 
+            url: timelineFactory.getOriginPath() + "trip/" + path+"?trip_id="+after._id
+          })
+          .success(function(data, status, headers, config) {
+            console.log("success"); 
+          })
+          .error(function(data, status, headers, config) {
+
+          });        
+
+      }
+
 	    $modalInstance.dismiss('cancel');
 	  };
 };
