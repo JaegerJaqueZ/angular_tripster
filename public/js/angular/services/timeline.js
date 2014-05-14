@@ -7,6 +7,7 @@ timelineService.factory('timelineFactory', function($http) {
 //=============================== Factory Attributes ===============================
 	var   resultList 	= new Array()
 		, chosenTrip  	= {}
+		, backUpTrip 	= {}
 
 //=============================== Factory Methods ===============================
 
@@ -46,16 +47,25 @@ timelineService.factory('timelineFactory', function($http) {
 		return bookmarkState = newBookmarkState ;
 	};	
 
+	function getBackUpTrip(){
+		return backUpTrip;
+	}
+
+	function setBackUpTrip(trip){
+		backUpTrip = jQuery.extend(true, {}, trip);
+	}
 //=============================== Factory Return ===============================
 	return{
-		getOriginPath: getOriginPath,
-		getResultList: getResultList,
-		setResultList: setResultList,
-		clearResultList: clearResultList,
-		getChosenTrip: getChosenTrip,
-		setChosenTrip: setChosenTrip,
-		getBookmarkState: getBookmarkState,
-		setBookmarkState: setBookmarkState
+		getOriginPath: 		getOriginPath,
+		getResultList: 		getResultList,
+		setResultList: 		setResultList,
+		clearResultList: 	clearResultList,
+		getChosenTrip: 		getChosenTrip,
+		setChosenTrip: 		setChosenTrip,
+		getBookmarkState: 	getBookmarkState,
+		setBookmarkState: 	setBookmarkState,
+		getBackUpTrip: 		getBackUpTrip,
+		setBackUpTrip: 		setBackUpTrip
 	}
 
 });
