@@ -92,22 +92,25 @@ modalAddTripEditPlaceControllers.controller('modalAddTripEditPlaceCtrl', functio
 
 	$scope.deletePlace = function () {
 
-		$scope.isDisabled = true;
-		
-		$http({
-			method: 'DELETE', 
-			url: createTripFactory.getOriginPath() + "place/delete?place_id=" + chosenPlaceTemp._id,
-			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-		})
-		.success(function(data, status, headers, config) {
-			updateTripsInService();
-		})
-		.error(function(data, status, headers, config) {
-			
-			$scope.isDisabled = false;
-			alert("Failed to delete place, please try again"); 
+		if(confirm("Are you sure to delete this place?") === true){
 
-		});
+			$scope.isDisabled = true;
+			
+			$http({
+				method: 'DELETE', 
+				url: createTripFactory.getOriginPath() + "place/delete?place_id=" + chosenPlaceTemp._id,
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+			})
+			.success(function(data, status, headers, config) {
+				updateTripsInService();
+			})
+			.error(function(data, status, headers, config) {
+				
+				$scope.isDisabled = false;
+				alert("Failed to delete place, please try again"); 
+
+			});
+		}
 
 	};
 

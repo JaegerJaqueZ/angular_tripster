@@ -75,6 +75,8 @@ modalAddTripAddPlaceControllers.controller('modalAddTripAddPlaceCtrl', function 
 		});
 	};
 
+	var newDefaultTripId;
+
 	function createDefaultTrip(){
 
 		var deferred = $q.defer();
@@ -87,6 +89,7 @@ modalAddTripAddPlaceControllers.controller('modalAddTripAddPlaceCtrl', function 
 			'Content-Type': 'application/json'}
 		})
 		.success(function(data, status, headers, config) {
+			newDefaultTripId = data._id;
 			deferred.resolve(data);
 		})
 		.error(function(data, status, headers, config) {
@@ -96,6 +99,8 @@ modalAddTripAddPlaceControllers.controller('modalAddTripAddPlaceCtrl', function 
 
 		return deferred.promise;
 	}
+
+	
 
 	function createPlace(trip){
 
@@ -253,7 +258,14 @@ modalAddTripAddPlaceControllers.controller('modalAddTripAddPlaceCtrl', function 
 
 			if(!createTripFactory.getIsEditingTrip()) {
 
-				createTripFactory.setChosenTrip(tripsTemp[tripsTemp.length-1]);
+				// for loop check new trip id
+				for(var i = 0 ; i < tripsTemp.length ; i++) {
+					if(tripsTemp[i]._id === newDefaultTripId) {
+						createTripFactory.setChosenTrip(tripsTemp[i]);
+						break;
+					}
+				}
+
 				createTripFactory.setIsEditingTrip(true);
 
 			} else {

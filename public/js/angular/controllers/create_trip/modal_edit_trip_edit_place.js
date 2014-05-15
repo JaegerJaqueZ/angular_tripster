@@ -92,21 +92,24 @@ modalEditTripEditPlaceControllers.controller('modalEditTripEditPlaceCtrl', funct
 	};
 
 	$scope.deletePlace = function () {
+
+		if(confirm("Are you sure to delete this place?") === true){
 		
-		$scope.isDisabled = true;
-		var chosenTripTemp = createTripFactory.getChosenTrip();
+			$scope.isDisabled = true;
+			var chosenTripTemp = createTripFactory.getChosenTrip();
 
-		createTripFactory.pushDeletedRequestPlace(chosenPlaceTemp._id);
+			createTripFactory.pushDeletedRequestPlace(chosenPlaceTemp._id);
 
-		for(var i = 0 ; i < chosenTripTemp.places.length ; i++) {
-			if(chosenTripTemp.places[i]._id === chosenPlaceTemp._id) {
-				chosenTripTemp.places.splice(i,1);	
-				break;
-			}
+			for(var i = 0 ; i < chosenTripTemp.places.length ; i++) {
+				if(chosenTripTemp.places[i]._id === chosenPlaceTemp._id) {
+					chosenTripTemp.places.splice(i,1);	
+					break;
+				}
+				
+			}		
 			
-		}		
-		
-		$scope.cancel();
+			$scope.cancel();
+		}
 	};
 
 	$scope.confirmPlace = function () {

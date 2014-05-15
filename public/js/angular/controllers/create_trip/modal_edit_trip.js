@@ -371,22 +371,25 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 
 	$scope.deleteTrip = function (){
 
-		$scope.isDisabled = true;
+		if(confirm("Are you sure to delete this trip?") === true){
+			$scope.isDisabled = true;
 
-		$http({
-				method: 'DELETE',
-				url: createTripFactory.getOriginPath() + "trip/delete?trip_id=" + createTripFactory.getChosenTrip()._id
-		}).
-		success(function(data, status, headers, config) {
-			createTripFactory.updateTrips();
-			createTripFactory.setIsEditingTrip(false);
-			createTripFactory.setChosenTrip({});
-			$scope.done();
-		}).
-		error(function(data, status, headers, config) {
-			alert("Save Failed, Please Try Again.");
-			$scope.isDisabled = false;
-		});
+			$http({
+					method: 'DELETE',
+					url: createTripFactory.getOriginPath() + "trip/delete?trip_id=" + createTripFactory.getChosenTrip()._id
+			}).
+			success(function(data, status, headers, config) {
+				createTripFactory.updateTrips();
+				createTripFactory.setIsEditingTrip(false);
+				createTripFactory.setChosenTrip({});
+				$scope.done();
+			}).
+			error(function(data, status, headers, config) {
+				alert("Delete Failed, Please Try Again.");
+				$scope.isDisabled = false;
+			});
+		}
+		
 	}
 
 //=============================== save and publish method ==========================================
