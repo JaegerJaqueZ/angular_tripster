@@ -50,7 +50,7 @@ angular.module('tripsterApp')
 				    // MegaPixImage constructor accepts File/Blob object.
 				    var mpImg = new MegaPixImage(params.file);
 				    // Render resized image into canvas element.
-				    mpImg.render(canvas[0], { maxHeight: 500, maxWidth: 500, orientation: exif.Orientation });
+				    mpImg.render(canvas[0], { maxHeight: 300, maxWidth: 500, orientation: exif.Orientation });
 				};
 				
 				fr.readAsBinaryString(params.file);
