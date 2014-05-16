@@ -12,6 +12,7 @@ var tripsterApp = angular.module('tripsterApp', [
 	'bookmarkService',
 	'timelineService',
 	'profileService',
+	'mapService',
 
 	'loginControllers',
 	'myTripControllers',
