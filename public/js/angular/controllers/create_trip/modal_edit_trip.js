@@ -233,9 +233,10 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 				var tripStatus;
 
 				if(createTripFactory.getChosenTrip().status === createTripFactory.PUBLIC_TRIP) {
-					tripStatus = createTripFactory.PUBLIC_TRIP;
+					// no need to publish again
+					tripStatus = -1;
 				}
-				else {
+				else if(createTripFactory.getChosenTrip().status === createTripFactory.PRIVATE_TRIP) {
 					tripStatus = createTripFactory.PRIVATE_TRIP;
 				}
 
@@ -461,11 +462,17 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 
 	function promiseUpdateTrip(trip_status){
 
+		var statusTemp = 10;
+
+		if(trip_status === -1) {
+			statusTemp = 20;
+		}
+
 		var myjson = {
 	 		"title": $scope.title,
 	 		"description": $scope.description,
 	 		"date_begin": createTripFactory.getDateBegin(),
-	 		"status": 10,
+	 		"status": statusTemp,
 	 		"days": createTripFactory.getTotalDays() - dayToBeDeleted.length
 	 	};
 		
@@ -478,7 +485,7 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 		}).
 		success(function(data, status, headers, config) {
 			
-			if(trip_status === 20){
+			if(trip_status === createTripFactory.PUBLIC_TRIP){
 				$http({
 					method: 'PUT',
 					url: createTripFactory.getOriginPath() + "trip/publish?trip_id=" + createTripFactory.getChosenTrip()._id,
