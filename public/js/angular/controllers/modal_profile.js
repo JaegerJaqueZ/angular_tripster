@@ -18,7 +18,6 @@ modalProfileControllers.controller('modalProfileCtrl', function ($rootScope, $sc
   console.log(user_id);
 
     // get history feeds
-
     $http({
       method:'GET', 
       url: profileFactory.getOriginPath() + "history?skip=" + $scope.from + "&limit=" + $scope.range+"&user_id="+user_id
@@ -248,7 +247,7 @@ modalProfileControllers.controller('modalProfileCtrl', function ($rootScope, $sc
 
   var profileModalInstanceCtrl = function ($scope, $modalInstance,profileFactory) {
 
-    $scope.cancel = function () {
+    $scope.cancel = function () {    
       $modalInstance.dismiss('cancel');
     };
 };
