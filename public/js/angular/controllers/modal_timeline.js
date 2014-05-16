@@ -2,7 +2,7 @@
 
 var modalTimelineControllers = angular.module('modalTimelineControllers', []);
 
-modalTimelineControllers.controller('modalTimelineCtrl', function ($rootScope, $scope, $http, timelineFactory) {
+modalTimelineControllers.controller('modalTimelineCtrl', function ($rootScope, $scope, $http, timelineFactory, $window) {
 
   $scope.trip = timelineFactory.getChosenTrip();
 
@@ -218,6 +218,9 @@ modalTimelineControllers.controller('modalTimelineCtrl', function ($rootScope, $
       })
       .error(function(data, status, headers, config) {
           alert("Failed to follow, please Try Again");
+          if(status === 401){
+            $window.location.reload();
+          }
       }); 
     }
     else{
@@ -232,6 +235,9 @@ modalTimelineControllers.controller('modalTimelineCtrl', function ($rootScope, $
       })
       .error(function(data, status, headers, config) {
           alert("Failed to follow, please Try Again");
+          if(status === 401){
+            $window.location.reload();
+          }
       }); 
     }
 
@@ -255,6 +261,9 @@ modalTimelineControllers.controller('modalTimelineCtrl', function ($rootScope, $
       .error(function(data, status, headers, config) {
         // console.log(data);
           alert("Failed to bookmark, please Try Again");
+          if(status === 401){
+            $window.location.reload();
+          }
       }); 
     }
     else{
@@ -271,6 +280,9 @@ modalTimelineControllers.controller('modalTimelineCtrl', function ($rootScope, $
       .error(function(data, status, headers, config) {
         // console.log(data);
           alert("Failed to bookmark, please Try Again");
+          if(status === 401){
+            $window.location.reload();
+          }
       }); 
     }
   };

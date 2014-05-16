@@ -2,7 +2,7 @@
 
 var modalEditTripEditPlaceControllers = angular.module('modalEditTripEditPlaceControllers', []);
 
-modalEditTripEditPlaceControllers.controller('modalEditTripEditPlaceCtrl', function ($scope, $http, $modal, createTripFactory, $q, $fileUploader) {
+modalEditTripEditPlaceControllers.controller('modalEditTripEditPlaceCtrl', function ($scope, $http, $modal, createTripFactory, $q, $fileUploader, $window) {
 
 	//prepare for place selection
 	createTripFactory.getNearByPlaces();
@@ -147,6 +147,10 @@ modalEditTripEditPlaceControllers.controller('modalEditTripEditPlaceCtrl', funct
 		})
 		.error(function(data, status, headers, config) {
 			deferred.reject(data);
+
+			if(status === 401){
+				$window.location.reload();
+			}
 		}); 
 
 		return deferred.promise.then(function(place) { 
@@ -231,6 +235,10 @@ modalEditTripEditPlaceControllers.controller('modalEditTripEditPlaceCtrl', funct
 		})
 		.error(function(data, status, headers, config) {
 			deferred.reject(data);
+
+			if(status === 401){
+				$window.location.reload();
+			}
 		});
 
 		return deferred.promise.then(function(result) {

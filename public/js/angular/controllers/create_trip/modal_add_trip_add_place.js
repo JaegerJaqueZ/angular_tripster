@@ -2,7 +2,7 @@
 
 var modalAddTripAddPlaceControllers = angular.module('modalAddTripAddPlaceControllers', []);
 
-modalAddTripAddPlaceControllers.controller('modalAddTripAddPlaceCtrl', function ($scope, $http, $modal, createTripFactory, $q, $fileUploader) {
+modalAddTripAddPlaceControllers.controller('modalAddTripAddPlaceCtrl', function ($scope, $http, $modal, createTripFactory, $q, $fileUploader, $window) {
 
 	//prepare for place selection
 	createTripFactory.getNearByPlaces();
@@ -95,6 +95,10 @@ modalAddTripAddPlaceControllers.controller('modalAddTripAddPlaceCtrl', function 
 		.error(function(data, status, headers, config) {
 			deferred.reject(data);
 
+
+			if(status === 401){
+				$window.location.reload();
+			}
 		}); 
 
 		return deferred.promise;
@@ -134,6 +138,10 @@ modalAddTripAddPlaceControllers.controller('modalAddTripAddPlaceCtrl', function 
 		})
 		.error(function(data, status, headers, config) {
 			deferred.reject(myjson);
+
+			if(status === 401){
+				$window.location.reload();
+			}
 		}); 
 
 		return deferred.promise.then(function(place) { 
@@ -223,6 +231,10 @@ modalAddTripAddPlaceControllers.controller('modalAddTripAddPlaceCtrl', function 
 		})
 		.error(function(data, status, headers, config) {
 			deferred.reject(data);
+
+			if(status === 401){
+				$window.location.reload();
+			}
 		});
 
 		return deferred.promise.then(function(data) {
@@ -248,6 +260,11 @@ modalAddTripAddPlaceControllers.controller('modalAddTripAddPlaceCtrl', function 
 		})
 		.error(function(data, status, headers, config) {
 			deferred.reject(data);
+
+			if(status === 401){
+				console.log("Hereee");
+				$window.location.reload();
+			}
 		});
 
 		return deferred.promise.then(function(result) {

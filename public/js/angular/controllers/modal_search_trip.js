@@ -2,7 +2,7 @@
 
 var modalSearchTripControllers = angular.module('modalSearchTripControllers', []);
 
-modalSearchTripControllers.controller('modalSearchTripCtrl', function ($rootScope, $scope, $http, searchTripFactory) {
+modalSearchTripControllers.controller('modalSearchTripCtrl', function ($rootScope, $scope, $http, searchTripFactory, $window) {
 
   $scope.trip = searchTripFactory.getChosenTrip();
   // console.log( $scope.trip );
@@ -55,6 +55,9 @@ modalSearchTripControllers.controller('modalSearchTripCtrl', function ($rootScop
       })
       .error(function(data, status, headers, config) {
           alert("Failed to follow, please Try Again");
+          if(status === 401){
+            $window.location.reload();
+          }
       }); 
     }
     else{
@@ -69,6 +72,9 @@ modalSearchTripControllers.controller('modalSearchTripCtrl', function ($rootScop
       })
       .error(function(data, status, headers, config) {
           alert("Failed to follow, please Try Again");
+          if(status === 401){
+            $window.location.reload();
+          }
       }); 
     }
 
@@ -91,6 +97,9 @@ modalSearchTripControllers.controller('modalSearchTripCtrl', function ($rootScop
       .error(function(data, status, headers, config) {
         // console.log(data);
           alert("Failed to bookmark, please Try Again");
+          if(status === 401){
+            $window.location.reload();
+          }
       }); 
     }
     else{
@@ -106,6 +115,9 @@ modalSearchTripControllers.controller('modalSearchTripCtrl', function ($rootScop
       .error(function(data, status, headers, config) {
         // console.log(data);
           alert("Failed to bookmark, please Try Again");
+          if(status === 401){
+            $window.location.reload();
+          }
       }); 
     }
   };

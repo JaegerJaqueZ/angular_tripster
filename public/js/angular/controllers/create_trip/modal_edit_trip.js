@@ -2,7 +2,7 @@
 
 var modalEditTripControllers = angular.module('modalEditTripControllers', []);
 
-modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http, createTripFactory, $modal, $q) {
+modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http, createTripFactory, $modal, $q, $window) {
 	
 	var places_temp    = createTripFactory.getChosenTrip().places || new Array();
 
@@ -166,6 +166,10 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 				})
 				.error(function(data, status, headers, config) {
 					deferred.reject(data);
+
+					if(status === 401){
+						$window.location.reload();
+					}
 				});
 
 				return deferred.promise.then(function(result) { updateDayEachPlace(); }, function(err) { alert('Error'); });
@@ -213,6 +217,10 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 					})
 					.error(function(data, status, headers, config) {
 						deferred.reject(data);
+
+						if(status === 401){
+							$window.location.reload();
+						}
 					}); 
 
 					return deferred.promise;
@@ -290,6 +298,10 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 				})
 				.error(function(data, status, headers, config) {
 					deferred.reject(data);
+
+					if(status === 401){
+						$window.location.reload();
+					}
 				});
 
 				return deferred.promise.then(function(result) { updateDayEachPlace(); }, function(err) { alert('Error'); });
@@ -337,6 +349,10 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 					})
 					.error(function(data, status, headers, config) {
 						deferred.reject(data);
+
+						if(status === 401){
+							$window.location.reload();
+						}
 					}); 
 
 					return deferred.promise;
@@ -387,6 +403,10 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 			error(function(data, status, headers, config) {
 				alert("Delete Failed, Please Try Again.");
 				$scope.isDisabled = false;
+
+				if(status === 401){
+					$window.location.reload();
+				}
 			});
 		}
 		
@@ -409,6 +429,10 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 			})
 			.error(function(data, status, headers, config) {
 				deferred.reject(data);
+
+				if(status === 401){
+					$window.location.reload();
+				}
 			});
 
 			return deferred.promise;
@@ -445,6 +469,10 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 			})
 			.error(function(data, status, headers, config) {
 				deferred.reject(data);
+
+				if(status === 401){
+					$window.location.reload();
+				}
 			});
 
 			return deferred.promise;
@@ -498,6 +526,10 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 				error(function(data, status, headers, config) {
 					alert("Save Success, but unable to publish. Please Try Again.");
 					$scope.isDisabled = false;
+
+					if(status === 401){
+						$window.location.reload();
+					}
 				});  
 			}
 			else{
@@ -515,6 +547,10 @@ modalEditTripControllers.controller('modalEditTripCtrl', function ($scope, $http
 		error(function(data, status, headers, config) {
 			alert("Save Failed, Please Try Again.");
 			$scope.isDisabled = false;
+
+			if(status === 401){
+				$window.location.reload();
+			}
 		});  
 	}
 
