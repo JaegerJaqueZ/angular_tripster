@@ -2,7 +2,7 @@
 
 var modalAddTripEditPlaceControllers = angular.module('modalAddTripEditPlaceControllers', []);
 
-modalAddTripEditPlaceControllers.controller('modalAddTripEditPlaceCtrl', function ($scope, $http, $modal, createTripFactory, $q, $fileUploader) {
+modalAddTripEditPlaceControllers.controller('modalAddTripEditPlaceCtrl', function ($scope, $http, $modal, createTripFactory, $q, $fileUploader, $window) {
 
 	//prepare for place selection
 	createTripFactory.getNearByPlaces();
@@ -109,6 +109,10 @@ modalAddTripEditPlaceControllers.controller('modalAddTripEditPlaceCtrl', functio
 				$scope.isDisabled = false;
 				alert("Failed to delete place, please try again"); 
 
+				if(status === 401){
+				$window.location.reload();
+			}
+
 			});
 		}
 
@@ -149,6 +153,10 @@ modalAddTripEditPlaceControllers.controller('modalAddTripEditPlaceCtrl', functio
 		})
 		.error(function(data, status, headers, config) {
 			deferred.reject(data);
+
+			if(status === 401){
+				$window.location.reload();
+			}
 		}); 
 
 		return deferred.promise.then(function(place) { 
@@ -232,6 +240,10 @@ modalAddTripEditPlaceControllers.controller('modalAddTripEditPlaceCtrl', functio
 		})
 		.error(function(data, status, headers, config) {
 			deferred.reject(data);
+
+			if(status === 401){
+				$window.location.reload();
+			}
 		});
 
 		return deferred.promise.then(function(result) {

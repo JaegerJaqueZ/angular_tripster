@@ -2,7 +2,7 @@
 
 var modalBookmarkControllers = angular.module('modalBookmarkControllers', []);
 
-modalBookmarkControllers.controller('modalBookmarkCtrl', function ($rootScope, $scope, $http, bookmarkFactory) {
+modalBookmarkControllers.controller('modalBookmarkCtrl', function ($rootScope, $scope, $http, bookmarkFactory, $window) {
 
   $scope.trip = bookmarkFactory.getChosenTrip();
 
@@ -214,6 +214,9 @@ modalBookmarkControllers.controller('modalBookmarkCtrl', function ($rootScope, $
       })
       .error(function(data, status, headers, config) {
           alert("Failed to follow, please Try Again");
+          if(status === 401){
+            $window.location.reload();
+          }
       }); 
     }
     else{
@@ -228,6 +231,9 @@ modalBookmarkControllers.controller('modalBookmarkCtrl', function ($rootScope, $
       })
       .error(function(data, status, headers, config) {
           alert("Failed to follow, please Try Again");
+          if(status === 401){
+            $window.location.reload();
+          }
       }); 
     }
 
@@ -251,6 +257,9 @@ modalBookmarkControllers.controller('modalBookmarkCtrl', function ($rootScope, $
       .error(function(data, status, headers, config) {
         // console.log(data);
           alert("Failed to bookmark, please Try Again");
+          if(status === 401){
+            $window.location.reload();
+          }
       }); 
     }
     else{
@@ -267,6 +276,9 @@ modalBookmarkControllers.controller('modalBookmarkCtrl', function ($rootScope, $
       .error(function(data, status, headers, config) {
         // console.log(data);
           alert("Failed to bookmark, please Try Again");
+          if(status === 401){
+            $window.location.reload();
+          }
       }); 
     }
   };

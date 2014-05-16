@@ -5,6 +5,7 @@ var searchTripControllers = angular.module('searchTripControllers', []);
 searchTripControllers.controller('searchTripCtrl', function ($scope, $http, searchTripFactory, $modal) {
 
   snapper.close();
+  getTopTrips();
   
   $scope.range = 10;
   $scope.from = 0;
@@ -14,6 +15,7 @@ searchTripControllers.controller('searchTripCtrl', function ($scope, $http, sear
 
   //accordian
   $scope.oneAtATime = true;
+
 
   $scope.$watchCollection(
 
@@ -27,21 +29,32 @@ searchTripControllers.controller('searchTripCtrl', function ($scope, $http, sear
       }
     }
   );
+
+  function getTopTrips(){
+    $http({
+      method:'GET', 
+      url: searchTripFactory.getOriginPath() + "trips/top"
+    })
+    .success(function(data, status, headers, config) {
+        $scope.topTrips = data
+       
+    })
+    .error(function(data, status, headers, config) {
+        alert("Failed to get top trips, Please Try Again");
+    });
+  }
 	
   $scope.search = function () {
-
-       // $scope.trips = searchTripFactory.getResultList();
-
+    
     //reset
     $scope.from = 0;
-    // $scope.to = $scope.from + $scope.range;
 
     $http({
       method:'GET', 
       url: searchTripFactory.getOriginPath() + "trips/search?key=" + $scope.key + "&skip=" + $scope.from + "&limit=" + $scope.range
     })
     .success(function(data, status, headers, config) {
-        // console.log(data);
+        console.log(data);
         searchTripFactory.clearResultList();
 
       if(data !=""){

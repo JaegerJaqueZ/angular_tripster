@@ -2,7 +2,7 @@
 
 var modalEditPlaceFoursquareControllers = angular.module('modalEditPlaceFoursquareControllers', []);
 
-modalEditPlaceFoursquareControllers.controller('modalEditPlaceFoursquareCtrl', function ($scope, $http, createTripFactory) {
+modalEditPlaceFoursquareControllers.controller('modalEditPlaceFoursquareCtrl', function ($scope, $http, createTripFactory, $window) {
 
 	//initialize loading spinner	
 	$scope.loading = true;
@@ -42,6 +42,10 @@ modalEditPlaceFoursquareControllers.controller('modalEditPlaceFoursquareCtrl', f
 		error(function(data, status, headers, config) {
 
 			alert('Please try again.');
+
+			if(status === 401){
+				$window.location.reload();
+			}
 		});
 	}	
 

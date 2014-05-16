@@ -2,7 +2,7 @@
 
 var modalAddTripControllers = angular.module('modalAddTripControllers', []);
 
-modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, createTripFactory, $modal, $q) {
+modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, createTripFactory, $modal, $q, $window) {
  
 	var places_temp    = createTripFactory.getChosenTrip().places || new Array();
 
@@ -175,6 +175,10 @@ modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, 
 				})
 				.error(function(data, status, headers, config) {
 					deferred.reject(data);
+
+					if(status === 401){
+						$window.location.reload();
+					}
 				});
 
 				return deferred.promise.then(function(result) { updateDayEachPlace(); }, function(err) { alert('Error'); });
@@ -222,6 +226,10 @@ modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, 
 					})
 					.error(function(data, status, headers, config) {
 						deferred.reject(data);
+
+						if(status === 401){
+							$window.location.reload();
+						}
 					}); 
 
 					return deferred.promise;
@@ -266,6 +274,10 @@ modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, 
 					error(function(data, status, headers, config) {
 						alert("Save Failed, Please Try Again.");
 						$scope.isDisabled = false;
+
+						if(status === 401){
+							$window.location.reload();
+						}
 					});  
 				}
 				else{
@@ -289,6 +301,10 @@ modalAddTripControllers.controller('modalAddTripCtrl', function ($scope, $http, 
 					error(function(data, status, headers, config) {
 						alert("Save Failed, Please Try Again.");
 						$scope.isDisabled = false;
+
+						if(status === 401){
+							$window.location.reload();
+						}
 					});
 				}
 
