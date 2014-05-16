@@ -83,9 +83,15 @@
 				    </div>						
 				</div>
 				<div class="col-xs-7 col-sm-7" style="padding-left:0px;padding-right:15px">
-					<progress>
+					<progress style="margin-bottom:0px" style="height:80%">
 						<bar ng-repeat="bar in stacked" style="height" value="bar.value" type="{{bar.type}}"></bar>
 					</progress>
+					<span>
+						<strong><small><font color="#428bca">{{trip.vote_up}}</font></small></strong>
+					</span>
+					<span style="float: right;">
+						<strong><small><font color="#d9534f">{{trip.vote_down}}</font></small></strong>
+					</span>					
 				</div>
 
 			</div>		

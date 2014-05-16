@@ -65,30 +65,38 @@
 		</fieldset>
 		<br>
 
-			<!-- Rating -->
-			<legend ><strong>Rating</strong></legend>
-			<div class="row">
-				<div class="col-xs-5 col-sm-5" style="">
-				    <div class="btn-group">
-				    	<!-- like button -->
-				        <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Like'" uncheckable ng-click="like()" >
-				        	<i class="glyphicon glyphicon-thumbs-up"><strong> Like</strong> </i>
-				        </label>
-				        <!-- unlike button -->
-				        <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Unlike'" uncheckable ng-click="unlike()" >
-				        	<i class="glyphicon glyphicon-thumbs-down"></i>		        	
-				        </label>
+		<!-- Rating -->
+		<legend ><strong>Rating</strong></legend>
+		<div class="row">
+			<!-- button -->
+			<div class="col-xs-5 col-sm-5" style="">
+			    <div class="btn-group">
+			    	<!-- like button -->
+			        <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Like'" uncheckable ng-click="like()" >
+			        	<i class="glyphicon glyphicon-thumbs-up"><strong> Like</strong> </i>
+			        </label>
+			        <!-- unlike button -->
+			        <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Unlike'" uncheckable ng-click="unlike()" >
+			        	<i class="glyphicon glyphicon-thumbs-down"></i>		        	
+			        </label>
 
 
-				    </div>						
-				</div>
-				<div class="col-xs-7 col-sm-7" style="padding-left:0px;padding-right:15px">
-					<progress>
-						<bar ng-repeat="bar in stacked" style="height" value="bar.value" type="{{bar.type}}"></bar>
-					</progress>
-				</div>
-
+			    </div>						
 			</div>
+			<!-- rating bar -->
+			<div class="col-xs-7 col-sm-7" style="padding-left:0px;padding-right:15px">
+				<progress style="margin-bottom:0px" style="height:80%">
+					<bar ng-repeat="bar in stacked"  value="bar.value" type="{{bar.type}}"></bar>
+				</progress>
+				<span>
+					<strong><small><font color="#428bca">{{trip.vote_up}}</font></small></strong>
+				</span>
+				<span style="float: right;">
+					<strong><small><font color="#d9534f">{{trip.vote_down}}</font></small></strong>
+				</span>
+			</div>
+
+		</div>
 
 		<fieldset>
 			<div  ng-repeat="day in days">
