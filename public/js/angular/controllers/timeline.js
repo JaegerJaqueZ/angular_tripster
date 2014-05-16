@@ -218,7 +218,7 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
       console.log(before); 
       console.log(after);      
 
-      if(before.voteState != after.voteState){
+      if(typeof(before.voteState) !== "undefined" && typeof(after.voteState) !== "undefined"  && before.voteState !== after.voteState){
 
           var path = "";
           // before like , after unlike
@@ -273,7 +273,7 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
      $scope.cancel = function () {
       $modalInstance.dismiss('cancel');
     }
-};
+  };
 
 });
 

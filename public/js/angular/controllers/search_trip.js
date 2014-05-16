@@ -155,12 +155,68 @@ searchTripControllers.controller('searchTripCtrl', function ($scope, $http, sear
 
   };  
 
-});
-
-var searchTripModalInstanceCtrl = function ($scope, $modalInstance) {
+var searchTripModalInstanceCtrl = function ($scope, $modalInstance, timelineFactory, searchTripFactory) {
 
   $scope.cancel = function () {
+
+      var before  = timelineFactory.getBackUpTrip();
+      var after   = searchTripFactory.getChosenTrip();
+      console.log(before); 
+      console.log(after);      
+
+      if(typeof(before.voteState) !== "undefined" && typeof(after.voteState) !== "undefined"  && before.voteState !== after.voteState){
+
+          var path = "";
+          // before like , after unlike
+          if(before.voteState===1 && after.voteState === -1)
+          {
+            path = "vote_up/flip";
+          }
+          // before like , after default
+          else if(before.voteState===1 && after.voteState === 0)
+          {
+            path = "vote_up/cancel";
+          }
+          // before default , after like
+          else if(before.voteState===0 && after.voteState === 1)
+          {
+            path = "vote_up";
+          }
+          // before default , after unlike
+          else if(before.voteState===0 && after.voteState === -1)
+          {
+            path = "vote_down";
+          }
+          // before unlike , after like
+          else if(before.voteState===-1 && after.voteState === 1)
+          {
+            path = "vote_down/flip";
+          }
+          // before unlike , after default
+          else if(before.voteState===-1 && after.voteState === 0)
+          {
+            path = "vote_down/cancel";
+          }
+
+          $http({
+            method:'PUT', 
+            url: timelineFactory.getOriginPath() + "trip/" + path+"?trip_id="+after._id
+          })
+          .success(function(data, status, headers, config) {
+            console.log("success"); 
+          })
+          .error(function(data, status, headers, config) {
+
+          });        
+
+      }
+        
     $modalInstance.dismiss('cancel');
   };
 };
+
+
+});
+
+
 

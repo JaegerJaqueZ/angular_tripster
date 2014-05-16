@@ -2,7 +2,7 @@
 
 var modalProfileControllers = angular.module('modalProfileControllers', []);
 
-modalProfileControllers.controller('modalProfileCtrl', function ($rootScope, $scope, $http, profileFactory) {
+modalProfileControllers.controller('modalProfileCtrl', function ($modal, $rootScope, $scope, $http, profileFactory) {
 
   snapper.close();
 
@@ -87,6 +87,7 @@ modalProfileControllers.controller('modalProfileCtrl', function ($rootScope, $sc
           // $scope.singleModel = 1;
           $scope.profile.isFollowingAuthor = true;
           $scope.followingstate = "Following";
+          $scope.profile.followers_count++;
       })
       .error(function(data, status, headers, config) {
           alert("Failed to follow, please Try Again");
@@ -101,6 +102,7 @@ modalProfileControllers.controller('modalProfileCtrl', function ($rootScope, $sc
           // $scope.singleModel = 0;
           $scope.profile.isFollowingAuthor = false;
           $scope.followingstate = "Follow";
+          $scope.profile.followers_count--;
       })
       .error(function(data, status, headers, config) {
           alert("Failed to follow, please Try Again");
@@ -244,6 +246,65 @@ modalProfileControllers.controller('modalProfileCtrl', function ($rootScope, $sc
     }); 
 
   };
+
+  var timelineModalInstanceCtrl = function ($scope, $modalInstance,timelineFactory) {
+
+    $scope.cancel = function () {
+      var before  = timelineFactory.getBackUpTrip();
+      var after   = timelineFactory.getChosenTrip();
+      console.log(before); 
+      console.log(after);      
+
+      if(typeof(before.voteState) !== "undefined" && typeof(after.voteState) !== "undefined"  && before.voteState !== after.voteState){
+
+          var path = "";
+          // before like , after unlike
+          if(before.voteState===1 && after.voteState === -1)
+          {
+            path = "vote_up/flip";
+          }
+          // before like , after default
+          else if(before.voteState===1 && after.voteState === 0)
+          {
+            path = "vote_up/cancel";
+          }
+          // before default , after like
+          else if(before.voteState===0 && after.voteState === 1)
+          {
+            path = "vote_up";
+          }
+          // before default , after unlike
+          else if(before.voteState===0 && after.voteState === -1)
+          {
+            path = "vote_down";
+          }
+          // before unlike , after like
+          else if(before.voteState===-1 && after.voteState === 1)
+          {
+            path = "vote_down/flip";
+          }
+          // before unlike , after default
+          else if(before.voteState===-1 && after.voteState === 0)
+          {
+            path = "vote_down/cancel";
+          }
+
+          $http({
+            method:'PUT', 
+            url: timelineFactory.getOriginPath() + "trip/" + path+"?trip_id="+after._id
+          })
+          .success(function(data, status, headers, config) {
+            console.log("success"); 
+          })
+          .error(function(data, status, headers, config) {
+
+          });        
+
+      }
+
+      $modalInstance.dismiss('cancel');
+    };
+};
 
   var profileModalInstanceCtrl = function ($scope, $modalInstance,profileFactory) {
 
