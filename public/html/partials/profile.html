@@ -1,39 +1,44 @@
 <title>Profile</title>
 
-<div class="animated slideInLeft" >	
+<div class="animated slideInLeft" ng-model="profile">	
+
 
 		<!-- profile photo -->
-		<center><img src="..." alt="..." class="img-circle"></center>
+		<center><img src="{{profile.profile_figure}}"  alt="{{profile.profile_figure}}" class="img-circle"></center>
 		<!-- profile name -->	
-		<center><strong><h2>Watza2014</h2></strong> </center>
+		<center><strong><h2>{{profile.first_name}} {{profile.last_name}}</h2></strong> </center>
 
  	<div class="container-fluid">	
  		<!-- edit button -->
-		<button type="button" class="btn btn-default btn-lg btn-block" >Edit Your Profile</button>
+		<button type="button" ng-hide="true" class="btn btn-default btn-lg btn-block" >Edit Your Profile</button>
 	</div>
 	<p>
 	<!-- stats -->
 	<table class="table table-bordered" style="text-align:center;padding:0px;" >
 		<tr>
-			<td>
-				<strong>100</strong>
+			<td >
+				<a ng-click="">
+				<strong>{{profile.followers_count}}</strong>
 				<br>					
-				FOLLOWERS					
+				FOLLOWERS	
+				</a>				
 			</td>
-			<td>
-				<strong>100</strong>
+			<td >
+				<a ng-click="goFollowing(profile._id)">
+				<strong>{{profile.followings_count}}</strong>
 				<br>
-				FOLLOWING					
+				FOLLOWING	
+				</a>				
 			</td>
 		</tr>
 		<tr>
-			<td>
-				<strong>100</strong>
+			<td ng-click="">
+				<strong>{{profile.trips_count}}</strong>
 				<br>
 				TRIPS					
 			</td>
-			<td>
-				<strong>100</strong>
+			<td ng-click="">
+				<strong>{{profile.bookmarks_count}}</strong>
 				<br>
 				BOOKMARKS					
 			</td>				
