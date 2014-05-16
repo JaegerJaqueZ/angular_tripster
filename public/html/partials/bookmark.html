@@ -55,7 +55,7 @@
 			<div style="height: 10%">
 				<carousel interval="myInterval">
 					<slide ng-repeat="place in trip.places" active="slide.active">
-						<img ng-src="{{place.cover_figure}}" style="margin:auto;" width="420" height="260">
+						<img ng-src="{{place.cover_figure}}" style="margin:auto;">
 						<div class="carousel-caption">
 							<!-- <h4>place {{$index+1}}</h4> -->
 							<p>place {{$index+1}} : {{place.foursquare.name}}</p>
