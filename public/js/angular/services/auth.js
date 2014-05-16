@@ -15,7 +15,7 @@ authService.factory('authFactory', function($location, $rootScope, $cookieStore,
 		return 'http://158.108.228.106:4000';
 	}
 
-	function getCurrentUser() {
+	function getCurrentUser(callback) {
 
 		// console.log("getCurrentUser");
 		
@@ -26,9 +26,18 @@ authService.factory('authFactory', function($location, $rootScope, $cookieStore,
 		.success(function(data, status, headers, config) {
 			// console.log(data);
 			$rootScope.currentUser = data;
+			if(callback) {
+				callback(undefined, data);
+			}
+			
 		})
 		.error(function(data, status, headers, config) {
 			// console.log(data);
+			
+			if(callback) {
+				callback(data);
+			}
+			
 			alert("Failed to login, Please Try Again");
 		}); 
 		
