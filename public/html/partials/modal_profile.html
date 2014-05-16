@@ -1,0 +1,97 @@
+<title>Profile</title>
+
+<div class="animated slideInLeft" ng-controller="modalProfileCtrl" style="padding:0px">	
+
+<!-- NavBar for Modal-->
+<nav class="navbar navbar-static-top navbar-default" role="navigation">
+	<div class="navbar-header">
+		<div class="row">
+			<div class="col-xs-3 col-sm-3">		
+				<button type="button" class="navbar-toggle" id="fix-btn" style="height:40px; width:80px" ng-click="cancel()">
+					Back
+				</button> 
+			</div>
+
+			<div class="col-xs-6 col-sm-6" style="text-align:center;font-size: 18px;color: #777;">	
+				<b>Tripster</b>
+			</div>
+
+			<div class="col-xs-3 col-sm-3" >	
+				<!-- <button type="button" style="float:right;height:40px; width:100px;margin-right:0px" ng-hide="checkIsOwner()" id="fix-btn" class="navbar-toggle" ng-model="bookmark" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="bookmarking()">
+			        {{bookmarkstate}}
+			    </button>	 -->
+			</div>
+		</div>	
+	</div>
+</nav>	
+
+		<!-- profile photo -->
+		<center><img src="{{profile.profile_figure}}"  alt="{{profile.profile_figure}}" class="img-circle"></center>
+		<!-- profile name -->	
+		<center><strong><h2>{{profile.first_name}} {{profile.last_name}}</h2></strong> </center>
+
+ 	<div class="container-fluid">	
+ 		<!-- edit button -->
+		<button type="button" ng-hide="checkIsOwner()" class="btn btn-default btn-lg btn-block" ng-click="following()">{{followingstate}}</button>
+	</div>
+	<p>
+	<!-- stats -->
+	<table class="table table-bordered" style="text-align:center;padding:0px;" >
+		<tr>
+			<td>
+				<strong>{{profile.followers_count}}</strong>
+				<br>					
+				FOLLOWERS					
+			</td>
+			<td>
+				<strong>{{profile.followings_count}}</strong>
+				<br>
+				FOLLOWING					
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<strong>{{profile.trips_count}}</strong>
+				<br>
+				TRIPS					
+			</td>
+			<td>
+				<strong>{{profile.bookmarks_count}}</strong>
+				<br>
+				BOOKMARKS					
+			</td>				
+		</tr>
+	</table>		
+	<div class="container">
+		<b>History</b><p>
+		 <div ng-repeat="activityLog in activityLogs">
+		 <div class="row">
+		 	<div class="col-xs-1 col-sm-1">
+		 		<!-- author photo -->
+		 		<img border="0" class="img-circle" src="{{activityLog.user_id.profile_figure}}" width="40" height="40">
+		 	</div>
+
+		 	<div class="col-xs-8 col-sm-8" style="margin-left:5%">
+
+		 		<!-- user + activity -->
+		 		<span >
+		 			<small><a>{{activityLog.user_id.first_name}} {{activityLog.user_id.last_name}}</a>  {{activityLog.act_code}}</small> 
+		 		</span>						  		
+		 		<br>
+		 		<!-- trip's name -->
+		 		<span style="margin-left:10%" >
+		 			<a ng-click="readmore(activityLog.trip_id)">{{activityLog.trip_id.title}}</a>
+		 		</span>						  		
+
+		 	</div>
+		 	<div class="col-xs-2 col-sm-2">
+		 		<!-- icon & time -->
+		 		<i class="pull-right glyphicon glyphicon-time">{{activityLog.created}}</i>
+		 	</div>
+		 </div>
+		 <p></p>
+
+		 <hr>
+		</div>
+	</div>
+</div>
