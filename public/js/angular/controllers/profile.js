@@ -10,6 +10,21 @@ profileControllers.controller('profileCtrl', function ($rootScope, $scope, $http
   $scope.from = 0;
   $scope.loadShow = false;
 
+  $scope.$watchCollection(
+
+    function() {
+
+      return profileFactory.getChosenProfile();
+    },
+    
+    function(newValue, oldValue) {
+      if(newValue!==oldValue) {
+
+        $scope.profile = newValue;
+      }
+    }
+  );   
+
 
     authFactory.getCurrentUser(function(err, user) {
 
@@ -68,10 +83,22 @@ profileControllers.controller('profileCtrl', function ($rootScope, $scope, $http
     $scope.goFollowing = function (user_id) {
 
             profileFactory.setChosenUser(user_id)
-            console.log("xxx");
+            console.log("goFollowing");
             var modalInstance = $modal.open({
               templateUrl: 'partials/modal_following.html',
               controller: followingModalInstanceCtrl,
+              backdrop: true
+            });
+
+    }; 
+
+    $scope.goFollower = function (user_id) {
+
+            profileFactory.setChosenUser(user_id)
+            console.log("goFollower");
+            var modalInstance = $modal.open({
+              templateUrl: 'partials/modal_follower.html',
+              controller: followerModalInstanceCtrl,
               backdrop: true
             });
 
@@ -218,13 +245,63 @@ profileControllers.controller('profileCtrl', function ($rootScope, $scope, $http
   var followingModalInstanceCtrl = function ($scope, $modalInstance, profileFactory) {
 
       $scope.cancel = function () {
+
+        // get user profile
+        $http({
+          method:'GET', 
+          url: profileFactory.getOriginPath() + "profile?user_id="+$rootScope.currentUser._id
+        })
+        .success(function(data, status, headers, config) {
+            
+            profileFactory.setChosenProfile(data);
+        })
+        .error(function(data, status, headers, config) {
+            alert("Failed to get your Profile, Please Try Again");
+        });         
         $modalInstance.dismiss('cancel');
       };
   };
 
-  var timelineModalInstanceCtrl = function ($scope, $modalInstance,timelineFactory) {
+
+  var followerModalInstanceCtrl = function ($scope, $modalInstance, profileFactory) {
+
+      $scope.cancel = function () {
+
+        // get user profile
+        $http({
+          method:'GET', 
+          url: profileFactory.getOriginPath() + "profile?user_id="+$rootScope.currentUser._id
+        })
+        .success(function(data, status, headers, config) {
+            
+            profileFactory.setChosenProfile(data);
+        })
+        .error(function(data, status, headers, config) {
+            alert("Failed to get your Profile, Please Try Again");
+        });         
+        $modalInstance.dismiss('cancel');
+      };
+  };  
+
+  var timelineModalInstanceCtrl = function ($scope, $modalInstance,timelineFactory,profileFactory) {
 
     $scope.cancel = function () {
+
+      // get user profile
+      $http({
+        method:'GET', 
+        url: profileFactory.getOriginPath() + "profile?user_id="+$rootScope.currentUser._id
+      })
+      .success(function(data, status, headers, config) {
+          
+          profileFactory.setChosenProfile(data);
+      })
+      .error(function(data, status, headers, config) {
+          alert("Failed to get your Profile, Please Try Again");
+      });         
+
+
+
       var before  = timelineFactory.getBackUpTrip();
       var after   = timelineFactory.getChosenTrip();
       console.log(before); 
@@ -273,7 +350,9 @@ profileControllers.controller('profileCtrl', function ($rootScope, $scope, $http
           })
           .error(function(data, status, headers, config) {
 
-          });        
+          });
+
+
 
       }
 
