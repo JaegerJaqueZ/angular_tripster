@@ -2,7 +2,7 @@
 
 var profileControllers = angular.module('profileControllers', []);
 
-profileControllers.controller('profileCtrl', function ($rootScope, $scope, $http, profileFactory, authFactory, $modal, timelineFactory) {
+profileControllers.controller('profileCtrl', function ($location, $rootScope, $scope, $http, profileFactory, authFactory, $modal, timelineFactory) {
 
   snapper.close();
 
@@ -104,6 +104,19 @@ profileControllers.controller('profileCtrl', function ($rootScope, $scope, $http
 
     }; 
     
+    $scope.goBookmark = function () {
+
+            console.log("goBookmark");
+            $location.path('/bookmark');
+
+    };
+
+    $scope.goMyTrip = function () {
+
+            console.log("goMyTrip");
+            $location.path('/mytrip');
+
+    };
 
     function getActivity(actCode){
       var activity;
@@ -307,8 +320,10 @@ profileControllers.controller('profileCtrl', function ($rootScope, $scope, $http
       console.log(before); 
       console.log(after);      
 
-      if(before.voteState != after.voteState){
+      if( typeof(before.voteState) !== "undefined" && typeof(after.voteState) !== "undefined"  && before.voteState !== after.voteState){
 
+
+          console.log("xxxxxxx");
           var path = "";
           // before like , after unlike
           if(before.voteState===1 && after.voteState === -1)
@@ -341,6 +356,8 @@ profileControllers.controller('profileCtrl', function ($rootScope, $scope, $http
             path = "vote_down/cancel";
           }
 
+
+
           $http({
             method:'PUT', 
             url: timelineFactory.getOriginPath() + "trip/" + path+"?trip_id="+after._id
@@ -351,14 +368,19 @@ profileControllers.controller('profileCtrl', function ($rootScope, $scope, $http
           .error(function(data, status, headers, config) {
 
           });
+        }
+
+        $modalInstance.dismiss('cancel');
+      };
+  };
 
 
-
-      }
-
+  var bookmarkInstanceCtrl = function ($scope, $modalInstance, bookmarkFactory) {
+     $scope.cancel = function () {
       $modalInstance.dismiss('cancel');
-    };
-};
+    }
+  }; 
+
 });
 
 
