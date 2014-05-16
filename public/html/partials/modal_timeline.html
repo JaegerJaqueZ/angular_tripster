@@ -3,58 +3,57 @@
 <div class="modal-body animated slideInLeft" ng-controller="modalTimelineCtrl" style="padding:0px">
 
 <!-- NavBar for Modal-->
-<nav class="navbar navbar-static-top navbar-default" role="navigation">
-	<div class="navbar-header">
-		<div class="row">
-			<div class="col-xs-3 col-sm-3">		
-				<button type="button" class="navbar-toggle" id="fix-btn" style="height:40px; width:80px" ng-click="cancel()">
-					Back
-				</button> 
-			</div>
+	<nav class="navbar navbar-static-top navbar-default" role="navigation">
+		<div class="navbar-header">
+			<div class="row">
+				<div class="col-xs-3 col-sm-3">		
+					<button type="button" class="navbar-toggle" id="fix-btn" style="height:40px; width:80px" ng-click="cancel()">
+						Back
+					</button> 
+				</div>
 
-			<div class="col-xs-6 col-sm-6" style="text-align:center;font-size: 18px;color: #777;">	
-				<b>Preview Trip</b>
-			</div>
+				<div class="col-xs-6 col-sm-6" style="text-align:center;font-size: 18px;color: #777;">	
+					<b>Preview Trip</b>
+				</div>
 
-			<div class="col-xs-3 col-sm-3" >	
-				<button type="button" style="float:right;height:40px; width:100px;margin-right:0px" ng-hide="checkIsOwner()" id="fix-btn" class="navbar-toggle" ng-model="bookmark" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="bookmarking()">
-			        {{bookmarkstate}}
-			    </button>	
-			</div>
-		</div>	
-	</div>
-</nav>
+				<div class="col-xs-3 col-sm-3" >	
+					<button type="button" style="float:right;height:40px; width:100px;margin-right:0px" ng-hide="checkIsOwner()" id="fix-btn" class="navbar-toggle" ng-model="bookmark" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="bookmarking()">
+				        {{bookmarkstate}}
+				    </button>	
+				</div>
+			</div>	
+		</div>
+	</nav>
 	<div class="container">
 		<fieldset >
 			<legend ><strong>Author</strong></legend>
-				<div class="row">
-				  	<div class="col-xs-2 col-sm-2" >
-				  		<!-- author photo -->
-				  		<img border="0" class="img-circle" src="{{trip.user_id.profile_figure}}" width="50" height="50">
-				  	</div>
-				  	
-				  	<div class="col-xs-6 col-sm-6">
-				  		<p></p>
-				  		<!-- author name -->
-				  		<span style="padding-left:10%"><strong> {{trip.user_id.first_name}} {{trip.user_id.last_name}}</strong> </span>						  		
+			<div class="row">
+			  	<div class="col-xs-2 col-sm-2" >
+			  		<!-- author photo -->
+			  		<img border="0" class="img-circle" src="{{trip.user_id.profile_figure}}" width="50" height="50">
+			  	</div>
+			  	
+			  	<div class="col-xs-6 col-sm-6">
+			  		<p></p>
+			  		<!-- author name -->
+			  		<span style="padding-left:10%"><strong> {{trip.user_id.first_name}} {{trip.user_id.last_name}}</strong> </span>						  		
 
-				  	</div>
-				  	<div class="col-xs-3 col-sm-3" style="padding-left:0px">
-						<!-- follow button -->
-						<button type="button" ng-hide="checkIsOwner	()" class="btn btn-default"  ng-model="follow" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="following()">
-					        {{followingstate}}
-					    </button>
-				  	</div>
-				</div>
+			  	</div>
+			  	<div class="col-xs-3 col-sm-3" style="padding-left:0px">
+					<!-- follow button -->
+					<button type="button" ng-hide="checkIsOwner	()" class="btn btn-default"  ng-model="follow" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="following()">
+				        {{followingstate}}
+				    </button>
+			  	</div>
+			</div>
 
-		<br>
+			<br>
 
 			<legend ><strong>Trip</strong></legend>
 			<!-- trip name name -->			
 			<div class="text-center"  type="text"><strong>{{trip.title}}</strong></div>
 			<!-- trip description -->
 			<p> &emsp;{{trip.description}}</p> 
-
 
 		</fieldset>
 		<br>
@@ -125,7 +124,7 @@
 				<div style="height: 10%">
 					<carousel interval="myInterval">
 						<slide ng-repeat="figure in place.figures" active="slide.active">
-							<img ng-src="{{figure.url}}" style="margin:auto;" width="420" height="260">
+							<img ng-src="{{figure.url}}" style="margin:auto;">
 <!-- 							<div class="carousel-caption">
 								<p>pic {{$index+1}} : {{place.foursquare.name}}</p>
 							</div> -->
@@ -140,11 +139,13 @@
 		</fieldset >
 
 		<fieldset >
-
+			<!-- Map -->
 			<legend ><strong>Map</strong></legend>
-			<p>....</p>
 
-			
+		    <center>
+		    	<leaflet defaults="defaults" center="center" height="350px" width="100%" markers="markers" paths="paths"></leaflet>
+		    </center>
+ 
 		</fieldset >
 
 
