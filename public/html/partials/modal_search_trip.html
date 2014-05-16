@@ -33,13 +33,21 @@
 				<div class="row">
 				  	<div class="col-xs-2 col-sm-2">
 				  		<!-- author photo -->
-				  		<img border="0" class="img-circle" src="{{trip.user_id.profile_figure}}" width="50" height="50">
+				  		<a ng-click="goProfile(trip.user_id._id)">
+				  			<img border="0" class="img-circle" src="{{trip.user_id.profile_figure}}" width="50" height="50">
+				  		</a>
 				  	</div>
 				  	
 				  	<div class="col-xs-6 col-sm-6">
 				  		<p></p>
 				  		<!-- author name -->
-				  		<span style="padding-left:10%"><strong> {{trip.user_id.first_name}} {{trip.user_id.last_name}}</strong> </span>						  		
+				  		<span style="padding-left:10%">
+				  			<strong>
+				  				<a ng-click="goProfile(trip.user_id._id)"> 
+				  					{{trip.user_id.first_name}} {{trip.user_id.last_name}}
+				  				</a>
+				  			</strong>
+				  		</span>						  		
 
 				  	</div>
 				  	<div class="col-xs-3 col-sm-3" style="padding-left:0px">
@@ -133,7 +141,7 @@
 				<div style="height: 10%">
 					<carousel interval="myInterval">
 						<slide ng-repeat="figure in place.figures" active="slide.active">
-							<img ng-src="{{figure.url}}" style="margin:auto;" width="420" height="260">
+							<img ng-src="{{figure.url}}" style="margin:auto;">
 <!-- 							<div class="carousel-caption">
 								<p>pic {{$index+1}} : {{place.foursquare.name}}</p>
 							</div> -->
@@ -151,12 +159,13 @@
 
 			<legend ><strong>Map</strong></legend>
 
-			<p> ....</p> 	
+		    <center>
+		    	<leaflet defaults="defaults" center="center" height="350px" width="100%" markers="markers" paths="paths"></leaflet>
+		    </center>
 
 		</fieldset >
+		<br>
 
-
-	<!-- </<fieldset></fieldset>orm> -->
 </div>
 
 </div>
