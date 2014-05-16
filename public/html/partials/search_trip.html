@@ -8,77 +8,133 @@
 	<div class="input-group">
 		<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
 		<input ng-model="key" type="text" class="form-control" style="width:75%" placeholder="Search Trip Name">
-		<button type="button" class="btn btn-default" style="margin-left:2%;width:23%;" ng-click="search()">Search</button>
+		<button type="button" class="btn btn-default" style="margin-left:2%;width:23%;" ng-click="search(); searchTabState.active = true">Search</button>
 	</div>	
+	<br>
 
-
-	<table width="100%">
+	<!-- <table width="100%">
 		<tr>
 			<td><hr /></td>
 			<td style="width:1px; padding: 0 10px; white-space: nowrap;color:grey;"><strong>Result</strong></td>
 			<td><hr /></td>
 		</tr>
-	</table>​		
-
-	<div>
-		<accordion close-others="oneAtATime">
-
-		  <accordion-group is-open="isopen" ng-repeat="trip in trips">
-
-			 <accordion-heading>
-				<div class="row">
-				  	<div class="col-xs-1 col-sm-1">
-				  		<!-- author photo -->
-				  		<img border="0" class="img-circle" src="{{trip.user_id.profile_figure}}" width="50" height="50">
-				  	</div>
-				  	
-				  	<div class="col-xs-9 col-sm-9" style="text-align:center">
-				  		<p></p>
-				  		<!-- trip name -->
-				  		<span style="margin-left:3%;text-align:center" ><strong >{{trip.title}}</strong>  </span>						  		
-				  		<br>
-				  		<!-- author name -->
-				  		<span style="margin-left:10%">by <strong>{{trip.user_id.first_name}} {{trip.user_id.last_name}}</strong> </span>						  		
-
-				  	</div>
-				  	<div class="col-xs-0.5 col-sm-0.5" style="align: right;padding-right:2%">
-				  		<p></p>
-				  		<!-- icon -->
-				  		<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
-				  	</div>
-				</div>
-			</accordion-heading>
-
-			<!-- carousel -->
+	</table>​ -->	
+	<!-- List Trips -->
+	<tabset>
+		<!--=================================== Top Trips ===================================-->
+		<tab heading="Top Trips" style="width:50%">
 			<div>
-				<div style="height: 10%">
-					<carousel interval="myInterval">
-						<slide ng-repeat="place in trip.places" active="slide.active">
-							<img ng-src="{{place.cover_figure}}" style="margin:auto;" width="420" height="260">
-							<div class="carousel-caption">
-								<!-- <h4>place {{$index+1}}</h4> -->
-								<p>place {{$index+1}} : {{place.foursquare.name}}</p>
-							</div>
-						</slide>
-					</carousel>
-				</div>
+				<accordion close-others="oneAtATime">
+
+				  <accordion-group is-open="isopen" ng-repeat="trip in topTrips">
+
+					 <accordion-heading>
+						<div class="row">
+						  	<div class="col-xs-1 col-sm-1">
+						  		{{$index+1}}
+						  		<!-- author photo -->
+						  		<img border="0" class="img-circle" src="{{trip.user_id.profile_figure}}" width="50" height="50">
+						  	</div>
+						  	
+						  	<div class="col-xs-9 col-sm-9" style="text-align:center">
+						  		<p></p>
+						  		<!-- trip name -->
+						  		<span style="margin-left:3%;text-align:center" ><strong >{{trip.title}}</strong>  </span>						  		
+						  		<br>
+						  		<!-- author name -->
+						  		<span style="margin-left:10%">by <strong>{{trip.user_id.first_name}} {{trip.user_id.last_name}}</strong> </span>						  		
+
+						  	</div>
+						  	<div class="col-xs-0.5 col-sm-0.5" style="align: right;padding-right:2%">
+						  		<p></p>
+						  		<!-- icon -->
+						  		<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+						  	</div>
+						</div>
+					</accordion-heading>
+
+					<!-- carousel -->
+					<div>
+						<div style="height: 10%">
+							<carousel interval="myInterval">
+								<slide ng-repeat="place in trip.places" active="slide.active">
+									<img ng-src="{{place.cover_figure}}" style="margin:auto;" width="420" height="260">
+									<div class="carousel-caption">
+										<!-- <h4>place {{$index+1}}</h4> -->
+										<p>place {{$index+1}} : {{place.foursquare.name}}</p>
+									</div>
+								</slide>
+							</carousel>
+						</div>
+					</div>
+
+					<p></p>
+					<p> &emsp;{{trip.description}}</p> 
+					<p></p>
+
+					<a class="btn btn-default btn-lg btn-block" ng-click="readmore(trip)"><strong>Read More</strong></a>
+				  </accordion-group>
+
+				</accordion>
 			</div>
+		</tab>
+		<!-------------------------------------- Result List ---------------------------------------->
+		<tab heading="Search Result" style="width:50%" active="searchTabState.active">
+			<div>
+				<accordion close-others="oneAtATime">
 
-			<p></p>
-			<p> &emsp;{{trip.description}}</p> 
-			<p></p>
+					  <accordion-group is-open="isopen" ng-repeat="trip in trips">
 
-			<a class="btn btn-default btn-lg btn-block" ng-click="readmore(trip)"><strong>Read More</strong></a>
-		  </accordion-group>
+						 <accordion-heading>
+							<div class="row">
+							  	<div class="col-xs-1 col-sm-1">
+							  		<!-- author photo -->
+							  		<img border="0" class="img-circle" src="{{trip.user_id.profile_figure}}" width="50" height="50">
+							  	</div>
+							  	
+							  	<div class="col-xs-9 col-sm-9" style="text-align:center">
+							  		<p></p>
+							  		<!-- trip name -->
+							  		<span style="margin-left:3%;text-align:center" ><strong >{{trip.title}}</strong>  </span>						  		
+							  		<br>
+							  		<!-- author name -->
+							  		<span style="margin-left:10%">by <strong>{{trip.user_id.first_name}} {{trip.user_id.last_name}}</strong> </span>						  		
 
-		</accordion>
-	</div>
-	<button type="button" class="btn btn-default btn-lg btn-block" ng-click="load()" ng-show="loadShow">Load More</button>
+							  	</div>
+							  	<div class="col-xs-0.5 col-sm-0.5" style="align: right;padding-right:2%">
+							  		<p></p>
+							  		<!-- icon -->
+							  		<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+							  	</div>
+							</div>
+						</accordion-heading>
 
-<!-- 	<center>
-		<div ng-controller="PaginationDemoCtrl">
-			<pagination total-items="bigTotalItems" page="bigCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
-		</div>
-	</center> -->
+						<!-- carousel -->
+						<div>
+							<div style="height: 10%">
+								<carousel interval="myInterval">
+									<slide ng-repeat="place in trip.places" active="slide.active">
+										<img ng-src="{{place.cover_figure}}" style="margin:auto;" width="420" height="260">
+										<div class="carousel-caption">
+											<!-- <h4>place {{$index+1}}</h4> -->
+											<p>place {{$index+1}} : {{place.foursquare.name}}</p>
+										</div>
+									</slide>
+								</carousel>
+							</div>
+						</div>
+
+						<p></p>
+						<p> &emsp;{{trip.description}}</p> 
+						<p></p>
+
+						<a class="btn btn-default btn-lg btn-block" ng-click="readmore(trip)"><strong>Read More</strong></a>
+				  	</accordion-group>
+
+				</accordion>
+			</div>
+			<button type="button" class="btn btn-default btn-lg btn-block" ng-click="load()" ng-show="loadShow">Load More</button>
+		</tab>
+</tabset>		
 
 </div>
