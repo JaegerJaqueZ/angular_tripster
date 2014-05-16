@@ -14,7 +14,9 @@
 	 <div class="row">
 	 	<div class="col-xs-1 col-sm-1">
 	 		<!-- author photo -->
-	 		<img border="0" class="img-circle" src="{{activityLog.user_id.profile_figure}}" width="40" height="40">
+	 		<a ng-click="goProfile(activityLog.user_id._id)">
+	 			<img border="0" class="img-circle" src="{{activityLog.user_id.profile_figure}}" width="40" height="40">
+	 		</a>
 	 	</div>
 
 	 	<div class="col-xs-8 col-sm-8" style="margin-left:5%">
