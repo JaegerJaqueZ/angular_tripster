@@ -29,7 +29,9 @@ var tripsterApp = angular.module('tripsterApp', [
 	'modalBookmarkControllers',
 	'timelineControllers',
 	'modalTimelineControllers',
-	'profileControllers',	
+	'profileControllers',
+	'modalProfileControllers',
+	'modalFollowingControllers'	
 ]);
 
 tripsterApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
@@ -96,6 +98,7 @@ tripsterApp.run(function ($rootScope, $location, authFactory) {
       // if no currentUser and on a page that requires authorization then try to update it
       // will trigger 401s if user does not have a valid session
       if (!currentUser && (['/', '/login', '/logout'].indexOf($location.path()) == -1 )) {
+
       	authFactory.getCurrentUser();
       }
   });
