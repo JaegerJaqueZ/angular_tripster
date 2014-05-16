@@ -66,11 +66,47 @@
 			<!-- trip description -->
 			<p> &emsp;{{trip.description}}</p> 
 		</fieldset>
+		<br>
+			<!-- Rating -->
+			<legend ><strong>Rating</strong></legend>
+			<div class="row">
+				<div class="col-xs-5 col-sm-5" style="">
+				    <div class="btn-group">
+				    	<!-- like button -->
+				        <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Like'" uncheckable ng-click="like()" >
+				        	<i class="glyphicon glyphicon-thumbs-up"><strong> Like</strong> </i>
+				        </label>
+				        <!-- unlike button -->
+				        <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Unlike'" uncheckable ng-click="unlike()" >
+				        	<i class="glyphicon glyphicon-thumbs-down"></i>		        	
+				        </label>
 
+
+				    </div>						
+				</div>
+				<div class="col-xs-7 col-sm-7" style="padding-left:0px;padding-right:15px">
+					<progress>
+						<bar ng-repeat="bar in stacked" style="height" value="bar.value" type="{{bar.type}}"></bar>
+					</progress>
+				</div>
+
+			</div>	
+			
 		<fieldset>
-			<div  ng-repeat="place in trip.places">
+			<div  ng-repeat="day in days">
+
+				<table width="100%">
+					<tr>
+						<td><hr /></td>
+						<td style="width:1px; padding: 0 10px; white-space: nowrap;color:black;"><strong style="font-size:18px;">Day {{$index+1}}</strong></td>
+						<td><hr /></td>
+					</tr>
+				</table>​	
+
 				<!-- place detail  -->
-				<div class="panel panel-default">
+				<div ng-repeat="place in day">
+
+				<div class="panel panel-default" >
 					<div class="panel-body">
 						<div class="row">
 						  	<div class="col-xs-10 col-sm-10" style="padding-right:0px">
@@ -107,7 +143,7 @@
 				<!-- place description -->	
 				<br>
 				<p>{{place.description}}</p>
-				
+				</div>
 			</div>
 		</fieldset >
 
