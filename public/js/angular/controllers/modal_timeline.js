@@ -6,9 +6,6 @@ modalTimelineControllers.controller('modalTimelineCtrl', function ($rootScope, $
 
   $scope.trip = timelineFactory.getChosenTrip();
 
-  // backup trip
-  timelineFactory.setBackUpTrip($scope.trip);
-
   var places_temp     = $scope.trip.places;
   $scope.days         = splitPlacesArray(places_temp);
   console.log($scope.trip);
