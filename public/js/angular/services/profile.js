@@ -8,6 +8,7 @@ profileService.factory('profileFactory', function($http) {
 	var   resultList 	= new Array()
 		, chosenTrip  	= {}
 		, chosenUser 	= ""
+		, chosenProfile = {};
 
 //=============================== Factory Methods ===============================
 
@@ -47,6 +48,14 @@ profileService.factory('profileFactory', function($http) {
 		chosenUser = user_id;
 	}	
 
+	function getChosenProfile(){
+		return chosenProfile;
+	}
+
+	function setChosenProfile(newProfile){
+		chosenProfile = newProfile;
+	}
+
 //=============================== Factory Return ===============================
 	return{
 		getOriginPath: getOriginPath,
@@ -56,7 +65,9 @@ profileService.factory('profileFactory', function($http) {
 		getChosenTrip: getChosenTrip,
 		setChosenTrip: setChosenTrip,
 		getChosenUser: getChosenUser,
-		setChosenUser: setChosenUser
+		setChosenUser: setChosenUser,
+		getChosenProfile: getChosenProfile,
+		setChosenProfile: setChosenProfile
 	}
 
 });
