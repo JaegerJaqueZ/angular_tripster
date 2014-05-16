@@ -21,7 +21,7 @@
 
 	 		<!-- user + activity -->
 	 		<span >
-	 			<small><a>{{activityLog.user_id.first_name}} {{activityLog.user_id.last_name}}</a>  {{activityLog.act_code}}</small> 
+	 			<small><a ng-click="goProfile(activityLog.user_id._id)">{{activityLog.user_id.first_name}} {{activityLog.user_id.last_name}}</a>  {{activityLog.act_code}}</small> 
 	 		</span>						  		
 	 		<br>
 	 		<!-- trip's name -->
