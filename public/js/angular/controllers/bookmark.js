@@ -95,7 +95,7 @@ bookmarkControllers.controller('bookmarkCtrl', function ($scope, $http, bookmark
 
 
 
-  var bookmarkModalInstanceCtrl = function ($scope, $modalInstance, bookmarkFactory) {
+  var bookmarkModalInstanceCtrl = function ($scope, $modalInstance, timelineFactory, bookmarkFactory) {
 
   $scope.cancel = function () {
     // check if bookmarkState has been change
@@ -112,6 +112,58 @@ bookmarkControllers.controller('bookmarkCtrl', function ($scope, $http, bookmark
             alert("Failed to get your bookmark(s), Please Try Again");
         });      
     }
+
+      var before  = timelineFactory.getBackUpTrip();
+      var after   = bookmarkFactory.getChosenTrip();
+      console.log(before); 
+      console.log(after);      
+
+      if(typeof(before.voteState) !== "undefined" && typeof(after.voteState) !== "undefined"  && before.voteState !== after.voteState){
+
+          var path = "";
+          // before like , after unlike
+          if(before.voteState===1 && after.voteState === -1)
+          {
+            path = "vote_up/flip";
+          }
+          // before like , after default
+          else if(before.voteState===1 && after.voteState === 0)
+          {
+            path = "vote_up/cancel";
+          }
+          // before default , after like
+          else if(before.voteState===0 && after.voteState === 1)
+          {
+            path = "vote_up";
+          }
+          // before default , after unlike
+          else if(before.voteState===0 && after.voteState === -1)
+          {
+            path = "vote_down";
+          }
+          // before unlike , after like
+          else if(before.voteState===-1 && after.voteState === 1)
+          {
+            path = "vote_down/flip";
+          }
+          // before unlike , after default
+          else if(before.voteState===-1 && after.voteState === 0)
+          {
+            path = "vote_down/cancel";
+          }
+
+          $http({
+            method:'PUT', 
+            url: timelineFactory.getOriginPath() + "trip/" + path+"?trip_id="+after._id
+          })
+          .success(function(data, status, headers, config) {
+            console.log("success"); 
+          })
+          .error(function(data, status, headers, config) {
+
+          });        
+
+      }
     
     $modalInstance.dismiss('cancel');
   };
