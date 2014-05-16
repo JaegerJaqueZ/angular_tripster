@@ -28,19 +28,23 @@
 				<strong>{{profile.followings_count}}</strong>
 				<br>
 				FOLLOWING	
-				</a>				
+				</a>
 			</td>
 		</tr>
 		<tr>
-			<td ng-click="">
+			<td >
+				<a ng-click="goMyTrip()">	
 				<strong>{{profile.trips_count}}</strong>
 				<br>
-				TRIPS					
+				TRIPS
+				</a>					
 			</td>
-			<td ng-click="">
+			<td >
+				<a ng-click="goBookmark()">				
 				<strong>{{profile.bookmarks_count}}</strong>
 				<br>
-				BOOKMARKS					
+				BOOKMARKS
+				</a>									
 			</td>				
 		</tr>
 	</table>		
