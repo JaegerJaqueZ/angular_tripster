@@ -2,9 +2,11 @@
 
 var modalTimelineControllers = angular.module('modalTimelineControllers', []);
 
-modalTimelineControllers.controller('modalTimelineCtrl', function ($rootScope, $scope, $http, timelineFactory, $window, mapFactory) {
+modalTimelineControllers.controller('modalTimelineCtrl', function ($rootScope, $scope, $http, timelineFactory, $window, mapFactory, profileFactory, $modal) {
 
   $scope.trip = timelineFactory.getChosenTrip();
+
+  timelineFactory.setBackUpTrip($scope.trip);
  
   mapFactory.setPlaces($scope.trip.places);
   $scope.places = mapFactory.getPlaces();
@@ -13,7 +15,7 @@ modalTimelineControllers.controller('modalTimelineCtrl', function ($rootScope, $
   
   $scope.latlngs = [];
 
-    // marker
+  // marker
   $scope.markers = new Array();   
   for (var i = 0; i < $scope.places.length; i++) {
 
@@ -88,9 +90,6 @@ modalTimelineControllers.controller('modalTimelineCtrl', function ($rootScope, $
         //     }
        //    }            
     });
-
-
-
 
 
   var places_temp     = $scope.trip.places;
@@ -234,6 +233,17 @@ modalTimelineControllers.controller('modalTimelineCtrl', function ($rootScope, $
     console.log($scope.trip);
   }  
 
+  $scope.goProfile = function (user_id) {
+
+          profileFactory.setChosenUser(user_id)
+          console.log("xxx");
+          var modalInstance = $modal.open({
+            templateUrl: 'partials/modal_profile.html',
+            controller: profileModalInstanceCtrl,
+            backdrop: true
+          });
+
+  };  
 
   function splitPlacesArray(places){
     console.log(places);
@@ -371,6 +381,10 @@ modalTimelineControllers.controller('modalTimelineCtrl', function ($rootScope, $
     }
   };
 
- 
+  var profileModalInstanceCtrl = function ($scope, $modalInstance, profileFactory) {
+     $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    }
+  }; 
 
 });
