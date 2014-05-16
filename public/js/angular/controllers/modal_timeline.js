@@ -2,9 +2,96 @@
 
 var modalTimelineControllers = angular.module('modalTimelineControllers', []);
 
-modalTimelineControllers.controller('modalTimelineCtrl', function ($rootScope, $scope, $http, timelineFactory, $window) {
+modalTimelineControllers.controller('modalTimelineCtrl', function ($rootScope, $scope, $http, timelineFactory, $window, mapFactory) {
 
   $scope.trip = timelineFactory.getChosenTrip();
+ 
+  mapFactory.setPlaces($scope.trip.places);
+  $scope.places = mapFactory.getPlaces();
+
+  console.log($scope.places);
+  
+  $scope.latlngs = [];
+
+    // marker
+  $scope.markers = new Array();   
+  for (var i = 0; i < $scope.places.length; i++) {
+
+    $scope.markers.push({
+
+            lat: $scope.places[i].foursquare.location.lat,
+            lng: $scope.places[i].foursquare.location.lng,
+            message: $scope.places[i].foursquare.name,
+            focus: false,
+            draggable: false,
+            icon : {
+              iconUrl: '../img/number_'+(i+1)+'.png',
+              //shadowUrl: 'img/leaf-shadow.png',
+              iconSize:     [32, 37], // size of the icon
+              //shadowSize:   [50, 64], // size of the shadow
+              iconAnchor:   [16, 35], // point of the icon which will correspond to marker's location
+              //shadowAnchor: [4, 62],  // the same for the shadow
+              popupAnchor:  [0, -30] // point from which the popup should open relative to the iconAnchor         
+            }                             
+        });
+
+       $scope.latlngs.push({  
+          lat : $scope.places[i].foursquare.location.lat,
+          lng : $scope.places[i].foursquare.location.lng
+    });
+
+  }
+  console.log($scope.latlngs);
+
+  // path
+  $scope.paths = new Array();
+  $scope.paths.push({
+
+    color: 'red',
+          weight: 4,
+          latlngs: $scope.latlngs
+
+  });   
+
+  //  set map properties (zoom, center, layers)
+    angular.extend($scope, {    
+        defaults: {
+            scrollWheelZoom: true,
+            //tileLayer: "http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png",
+          maxZoom: 20,
+          path: {
+              weight: 10,
+              color: '#800000',
+              opacity: 1
+          }
+        },
+        center : {
+          lat: mapFactory.getAvgLat(),
+          lng: mapFactory.getAvgLng(),
+          zoom:15            
+        },
+        layers: {
+            baselayers: {
+                osm: {
+                    name: 'YO',
+                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    type: 'xyz'
+                },
+            }
+        }
+        // paths: {
+       //        polyline: {
+       //         type : "polyline",
+        //         color: "red",
+        //         weight: 4,
+        //         latlngs:  $scope.latlngs
+        //     }
+       //    }            
+    });
+
+
+
+
 
   var places_temp     = $scope.trip.places;
   $scope.days         = splitPlacesArray(places_temp);
@@ -283,5 +370,7 @@ modalTimelineControllers.controller('modalTimelineCtrl', function ($rootScope, $
       }); 
     }
   };
+
+ 
 
 });
