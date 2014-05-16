@@ -2,7 +2,7 @@
 
 var timelineControllers = angular.module('timelineControllers', []);
 
-timelineControllers.controller('timelineCtrl', function ($scope, $http, timelineFactory, $modal) {
+timelineControllers.controller('timelineCtrl', function ($scope, $http, timelineFactory, $modal, profileFactory) {
 
 	snapper.close();
 
@@ -166,6 +166,17 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
     	}); 
 	};
 
+  $scope.goProfile = function (user_id) {
+
+          profileFactory.setChosenUser(user_id)
+          console.log("xxx");
+          var modalInstance = $modal.open({
+            templateUrl: 'partials/modal_profile.html',
+            controller: profileModalInstanceCtrl,
+            backdrop: true
+          });
+
+  };  
 
 
   	$scope.load = function () {
@@ -256,6 +267,12 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
 
 	    $modalInstance.dismiss('cancel');
 	  };
+};
+
+  var profileModalInstanceCtrl = function ($scope, $modalInstance, profileFactory) {
+     $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    }
 };
 
 });
