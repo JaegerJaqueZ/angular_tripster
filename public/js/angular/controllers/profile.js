@@ -2,7 +2,7 @@
 
 var profileControllers = angular.module('profileControllers', []);
 
-profileControllers.controller('profileCtrl', function ($scope, $http, profileFactory, $modal) {
+profileControllers.controller('profileCtrl', function ($rootScope, $scope, $http, profileFactory, authFactory, $modal, timelineFactory) {
 
   snapper.close();
 
@@ -10,41 +10,73 @@ profileControllers.controller('profileCtrl', function ($scope, $http, profileFac
   $scope.from = 0;
   $scope.loadShow = false;
 
-    $scope.$watchCollection(
 
-      function() {
-        return profileFactory.getResultList();
-      },
-      
-      function(newValue, oldValue) {
-        if(newValue!==oldValue) {
-          $scope.activityLogs = newValue;
-        }
+    authFactory.getCurrentUser(function(err, user) {
+
+      if(err) {
+
       }
-    );    
 
-    $http({
-      method:'GET', 
-      url: profileFactory.getOriginPath() + "timeline"+ "?skip=" + $scope.from + "&limit=" + $scope.range
-    })
-    .success(function(data, status, headers, config) {
-      // console.log(data);
-        profileFactory.clearResultList(data);
-        for (var i=0;i<data.length;i++)
-        { 
-          //change act code to activity
-          var activity = getActivity(data[i].act_code);
-          data[i].act_code = activity;
+      else if(user) {
 
-          // change created time to time
-          var time =calTime(data[i].created);
-          data[i].created = time;
-        }  
-        profileFactory.setResultList(data);
-    })
-    .error(function(data, status, headers, config) {
-        alert("Failed to get your timeline, Please Try Again");
-    }); 
+        // get history feeds
+        $http({
+          method:'GET', 
+          url: profileFactory.getOriginPath() + "history?skip=" + $scope.from + "&limit=" + $scope.range+"&user_id="+user._id
+        })
+        .success(function(data, status, headers, config) {
+ 
+            for (var i=0;i<data.length;i++)
+            { 
+              //change act code to activity
+              var activity = getActivity(data[i].act_code);
+              data[i].act_code = activity;
+
+              // change created time to time
+              var time =calTime(data[i].created);
+              data[i].created = time;
+            }  
+            $scope.activityLogs = data;
+            console.log(data);
+        })
+        .error(function(data, status, headers, config) {
+            alert("Failed to get your Profile, Please Try Again");
+        }); 
+
+
+        // get user profile
+        $http({
+          method:'GET', 
+          url: profileFactory.getOriginPath() + "profile?user_id="+user._id
+        })
+        .success(function(data, status, headers, config) {
+ 
+            $scope.profile = data;
+            console.log(data);
+        })
+        .error(function(data, status, headers, config) {
+            alert("Failed to get your Profile, Please Try Again");
+        }); 
+
+      }
+      else {
+
+      }
+
+    });
+
+    $scope.goFollowing = function (user_id) {
+
+            profileFactory.setChosenUser(user_id)
+            console.log("xxx");
+            var modalInstance = $modal.open({
+              templateUrl: 'partials/modal_following.html',
+              controller: followingModalInstanceCtrl,
+              backdrop: true
+            });
+
+    }; 
+    
 
     function getActivity(actCode){
       var activity;
@@ -135,7 +167,7 @@ profileControllers.controller('profileCtrl', function ($scope, $http, profileFac
             // TODO
           }
 
-          profileFactory.setChosenTrip(data);
+          timelineFactory.setChosenTrip(data);
 
           var modalInstance = $modal.open({
             templateUrl: 'partials/modal_timeline.html',
@@ -182,13 +214,72 @@ profileControllers.controller('profileCtrl', function ($scope, $http, profileFac
 
   };
 
-  var timelineModalInstanceCtrl = function ($scope, $modalInstance,profileFactory) {
+
+  var followingModalInstanceCtrl = function ($scope, $modalInstance, profileFactory) {
+
+      $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+      };
+  };
+
+  var timelineModalInstanceCtrl = function ($scope, $modalInstance,timelineFactory) {
 
     $scope.cancel = function () {
+      var before  = timelineFactory.getBackUpTrip();
+      var after   = timelineFactory.getChosenTrip();
+      console.log(before); 
+      console.log(after);      
+
+      if(before.voteState != after.voteState){
+
+          var path = "";
+          // before like , after unlike
+          if(before.voteState===1 && after.voteState === -1)
+          {
+            path = "vote_up/flip";
+          }
+          // before like , after default
+          else if(before.voteState===1 && after.voteState === 0)
+          {
+            path = "vote_up/cancel";
+          }
+          // before default , after like
+          else if(before.voteState===0 && after.voteState === 1)
+          {
+            path = "vote_up";
+          }
+          // before default , after unlike
+          else if(before.voteState===0 && after.voteState === -1)
+          {
+            path = "vote_down";
+          }
+          // before unlike , after like
+          else if(before.voteState===-1 && after.voteState === 1)
+          {
+            path = "vote_down/flip";
+          }
+          // before unlike , after default
+          else if(before.voteState===-1 && after.voteState === 0)
+          {
+            path = "vote_down/cancel";
+          }
+
+          $http({
+            method:'PUT', 
+            url: timelineFactory.getOriginPath() + "trip/" + path+"?trip_id="+after._id
+          })
+          .success(function(data, status, headers, config) {
+            console.log("success"); 
+          })
+          .error(function(data, status, headers, config) {
+
+          });        
+
+      }
+
       $modalInstance.dismiss('cancel');
     };
 };
-
 });
 
 
