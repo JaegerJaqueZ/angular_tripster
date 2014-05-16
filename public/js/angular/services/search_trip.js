@@ -6,7 +6,7 @@ searchTripService.factory('searchTripFactory', function($http) {
 
 //=============================== Factory Attributes ===============================
 	var   resultList 	= new Array()
-		, chosenTrip  	= {}
+		, chosenTrip  	= {};
 
 //=============================== Factory Methods ===============================
 
