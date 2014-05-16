@@ -2,10 +2,94 @@
 
 var modalSearchTripControllers = angular.module('modalSearchTripControllers', []);
 
-modalSearchTripControllers.controller('modalSearchTripCtrl', function ($rootScope, $scope, $http, searchTripFactory, $window) {
+modalSearchTripControllers.controller('modalSearchTripCtrl', function ($modal, $rootScope, $scope, $http, searchTripFactory, $window, mapFactory, timelineFactory, profileFactory) {
 
   $scope.trip = searchTripFactory.getChosenTrip();
-  // console.log( $scope.trip );
+
+  timelineFactory.setBackUpTrip($scope.trip);   
+   
+  mapFactory.setPlaces($scope.trip.places);
+  $scope.places = mapFactory.getPlaces();
+
+  console.log($scope.places);
+  
+  $scope.latlngs = [];
+
+  // marker
+  $scope.markers = new Array();   
+  for (var i = 0; i < $scope.places.length; i++) {
+
+    $scope.markers.push({
+
+            lat: $scope.places[i].foursquare.location.lat,
+            lng: $scope.places[i].foursquare.location.lng,
+            message: $scope.places[i].foursquare.name,
+            focus: false,
+            draggable: false,
+            icon : {
+              iconUrl: '../img/number_'+(i+1)+'.png',
+              //shadowUrl: 'img/leaf-shadow.png',
+              iconSize:     [32, 37], // size of the icon
+              //shadowSize:   [50, 64], // size of the shadow
+              iconAnchor:   [16, 35], // point of the icon which will correspond to marker's location
+              //shadowAnchor: [4, 62],  // the same for the shadow
+              popupAnchor:  [0, -30] // point from which the popup should open relative to the iconAnchor         
+            }                             
+        });
+
+       $scope.latlngs.push({  
+          lat : $scope.places[i].foursquare.location.lat,
+          lng : $scope.places[i].foursquare.location.lng
+    });
+
+  }
+  console.log($scope.latlngs);
+
+  // path
+  $scope.paths = new Array();
+  $scope.paths.push({
+
+    color: 'red',
+          weight: 4,
+          latlngs: $scope.latlngs
+
+  });   
+
+  //  set map properties (zoom, center, layers)
+    angular.extend($scope, {    
+        defaults: {
+            scrollWheelZoom: true,
+            //tileLayer: "http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png",
+          maxZoom: 20,
+          path: {
+              weight: 10,
+              color: '#800000',
+              opacity: 1
+          }
+        },
+        center : {
+          lat: mapFactory.getAvgLat(),
+          lng: mapFactory.getAvgLng(),
+          zoom:15            
+        },
+        layers: {
+            baselayers: {
+                osm: {
+                    name: 'YO',
+                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    type: 'xyz'
+                },
+            }
+        }
+        // paths: {
+       //        polyline: {
+       //         type : "polyline",
+        //         color: "red",
+        //         weight: 4,
+        //         latlngs:  $scope.latlngs
+        //     }
+       //    }            
+    });  
 
   var places_temp     = $scope.trip.places;
   $scope.days         = splitPlacesArray(places_temp);
@@ -141,13 +225,22 @@ modalSearchTripControllers.controller('modalSearchTripCtrl', function ($rootScop
       $scope.trip.percent_vote_down = 100*$scope.trip.vote_down/($scope.trip.vote_up+$scope.trip.vote_down); 
     }
     
-
-
     just_count+=1;
 
     console.log($scope.trip);
   }  
 
+  $scope.goProfile = function (user_id) {
+
+          profileFactory.setChosenUser(user_id)
+          console.log("xxx");
+          var modalInstance = $modal.open({
+            templateUrl: 'partials/modal_profile.html',
+            controller: profileModalInstanceCtrl,
+            backdrop: true
+          });
+
+  };  
 
   function splitPlacesArray(places){
     console.log(places);
@@ -280,5 +373,11 @@ modalSearchTripControllers.controller('modalSearchTripCtrl', function ($rootScop
       }); 
     }
   };
+
+  var profileModalInstanceCtrl = function ($scope, $modalInstance, profileFactory) {
+     $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    }
+  };   
 
 });
