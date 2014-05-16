@@ -7,6 +7,165 @@ modalSearchTripControllers.controller('modalSearchTripCtrl', function ($rootScop
   $scope.trip = searchTripFactory.getChosenTrip();
   // console.log( $scope.trip );
 
+  var places_temp     = $scope.trip.places;
+  $scope.days         = splitPlacesArray(places_temp);
+  console.log($scope.trip);
+
+  $scope.radioModel = '';
+  // set state of button
+  if( $scope.trip.voteState === 0 || typeof($scope.trip.voteState) === "undefined"){
+    console.log(0);
+    $scope.radioModel = '';   
+  }
+  else if( $scope.trip.voteState === 1){
+    console.log(1);
+    $scope.radioModel = 'Like';    
+  }
+  else if( $scope.trip.voteState === -1){
+    console.log(-1);
+    $scope.radioModel = 'Unlike';    
+  }  
+
+  // progress bar
+  $scope.stacked = setBarInProgressBar($scope.trip);
+
+  var just_count = 0;
+
+  $scope.$watch(
+
+    function() {
+
+      return just_count;
+    },
+    
+    function(newValue, oldValue) {
+      if(newValue!==oldValue) {
+
+        $scope.stacked = setBarInProgressBar(searchTripFactory.getChosenTrip());
+      }
+    }
+  );    
+
+
+  function setBarInProgressBar(trip) {
+    var arrayBar = [];
+
+    if(typeof(trip.percent_vote_up) === 'undefined' || trip.percent_vote_up === null) {
+      trip.percent_vote_up =0;
+    }
+
+    if(typeof(trip.percent_vote_down) === 'undefined' || trip.percent_vote_down === null) {
+      trip.percent_vote_down =0;
+    }    
+
+    arrayBar.push({
+      value: trip.percent_vote_up,
+      type: "primary"
+    });
+
+    arrayBar.push({
+      value: trip.percent_vote_down,
+      type: "danger"
+    });    
+
+    return arrayBar;  
+  }
+
+
+
+  $scope.like = function(){
+
+    console.log($scope.radioModel);
+
+    if( $scope.radioModel !== 'Like' ){
+
+      if($scope.trip.voteState===0){
+        $scope.trip.vote_up++;
+      }
+      else if($scope.trip.voteState===-1){
+        $scope.trip.vote_down--;
+        $scope.trip.vote_up++;        
+      }
+      $scope.trip.voteState=1;
+
+    }
+    else {
+      $scope.trip.vote_up--; 
+      $scope.trip.voteState =0;
+    }
+    
+    if($scope.trip.vote_up === 0 && $scope.trip.vote_down === 0) {
+      $scope.trip.percent_vote_up = 0;
+      $scope.trip.percent_vote_down = 0;
+    }
+    else {
+      $scope.trip.percent_vote_up = 100*$scope.trip.vote_up /($scope.trip.vote_up+$scope.trip.vote_down);
+      $scope.trip.percent_vote_down = 100*$scope.trip.vote_down/($scope.trip.vote_up+$scope.trip.vote_down); 
+    }
+    
+
+    just_count+=1;
+
+    console.log($scope.trip);
+  }
+
+  $scope.unlike = function(){
+    console.log($scope.radioModel);
+    // case like and default 
+    if( $scope.radioModel !== "Unlike"){
+
+      if($scope.trip.voteState===0){
+        $scope.trip.vote_down++;
+      }
+      else if($scope.trip.voteState===1){
+        $scope.trip.vote_up--;
+        $scope.trip.vote_down++;        
+      }  
+      $scope.trip.voteState=-1;
+   
+    }
+    // case unlike
+    else {
+      console.log("else");
+
+      $scope.trip.vote_down--; 
+      $scope.trip.voteState =0;
+    }
+    
+    if($scope.trip.vote_up === 0 && $scope.trip.vote_down === 0) {
+      $scope.trip.percent_vote_up = 0;
+      $scope.trip.percent_vote_down = 0;
+    }
+    else {
+      $scope.trip.percent_vote_up = 100*$scope.trip.vote_up /($scope.trip.vote_up+$scope.trip.vote_down);
+      $scope.trip.percent_vote_down = 100*$scope.trip.vote_down/($scope.trip.vote_up+$scope.trip.vote_down); 
+    }
+    
+
+
+    just_count+=1;
+
+    console.log($scope.trip);
+  }  
+
+
+  function splitPlacesArray(places){
+    console.log(places);
+
+    var places_split = [];
+
+    for( var i = 0 ; i < $scope.trip.days; i++ ) {
+
+      places_split.push([]);
+    }
+
+    for( var i = 0 ; i < places.length ; i ++) {
+      
+      places_split[places[i].day-1].push(places[i]);
+      
+    }
+    return places_split;
+  }  
 
 
   // initialize follow button
