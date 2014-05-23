@@ -65,6 +65,7 @@
 	<script src="../js/angular/controllers/modal_profile.js"></script>
 	<script src="../js/angular/controllers/modal_following.js"></script>
 	<script src="../js/angular/controllers/modal_follower.js"></script>
+	<script src="../js/angular/controllers/addFriend.js"></script>	
 
 	<!-- service -->
 	<script src="../js/angular/services/auth.js"></script>
@@ -74,6 +75,7 @@
 	<script src="../js/angular/services/timeline.js"></script>
 	<script src="../js/angular/services/profile.js"></script>
 	<script src="../js/angular/services/map.js"></script>
+	<script src="../js/angular/services/addFriend.js"></script>
 
 	<!-- directive -->
 	<script src="../js/angular/directives/file_upload.js"></script>
@@ -108,7 +110,8 @@
 						<li><a href="#/mytrip"><span class="glyphicon glyphicon-pencil" style="margin-right:5px"></span> My Trip</a></li>
 						<li><a href="#/search"><span class="glyphicon glyphicon-search" style="margin-right:5px"></span> Search</a></li>
 						<li><a href="#/bookmark"><span class="glyphicon glyphicon-book" style="margin-right:5px"></span> Bookmark</a></li>
-						<li><a href="#/profile"><span class="glyphicon glyphicon-user" style="margin-right:5px"></span> My profile</a></li>						
+						<li><a href="#/profile"><span class="glyphicon glyphicon-user" style="margin-right:5px"></span> My profile</a></li>
+						<li><a href="#/friend"><span class="glyphicon glyphicon-plus" style="margin-right:5px"></span> Add friend</a></li>													
 					</ul>
 				</div>
 			</div>
@@ -133,7 +136,7 @@
 		<div id="content" class="snap-content">
 
 			<!-- Angular ng-view -->
-			<div ng-view style="padding-top:70px"></div>
+			<div ng-view style="padding-top:60px"></div>
 		</div>
 	</div>
 
