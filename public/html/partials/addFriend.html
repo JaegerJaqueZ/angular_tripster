@@ -1,0 +1,67 @@
+<title>Add Friend</title>
+
+<div class="animated slideInLeft" ng-controller="addFriendCtrl">	
+
+	<div class="container" ng-show="header">
+		<p class="bg-info" style="text-align:center"><strong> You have {{friendsInApps.length}} friends on Tripster</strong></p>
+	</div>
+		<center>
+			<i class="fa fa-spinner fa-spin fa-4x" ng-show="loading"></i>
+		</center>
+	<div class="container" ng-repeat="friendsInApp in friendsInApps">
+			<div class="row">
+			
+			  	<div class="col-xs-2 col-sm-2" >
+			  		<!-- friend photo -->
+			  		<img border="0" class="img-circle" src="{{friendsInApp.profile_figure}}" width="50" height="50">
+			  	</div>
+			  	
+			  	<div class="col-xs-7 col-sm-7	">
+			  		<p></p>
+			  		<!-- friend name -->
+			  		<span style="padding-left:10%"><strong> {{friendsInApp.first_name}} {{friendsInApp.last_name}}</strong> </span>						  		
+
+			  	</div>
+			  	<div class="col-xs-3 col-sm-3" style="padding-left:0px">
+					<!-- follow button -->
+					<button type="button" ng-hide="checkIsOwner()" class="btn btn-default" style="float:right;margin-right:5px" ng-model="follow" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="following($index)">
+				        {{followingstate[$index]}}
+				    </button>
+			  	</div>
+			</div>
+			<hr style="margin-top:10px;margin-bottom:10px">
+
+	</div>	
+
+	
+	<div class="container" ng-show="header">
+		<p class="bg-info" style="text-align:center"><strong> You have {{friendsInvites.length}} Facebook friends not on Tripster<br> (invite them)</strong></p>
+	</div>
+		
+	<div class="container" ng-repeat="friendsInvite in friendsInvites">
+			<div class="row">
+
+			  	<div class="col-xs-2 col-sm-2" >
+			  		<!-- friend photo -->
+			  		<img border="0" class="img-circle" src="{{friendsInvite.picture.data.url}}" width="50" height="50">
+			  	</div>
+			  	
+			  	<div class="col-xs-7 col-sm-7">
+			  		<p></p>
+			  		<!-- friend name -->
+			  		<span style="padding-left:10%"><strong> {{friendsInvite.name}} </strong> </span>						  		
+
+			  	</div>
+			  	<div class="col-xs-3 col-sm-3" style="padding-left:0px">
+					<!-- follow button -->
+					<button type="button" class="btn btn-default" style="float:right;margin-right:5px" disabled="disabled">
+				        invite
+				    </button>
+			  	</div>
+			</div>
+			<hr style="margin-top:10px;margin-bottom:10px">
+
+		
+	</div>	
+
+</div>
