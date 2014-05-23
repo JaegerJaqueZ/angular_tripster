@@ -13,6 +13,7 @@ var tripsterApp = angular.module('tripsterApp', [
 	'timelineService',
 	'profileService',
 	'mapService',
+	'addFriendService',
 
 	'loginControllers',
 	'myTripControllers',
@@ -33,7 +34,8 @@ var tripsterApp = angular.module('tripsterApp', [
 	'profileControllers',
 	'modalProfileControllers',
 	'modalFollowingControllers',
-	'modalFollowerControllers',		
+	'modalFollowerControllers',
+	'addFriendControllers'		
 ]);
 
 tripsterApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
@@ -62,7 +64,11 @@ function($routeProvider, $locationProvider, $httpProvider) {
 	when('/profile', {
 			templateUrl: 'partials/profile.html',
 			controller: 'profileCtrl'
-	}).	
+	}).
+	when('/friend', {
+			templateUrl: 'partials/addFriend.html',
+			controller: 'addFriendCtrl'
+	}).			
 	otherwise({
 		redirectTo: '/timeline'
 	});
