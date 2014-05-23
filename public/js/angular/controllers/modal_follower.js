@@ -72,40 +72,6 @@ $scope.followerstate ={};
 
   }
 
-    function calTime(time){
-
-      var currentTime = new Date().getTime();
-      var diffTimeMillisec = currentTime - time;
-
-      var one_day=1000*60*60*24;
-      var one_hour=1000*60*60;
-      var one_minute=1000*60;
-
-      var diffDay = Math.floor(diffTimeMillisec/one_day);
-      var diffHour = Math.floor((diffTimeMillisec%one_day)/one_hour);
-      var diffMinute = Math.floor(((diffTimeMillisec%one_day)%one_hour)/one_minute);
-
-      // console.log(diffDay+" "+diffHour+" "+diffMinute);
-
-      var result;
-
-      if(diffDay>0){
-          result= diffDay+"d";  
-      }
-      else{
-        if(diffHour>0)
-        {
-          result= diffHour+"h";                 
-        }
-        else{
-          result =  diffMinute+"m";
-        }
-      }
-  
-      return result;    
-    }  
-
-
   var followerModalInstanceCtrl = function ($scope, $modalInstance,profileFactory) {
 
     $scope.cancel = function () {
