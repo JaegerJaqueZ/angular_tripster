@@ -1,17 +1,17 @@
 <!-- public/html/partials/modal_add_place_foursquare.html -->
 
 <!-- NavBar for Modal-->
-<nav class="navbar navbar-static-top navbar-default" role="navigation">
+<nav class="navbar navbar-static-top navbar-default" role="navigation" style="font-family: 'Roboto'">
 	<div class="navbar-header">
 		<button type="button" class="navbar-toggle" id="fix-btn" style="height:40px; width:80px" ng-click="cancel()">
 			Cancel
 		</button>    
-		<a class="navbar-brand" href="#"><b>Select Place</b></a> 
+		<a class="navbar-brand" href="#" style="font-size:22px;"><b>Select Place</b></a> 
 	</div>
 </nav>
 <!-- Modal -->
 <!--div class="modal-header"></div-->
-<div class="modal-body animated slideInLeft" ng-controller="modalAddPlaceFoursquareCtrl">
+<div class="modal-body animated slideInLeft" ng-controller="modalAddPlaceFoursquareCtrl" style="font-family: 'Roboto'">
 	<form role="form">
 		<div class="form-group">
 			<label for="placeName">Place Name</label>
@@ -99,22 +99,26 @@
 				<option>อำนาจเจริญ</option>		
 			</select>
 		</div>
-		<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="findPlace()">Search</button>
-		<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="findNearbyPlace()">Search Nearby</button>
+		<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="findPlace()">
+			<strong>Search</strong>
+		</button>
+		<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="findNearbyPlace()">
+			<strong>Search Nearby</strong>
+		</button>
 		<br>
 		<center>
 			<i class="fa fa-spinner fa-spin fa-4x" ng-show="loading"></i>
 		</center>
 	</form>
+	<p></p>
 	<div class="form-group">
-		<br><br>
 		<!-- <label for="Places">Listed Place</label>		 -->
 		<div class="list-group">
 			<a ng-repeat="place in foursqplaces" class="list-group-item" ng-click="selectPlace(place)">
 				{{place.name}} <br>
-				{{place.id}} <br>
+<!-- 				{{place.id}} <br>
 				{{place.location.lat}} <br>
-				{{place.location.lng}} <br>
+				{{place.location.lng}} <br> -->
 			</a>
 		</div>
 	</div>

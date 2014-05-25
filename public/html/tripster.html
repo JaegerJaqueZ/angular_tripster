@@ -10,9 +10,15 @@
 	<!-- snap -->
 	<link rel="stylesheet" type="text/css" href="../css/snap.css" />
 	<link rel="stylesheet" type="text/css" href="../css/mysnap.css" />
+	
+	<!-- Font -->
+	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,900' rel='stylesheet' type='text/css'>
 
 	<!-- bootstrap CDN -->
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> 
+	<!-- <link rel="stylesheet" href="http://bootswatch.com/flatly/bootstrap.min.css">  -->
+	
 
 	<!-- font-awesome CDN -->
 	<link  rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
@@ -92,21 +98,20 @@
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
 	<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 
-
 	<!-- test button -->
 
 	 
 </head>
-<body>
+<body >
 
-	<div class="container-fluid">
+	<div class="container-fluid" id="mainPage">
 		<!-- Side Bar -->
 		<div class="snap-drawers">
 			<div class="snap-drawer snap-drawer-left">
 				<div>
 					<ul>            
 						<li><a>Default</a></li>
-						<li><a href="#/"><span class="glyphicon glyphicon-home" style="margin-right:5px"></span> Timeline</a></li>
+						<li ><a href="#/"><span class="glyphicon glyphicon-home" style="margin-right:5px"></span> Timeline</a></li>
 						<li><a href="#/mytrip"><span class="glyphicon glyphicon-pencil" style="margin-right:5px"></span> My Trip</a></li>
 						<li><a href="#/search"><span class="glyphicon glyphicon-search" style="margin-right:5px"></span> Search</a></li>
 						<li><a href="#/bookmark"><span class="glyphicon glyphicon-book" style="margin-right:5px"></span> Bookmark</a></li>
@@ -121,22 +126,23 @@
 
 			<!-- Top Nav Bar -->
 			<!-- <nav class="navbar navbar-static-top navbar-inverse" role="navigation"> -->
-			<nav class="navbar navbar-fixed-top navbar-default" role="navigation">
+			<nav class="navbar navbar-fixed-top navbar-default" role="navigation" id="menuButton" style="background-color:#ba2336">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" style="height:40px" id="open-left">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
+						<span class="icon-bar" style="background-color:white;"></span>
+						<span class="icon-bar" style="background-color:white;"></span>
+						<span class="icon-bar" style="background-color:white;"></span>
 					</button>    
-					<a class="navbar-brand" href="#/home"><b>Tripster</b></a> 
+					<a class="navbar-brand" href="#/home" ><b id="header"  align="center" style="font-family: 'Roboto', cursive;font-size:24px;font-weight:900;text-align:center; ">tripster</b></a> 
+					<i class="fa fa-spinner fa-spin fa-2x" id="loading" style="float:right"></i>
 				</div>
 			</nav>
 
 		<!-- Main Content -->
-		<div id="content" class="snap-content">
+		<div id="content" class="snap-content " style="background-color:#dfdfdf;background-size:cover;" >
 
 			<!-- Angular ng-view -->
-			<div ng-view style="padding-top:60px"></div>
+			<div ng-view style="padding-top:60px" style="background-color:#dfdfdf"></div>
 		</div>
 	</div>
 

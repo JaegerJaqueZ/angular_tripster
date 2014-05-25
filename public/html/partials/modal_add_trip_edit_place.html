@@ -1,17 +1,17 @@
 <!-- public/html/partials/modal_add_trip_edit_place.html -->
 
 <!-- NavBar for Modal-->
-<nav class="navbar navbar-static-top navbar-default" role="navigation">
+<nav class="navbar navbar-static-top navbar-default" role="navigation" style="font-family: 'Roboto'">
 	<div class="navbar-header">
 		<button type="button" class="navbar-toggle" id="fix-btn" style="height:40px; width:80px" ng-click="cancel()">
 			Cancel
 		</button>    
-		<a class="navbar-brand" href="#"><b>Add Place</b></a> 
+		<a class="navbar-brand" href="#" style="font-size:22px;font-family: 'Roboto'"><b>Add Place</b></a> 
 	</div>
 </nav>
 <!-- Modal -->
 <!--div class="modal-header"></div-->
-<div class="modal-body animated slideInLeft" ng-controller="modalAddTripEditPlaceCtrl">
+<div class="modal-body animated slideInLeft" ng-controller="modalAddTripEditPlaceCtrl" style="font-family: 'Roboto'">
 	<fieldset ng-disabled="isDisabled">
 		<form role="form">
 			<!-- Search Trip -->
@@ -22,13 +22,14 @@
 				</div>
 				<br>
 
+				<label for="Date">Photo(s)</label><br>
 				<div class="col-md-12" style="margin-bottom: 40px">
 	                
                     <span class="btn btn-primary fileinput-button">
                         <i class="icon-plus icon-white"></i>
                         <input ng-file-select type="file" multiple  />
                         <span>
-                            <span class="glyphicon glyphicon-plus-sign"></span> Add files &nbsp
+                            <span class="glyphicon glyphicon-plus-sign"></span><strong> Add Photo &nbsp</strong>
                         </span>
                     </span>                    
                 
@@ -104,8 +105,12 @@
 		</form>
 
 		<hr>
-		<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="confirmPlace()">Done</button>
-		<button type="button" class="btn btn-danger btn-lg btn-block" ng-click="deletePlace()">Delete</button>
+		<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="confirmPlace()">
+			<strong>Done</strong>
+		</button>
+		<button type="button" class="btn btn-danger btn-lg btn-block" ng-click="deletePlace()">
+			<strong>Delete</strong>
+		</button>
 	</fieldset>
 	
 </div>

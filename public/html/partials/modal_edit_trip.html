@@ -1,17 +1,17 @@
 <!-- public/html/partials/modal_edit_trip.html -->
 
 <!-- NavBar for Modal-->
-<nav class="navbar navbar-static-top navbar-default" role="navigation">
+<nav class="navbar navbar-static-top navbar-default" role="navigation" style="font-family: 'Roboto'">
 	<div class="navbar-header">
 		<button type="button" class="navbar-toggle" id="fix-btn" style="height:40px; width:80px" ng-click="cancel()">
 			Cancel
 		</button>    
-		<a class="navbar-brand" href="#"><b>Create Trip</b></a> 
+		<a class="navbar-brand" href="#" style="font-size:22px;"><b>Create Trip</b></a> 
 	</div>
 </nav>
 <!-- Modal -->
 <!--div class="modal-header"></div-->
-<div class="modal-body animated slideInLeft" ng-controller="modalEditTripCtrl">
+<div class="modal-body animated slideInLeft" ng-controller="modalEditTripCtrl" style="font-family: 'Roboto';">
 	<fieldset ng-disabled="isDisabled">
 		<form role="form">
 			<div class="form-group">
@@ -90,7 +90,7 @@
 								<br>
 								<center>
 									<button type="button" class="btn btn-default" ng-click="open($index)">
-										<span class="glyphicon glyphicon-plus">AddPlace</span>
+										<span class="glyphicon glyphicon-plus"></span><strong> Add Place</strong>
 									</button>
 									<button type="button" class="btn btn-danger" ng-click="deleteDay($parent.$index)">
 										<span class="glyphicon glyphicon-trash"></span>
@@ -103,7 +103,7 @@
 					</accordion>
 
 					<button class="btn btn-default btn-lg btn-block" ng-click="addDay()">
-						<span class="glyphicon glyphicon-plus"> AddDay</span>
+						<span class="glyphicon glyphicon-plus"></span><strong> Add Day</strong> 
 					</button>
 				</div>		
 				<!-- <div class="list-group">
@@ -126,12 +126,14 @@
 			<img src="../img/exmap.png" class="img-responsive img-thumbnail" alt="Responsive image">
 			</center>
 		</div> -->
-		<br>
+		
 	</form>
 	<hr>
-	<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="save()">Save</button>
-	<button type="submit" class="btn btn-success btn-lg btn-block" ng-click="publish()" ng-show="publishShow">Publish</button>
-	<button type="button" class="btn btn-danger btn-lg btn-block" ng-click="deleteTrip()">Delete</button>
+	<div style="font-family: 'Roboto';">
+		<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="save()"><strong>Save</strong></button>
+		<button type="submit" class="btn btn-success btn-lg btn-block" ng-click="publish()" ng-show="publishShow"><strong>Publish</strong></button>
+		<button type="button" class="btn btn-danger btn-lg btn-block" ng-click="deleteTrip()"><strong>Delete</strong></button>
+	</div>
 </fieldset>
 </div>
 	<!-- <div class="modal-footer">

@@ -1,6 +1,7 @@
 
 <title>Timeline</title>
-<div class="container-fluid animated slideInLeft" >	
+
+<div class="container-fluid animated slideInLeft" id="timeline" >	
 
 
 	
@@ -19,11 +20,11 @@
 	 		</a>
 	 	</div>
 
-	 	<div class="col-xs-8 col-sm-8" style="margin-left:5%">
+	 	<div class="col-xs-9 col-sm-9" style="margin-left:5%">
 
 	 		<!-- user + activity -->
 	 		<span >
-	 			<small><a ng-click="goProfile(activityLog.user_id._id)">{{activityLog.user_id.first_name}} {{activityLog.user_id.last_name}}</a>  {{activityLog.act_code}}</small> 
+	 			<a  style="color:black" ng-click="goProfile(activityLog.user_id._id)">{{activityLog.user_id.first_name}} {{activityLog.user_id.last_name}}</a>  {{activityLog.act_code}}
 	 		</span>						  		
 	 		<br>
 	 		<!-- trip's name -->
@@ -32,7 +33,7 @@
 	 		</span>						  		
 
 	 	</div>
-	 	<div class="col-xs-2 col-sm-2">
+	 	<div class="col-xs-1 col-sm-1" style="font-family: 'Roboto'">
 	 		<!-- icon & time -->
 	 		<i class="pull-right glyphicon glyphicon-time">{{activityLog.created}}</i>
 	 	</div>
@@ -42,15 +43,19 @@
 	 <!-- photo -->
 	 <div >
 	 	<div style="height: 10%">
-	 		<carousel interval="myInterval">
-	 			<slide ng-repeat="place in activityLog.trip_id.places" active="place.active">
-	 				<img ng-src="{{place.cover_figure}}" style="margin:auto;">
-	 				<div class="carousel-caption">
-	 					<!-- <h4>place {{$index+1}}</h4> -->
-	 					<p>place {{$index+1}} : {{place.foursquare.name}}</p>
-	 				</div>
-	 			</slide>
-	 		</carousel>
+	 		
+		 		<carousel interval="myInterval">
+		 			<slide ng-repeat="place in activityLog.trip_id.places" active="place.active">
+		 				<a ng-click="readmore(activityLog.trip_id)">
+		 				<img ng-src="{{place.cover_figure}}" style="margin:auto;">
+		 				</a>
+		 				<div class="carousel-caption">
+		 					<!-- <h4>place {{$index+1}}</h4> -->
+		 					<p>place {{$index+1}} : {{place.foursquare.name}}</p>
+		 				</div>
+		 			</slide>
+		 		</carousel>
+		 	
 	 	</div>
 	 </div>
 	 <hr>

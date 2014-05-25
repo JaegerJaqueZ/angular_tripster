@@ -1,28 +1,16 @@
 <title>Profile</title>
 
-<div class="animated slideInLeft" ng-controller="modalProfileCtrl" style="padding:0px">	
+<div class="animated slideInLeft" ng-controller="modalProfileCtrl" style="padding:0px;font-family: 'Roboto'">	
 
 <!-- NavBar for Modal-->
-<nav class="navbar navbar-static-top navbar-default" role="navigation">
+<nav class="navbar navbar-static-top navbar-default" role="navigation" >
+
 	<div class="navbar-header">
-		<div class="row">
-			<div class="col-xs-3 col-sm-3">		
-				<button type="button" class="navbar-toggle" id="fix-btn" style="height:40px; width:80px" ng-click="cancel()">
-					Back
-				</button> 
-			</div>
-
-			<div class="col-xs-6 col-sm-6" style="text-align:center;font-size: 18px;color: #777;">	
-				<b>Tripster</b>
-			</div>
-
-			<div class="col-xs-3 col-sm-3" >	
-				<!-- <button type="button" style="float:right;height:40px; width:100px;margin-right:0px" ng-hide="checkIsOwner()" id="fix-btn" class="navbar-toggle" ng-model="bookmark" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="bookmarking()">
-			        {{bookmarkstate}}
-			    </button>	 -->
-			</div>
-		</div>	
-	</div>
+		<button type="button" class="navbar-toggle" id="fix-btn" style="height:40px; width:80px" ng-click="cancel()">
+			Cancel
+		</button>    
+		<a class="navbar-brand" href="#" style="font-size:24px;font-family: 'Roboto';font-weight:900;"><b>Profile</b></a> 
+	</div>	
 </nav>	
 
 		<!-- profile photo -->
@@ -32,33 +20,39 @@
 
  	<div class="container-fluid">	
  		<!-- edit button -->
-		<button type="button" ng-hide="checkIsOwner()" class="btn btn-default btn-lg btn-block" ng-click="following()">{{followingstate}}</button>
+		<button type="button" ng-hide="checkIsOwner()" class="btn btn-default btn-lg btn-block" ng-click="following()" style="background-color:#ba2336;color:white;">
+			<strong>{{followingstate}}</strong>
+		</button>
 	</div>
 	<p>
 	<!-- stats -->
 	<table class="table table-bordered" style="text-align:center;padding:0px;" >
 		<tr>
 			<td>
-				<strong>{{profile.followers_count}}</strong>
+				<strong>{{profile.followers_count}}
 				<br>					
-				FOLLOWERS					
+				FOLLOWERS
+				</strong>					
 			</td>
 			<td>
-				<strong>{{profile.followings_count}}</strong>
+				<strong>{{profile.followings_count}}
 				<br>
-				FOLLOWING					
+				FOLLOWING
+				</strong>					
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<strong>{{profile.trips_count}}</strong>
+				<strong>{{profile.trips_count}}
 				<br>
-				TRIPS					
+				TRIPS	
+				</strong>				
 			</td>
 			<td>
-				<strong>{{profile.bookmarks_count}}</strong>
+				<strong>{{profile.bookmarks_count}}
 				<br>
-				BOOKMARKS					
+				BOOKMARKS	
+				</strong>				
 			</td>				
 		</tr>
 	</table>		
@@ -75,7 +69,7 @@
 
 		 		<!-- user + activity -->
 		 		<span >
-		 			<small><a>{{activityLog.user_id.first_name}} {{activityLog.user_id.last_name}}</a>  {{activityLog.act_code}}</small> 
+		 			<a style="color:black">{{activityLog.user_id.first_name}} {{activityLog.user_id.last_name}}</a>  {{activityLog.act_code}}
 		 		</span>						  		
 		 		<br>
 		 		<!-- trip's name -->

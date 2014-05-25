@@ -3,17 +3,17 @@
 <div class="modal-body animated slideInLeft" ng-controller="modalBookmarkCtrl" style="padding:0px">
 
 <!-- NavBar for Modal-->
-<nav class="navbar navbar-static-top navbar-default" role="navigation">
+<nav class="navbar navbar-static-top navbar-default" role="navigation" style="background-color:#ba2336">
 	<div class="navbar-header">
 		<div class="row">
 			<div class="col-xs-3 col-sm-3">		
 				<button type="button" class="navbar-toggle" id="fix-btn" style="height:40px; width:80px" ng-click="cancel()">
-					Back
+					<strong>Back</strong>
 				</button> 
 			</div>
 
-			<div class="col-xs-6 col-sm-6" style="text-align:center;font-size: 18px;color: #777;">	
-				<b>Preview Trip</b>
+			<div class="col-xs-6 col-sm-6" style="text-align:center;font-size: 22px;font-weight:900;">	
+				<b>Trip</b>
 			</div>
 
 			<div class="col-xs-3 col-sm-3" >	
@@ -28,38 +28,41 @@
 		<fieldset >
 			<legend ><strong>Author</strong></legend>
 
-				<div class="row">
-				  	<div class="col-xs-2 col-sm-2" >
-				  		<!-- author photo -->
-				  		<a ng-click="goProfile(trip.user_id._id)">
-				  			<img border="0" class="img-circle" src="{{trip.user_id.profile_figure}}" width="50" height="50">
-				  		</a>
-				  	</div>
-				  	
-				  	<div class="col-xs-6 col-sm-6">
-				  		<p></p>
-				  		<!-- author name -->
-				  		<span style="padding-left:10%">
-				  			<strong>
-				  				<a ng-click="goProfile(trip.user_id._id)"> 
-				  					{{trip.user_id.first_name}} {{trip.user_id.last_name}}
-				  				</a> 
-				  			</strong>
-				  		</span>						  		
+			<div class="row">
+			  	<div class="col-xs-2 col-sm-2" >
+			  		<!-- author photo -->
+			  		<a ng-click="goProfile(trip.user_id._id)">
+			  			<img border="0" class="img-circle" src="{{trip.user_id.profile_figure}}" width="50" height="50">
+			  		</a>
+			  	</div>
+			  	
+			  	<div class="col-xs-6 col-sm-6">
+			  		<p></p>
+			  		<!-- author name -->
+			  		<span style="padding-left:10%">
+			  			<strong>
+			  				<a ng-click="goProfile(trip.user_id._id)"> 
+			  					{{trip.user_id.first_name}} {{trip.user_id.last_name}}
+			  				</a> 
+			  			</strong>
+			  		</span>						  		
 
-				  	</div>
-				  	<div class="col-xs-3 col-sm-3" style="padding-left:0px">
-						<!-- follow button -->
-						<button type="button" ng-hide="checkIsOwner()" class="btn btn-default"  ng-model="follow" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="following()">
-					        {{followingstate}}
-					    </button>
-				  	</div>
-				</div>
-		<br>
+			  	</div>
+			  	<div class="col-xs-3 col-sm-3" style="padding-left:0px">
+					<!-- follow button -->
+					<button type="button" style="height:40px;width:100px;margin-right:0px;color:white;background-color:#ba2336;" ng-hide="checkIsOwner()" class="btn btn-default"  ng-model="follow" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="following()">
+				        <strong>{{followingstate}}</strong>
+				    </button>
+			  	</div>
+			</div>
+
+			<br>
 
 			<legend ><strong>Trip</strong></legend>
-			<!-- trip name name -->
-			<div class="text-center" style="width:75%" type="text"><strong>{{trip.title}}</strong></div>
+			<!-- trip name -->
+			<div class="text-center" type="text"><strong>{{trip.title}}</strong></div>
+			<!-- start to end date -->
+			<center><span class="glyphicon glyphicon-time"></span> {{date}}</center>
 			<!-- trip description -->
 			<p> &emsp;{{trip.description}}</p> 
 
@@ -72,7 +75,7 @@
 				    <div class="btn-group">
 				    	<!-- like button -->
 				        <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Like'" uncheckable ng-click="like()" >
-				        	<i class="glyphicon glyphicon-thumbs-up"><strong> Like</strong> </i>
+				        	<i class="glyphicon glyphicon-thumbs-up"></i>
 				        </label>
 				        <!-- unlike button -->
 				        <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Unlike'" uncheckable ng-click="unlike()" >
@@ -110,7 +113,7 @@
 				<!-- place detail  -->
 				<div ng-repeat="place in day">
 
-				<div class="panel panel-default" >
+				<div class="panel panel-default" style="background-color:#e4a9af;color:black" >
 					<div class="panel-body">
 						<div class="row">
 						  	<div class="col-xs-10 col-sm-10" style="padding-right:0px">
@@ -146,7 +149,7 @@
 				</div>
 				<!-- place description -->	
 				<br>
-				<p>{{place.description}}</p>
+				<p>&emsp;{{place.description}}</p>
 				</div>
 			</div>
 		</fieldset >

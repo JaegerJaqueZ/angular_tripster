@@ -1,16 +1,20 @@
 <title>Profile</title>
 
-<div class="animated slideInLeft" ng-model="profile">	
+<div class="animated slideInLeft" ng-model="profile" >	
 
 
 		<!-- profile photo -->
 		<center><img src="{{profile.profile_figure}}"  alt="{{profile.profile_figure}}" class="img-circle"></center>
 		<!-- profile name -->	
-		<center><strong><h2>{{profile.first_name}} {{profile.last_name}}</h2></strong> </center>
+		<center ><strong><h2>{{profile.first_name}} {{profile.last_name}}</h2></strong> </center>
 
  	<div class="container-fluid">	
  		<!-- edit button -->
-		<button type="button" ng-hide="true" class="btn btn-default btn-lg btn-block" >Edit Your Profile</button>
+ 		<a href="http://158.108.137.28:4000/api/logout"
+			<button type="button" class="btn btn-default btn-lg btn-block" ng-click="logOut()" style="background-color:#ba2336;color:white;">
+				<strong>Log Out</strong>
+			</button>		
+		</a>
 	</div>
 	<p>
 	<!-- stats -->
@@ -61,7 +65,7 @@
 
 		 		<!-- user + activity -->
 		 		<span >
-		 			<small><a>{{activityLog.user_id.first_name}} {{activityLog.user_id.last_name}}</a>  {{activityLog.act_code}}</small> 
+		 			<a style="color:black">{{activityLog.user_id.first_name}} {{activityLog.user_id.last_name}}</a>  {{activityLog.act_code}}
 		 		</span>						  		
 		 		<br>
 		 		<!-- trip's name -->

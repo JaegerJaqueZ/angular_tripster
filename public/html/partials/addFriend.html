@@ -1,6 +1,6 @@
 <title>Add Friend</title>
 
-<div class="animated slideInLeft" ng-controller="addFriendCtrl">	
+<div class="animated slideInLeft" ng-controller="addFriendCtrl" style="font-family: 'Roboto'">	
 
 	<div class="container" ng-show="header">
 		<p class="bg-info" style="text-align:center"><strong> You have {{friendsInApps.length}} friends on Tripster</strong></p>
@@ -24,8 +24,8 @@
 			  	</div>
 			  	<div class="col-xs-3 col-sm-3" style="padding-left:0px">
 					<!-- follow button -->
-					<button type="button" ng-hide="checkIsOwner()" class="btn btn-default" style="float:right;margin-right:5px" ng-model="follow" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="following($index)">
-				        {{followingstate[$index]}}
+					<button type="button" ng-hide="checkIsOwner()" class="btn btn-default" style="float:right;margin-right:5px;background-color:#ba2336;color:white;" ng-model="follow" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="following($index)">
+				        <strong>{{followingstate[$index]}}</strong>
 				    </button>
 			  	</div>
 			</div>

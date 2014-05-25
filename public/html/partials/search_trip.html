@@ -6,9 +6,9 @@
 
 	<!-- Search Trip -->
 	<div class="input-group">
-		<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-		<input ng-model="key" type="text" class="form-control" style="width:75%" placeholder="Search Trip Name">
-		<button type="button" class="btn btn-default" style="margin-left:2%;width:23%;" ng-click="search(); searchTabState.active = true">Search</button>
+		<span class="input-group-addon" style="background-color:#ba2336"><span class="glyphicon glyphicon-search white"></span></span>
+		<input ng-model="key" type="text" class="form-control" style="width:67%" placeholder="Search Trip Name">
+		<button type="button" class="btn btn-default" style="float:right;width:30%;background-color:#ba2336;color:white;" ng-click="search(); searchTabState.active = true"><strong>Search</strong></button>
 	</div>	
 	<br>
 	
@@ -16,12 +16,13 @@
 	<tabset>
 		<!--=================================== Top Trips ===================================-->
 		<tab heading="Top Trips" style="width:50%">
+			<p></p>
 			<div>
 				<accordion close-others="oneAtATime">
 
-				  <accordion-group is-open="isopen" ng-repeat="trip in topTrips">
+				  <accordion-group is-open="isopen" ng-repeat="trip in topTrips" >
 
-					 <accordion-heading>
+					 <accordion-heading >
 						<div class="row">
 						  	<div class="col-xs-2 col-sm-2">
 						  		{{$index+1}}
@@ -35,7 +36,7 @@
 						  		<span style="margin-left:3%;text-align:center" ><strong >{{trip.title}}</strong>  </span>						  		
 						  		<br>
 						  		<!-- author name -->
-						  		<span style="margin-left:10%">by <strong>{{trip.user_id.first_name}} {{trip.user_id.last_name}}</strong> </span>						  		
+						  		<span style="margin-left:10%"><strong>{{trip.user_id.first_name}} {{trip.user_id.last_name}}</strong> </span>						  		
 
 						  	</div>
 						  	<div class="col-xs-0.5 col-sm-0.5" style="align: right;padding-right:2%">
@@ -51,7 +52,9 @@
 						<div style="height: 10%">
 							<carousel interval="myInterval">
 								<slide ng-repeat="place in trip.places" active="slide.active">
+									<a ng-click="readmore(trip)">
 									<img ng-src="{{place.cover_figure}}" style="margin:auto;">
+									</a>
 									<div class="carousel-caption">
 										<!-- <h4>place {{$index+1}}</h4> -->
 										<p>place {{$index+1}} : {{place.foursquare.name}}</p>
@@ -65,7 +68,7 @@
 					<p> &emsp;{{trip.description}}</p> 
 					<p></p>
 
-					<a class="btn btn-default btn-lg btn-block" ng-click="readmore(trip)"><strong>Read More</strong></a>
+					<a class="btn btn-default btn-lg btn-block" ng-click="readmore(trip)" style="background-color:#ba2336;color:white;"><strong>Read More</strong></a>
 				  </accordion-group>
 
 				</accordion>
@@ -73,6 +76,7 @@
 		</tab>
 		<!-------------------------------------- Result List ---------------------------------------->
 		<tab heading="Search Result" style="width:50%" active="searchTabState.active">
+			<p></p>
 			<div>
 				<accordion close-others="oneAtATime">
 
@@ -104,16 +108,18 @@
 
 						<!-- carousel -->
 						<div>
-							<div style="height: 10%">
+							<div style="height: 10%">	 		
 								<carousel interval="myInterval">
 									<slide ng-repeat="place in trip.places" active="slide.active">
+										<a ng-click="readmore(trip)">
 										<img ng-src="{{place.cover_figure}}" style="margin:auto;" >
+										</a>
 										<div class="carousel-caption">
 											<!-- <h4>place {{$index+1}}</h4> -->
 											<p>place {{$index+1}} : {{place.foursquare.name}}</p>
 										</div>
 									</slide>
-								</carousel>
+								</carousel>								
 							</div>
 						</div>
 
@@ -121,7 +127,7 @@
 						<p> &emsp;{{trip.description}}</p> 
 						<p></p>
 
-						<a class="btn btn-default btn-lg btn-block" ng-click="readmore(trip)"><strong>Read More</strong></a>
+						<a class="btn btn-default btn-lg btn-block" ng-click="readmore(trip)" style="background-color:#ba2336;color:white;"><strong>Read More</strong></a>
 				  	</accordion-group>
 
 				</accordion>

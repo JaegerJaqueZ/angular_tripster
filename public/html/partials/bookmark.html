@@ -6,7 +6,7 @@
 
 	<!-- Search Trip -->
 	<div class="input-group">
-		<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+		<span class="input-group-addon" style="background-color:#ba2336"><span class="glyphicon glyphicon-search white"></span></span>
 		<input ng-model="query" type="text" class="form-control" placeholder="Search Trip Title">
 	</div>
 	<br>
@@ -16,7 +16,7 @@
 	<table width="100%">
 		<tr>
 			<td><hr /></td>
-			<td style="width:1px; padding: 0 10px; white-space: nowrap;color:grey;"><strong>Result</strong></td>
+			<td style="width:1px; padding:10px; white-space: nowrap;color:grey;font-family: 'Roboto';"><strong>Result</strong></td>
 			<td><hr /></td>
 		</tr>
 	</table>​		
@@ -55,21 +55,24 @@
 			<div style="height: 10%">
 				<carousel interval="myInterval">
 					<slide ng-repeat="place in trip.places" active="slide.active">
+						<a ng-click="readmore(trip)">
 						<img ng-src="{{place.cover_figure}}" style="margin:auto;">
+						</a>
 						<div class="carousel-caption">
 							<!-- <h4>place {{$index+1}}</h4> -->
 							<p>place {{$index+1}} : {{place.foursquare.name}}</p>
 						</div>
+
 					</slide>
 				</carousel>
 			</div>
 		</div>
 
 		<p></p>
-		{{trip.description}}
+			&nbsp &nbsp {{trip.description}}
 		<p></p>
 
-		<a class="btn btn-default btn-lg btn-block" ng-click="readmore(trip)">Read More</a>
+		<a class="btn btn-default btn-lg btn-block" ng-click="readmore(trip)" style="background-color:#ba2336;color:white;"><strong>Read More</strong></a>
 	</accordion-group>
 
 </accordion>

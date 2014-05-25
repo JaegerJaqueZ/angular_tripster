@@ -3,30 +3,30 @@
 <div class="modal-body animated slideInLeft" ng-controller="modalTimelineCtrl" style="padding:0px">
 
 <!-- NavBar for Modal-->
-	<nav class="navbar navbar-static-top navbar-default" role="navigation">
-		<div class="navbar-header">
-			<div class="row">
-				<div class="col-xs-3 col-sm-3">		
-					<button type="button" class="navbar-toggle" id="fix-btn" style="height:40px; width:80px" ng-click="cancel()">
-						Back
-					</button> 
-				</div>
+<nav class="navbar navbar-static-top navbar-default" role="navigation" style="background-color:#ba2336">
+	<div class="navbar-header">
+		<div class="row">
+			<div class="col-xs-3 col-sm-3">		
+				<button type="button" class="navbar-toggle" id="fix-btn" style="height:40px; width:80px" ng-click="cancel()">
+					<strong>Back</strong>
+				</button> 
+			</div>
 
-				<div class="col-xs-6 col-sm-6" style="text-align:center;font-size: 18px;color: #777;">	
-					<b>Preview Trip</b>
-				</div>
+			<div class="col-xs-6 col-sm-6" style="text-align:center;font-size: 22px;font-weight:900;">	
+				<b>Trip</b>
+			</div>
 
-				<div class="col-xs-3 col-sm-3" >	
-					<button type="button" style="float:right;height:40px; width:100px;margin-right:0px" ng-hide="checkIsOwner()" id="fix-btn" class="navbar-toggle" ng-model="bookmark" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="bookmarking()">
-				        {{bookmarkstate}}
-				    </button>	
-				</div>
-			</div>	
-		</div>
-	</nav>
-	<div class="container">
+			<div class="col-xs-3 col-sm-3" >	
+				<button type="button" style="float:right;height:40px; width:100px;margin-right:0px;" ng-hide="checkIsOwner()" id="fix-btn" class="navbar-toggle" ng-model="bookmark" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="bookmarking()">
+			        {{bookmarkstate}}
+			    </button>	
+			</div>
+		</div>	
+	</div>
+</nav>
+	<div class="container" style="font-family: 'Roboto'">
 		<fieldset >
-			<legend ><strong>Author</strong></legend>
+			<legend style="font-family: 'Roboto'"><strong>Author</strong></legend>
 			<div class="row">
 			  	<div class="col-xs-2 col-sm-2" >
 			  		<!-- author photo -->
@@ -48,17 +48,19 @@
 			  	</div>
 			  	<div class="col-xs-3 col-sm-3" style="padding-left:0px">
 					<!-- follow button -->
-					<button type="button" ng-hide="checkIsOwner	()" class="btn btn-default"  ng-model="follow" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="following()">
-				        {{followingstate}}
+					<button type="button" style="height:40px;width:100px;margin-right:0px;color:white;background-color:#ba2336;"  ng-hide="checkIsOwner	()" class="btn btn-default"  ng-model="follow" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="following()">
+				        <strong>{{followingstate}}</strong>
 				    </button>
 			  	</div>
 			</div>
 
 			<br>
 
-			<legend ><strong>Trip</strong></legend>
-			<!-- trip name name -->			
-			<div class="text-center"  type="text"><strong>{{trip.title}}</strong></div>
+			<legend ><strong >Trip</strong></legend>
+			<!-- trip name -->
+			<div class="text-center" type="text"><strong>{{trip.title}}</strong></div>
+			<!-- start to end date -->
+			<center><span class="glyphicon glyphicon-time"></span> {{date}}</center>
 			<!-- trip description -->
 			<p> &emsp;{{trip.description}}</p> 
 
@@ -73,7 +75,7 @@
 			    <div class="btn-group">
 			    	<!-- like button -->
 			        <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Like'" uncheckable ng-click="like()" >
-			        	<i class="glyphicon glyphicon-thumbs-up"><strong> Like</strong> </i>
+			        	<i class="glyphicon glyphicon-thumbs-up"></i>
 			        </label>
 			        <!-- unlike button -->
 			        <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Unlike'" uncheckable ng-click="unlike()" >
@@ -112,7 +114,7 @@
 				<!-- place detail  -->
 				<div ng-repeat="place in day">
 
-				<div class="panel panel-default" >
+				<div class="panel panel-default" style="background-color:#e4a9af;color:black" >
 					<div class="panel-body">
 						<div class="row">
 						  	<div class="col-xs-10 col-sm-10" style="padding-right:0px">
@@ -126,7 +128,7 @@
 						  	<div class="col-xs-2 col-sm-2" >
 						  		<p></p>
 							<!-- foursquare link -->
-						  	<a href="http://www.foursquare.com/v/{{place.foursquare.id}}"><i class="pull-right glyphicon glyphicon-chevron-right"></i></a>
+						  	<a href="http://www.foursquare.com/v/{{place.foursquare.id}}" style="color:#5b6258;"><i class="pull-right fa fa-foursquare fa-2x"></i></a>
 								<!-- <span class="pull-right glyphicon glyphicon-chevron-right"></span> -->
 							</div>
 
@@ -148,7 +150,7 @@
 				</div>
 				<!-- place description -->	
 				<br>
-				<p>{{place.description}}</p>
+				<p>&emsp;{{place.description}}</p>
 				</div>
 			</div>
 		</fieldset >
