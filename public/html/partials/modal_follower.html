@@ -5,34 +5,21 @@
 <!-- NavBar for Modal-->
 <nav class="navbar navbar-static-top navbar-default" role="navigation">
 	<div class="navbar-header">
-		<div class="row">
-			<div class="col-xs-3 col-sm-3">		
-				<button type="button" class="navbar-toggle" id="fix-btn" style="height:40px; width:80px" ng-click="cancel()">
-					Back
-				</button> 
-			</div>
-
-			<div class="col-xs-6 col-sm-6" style="text-align:center;font-size: 18px;color: #777;">	
-				<b>Followers</b>
-			</div>
-
-			<div class="col-xs-3 col-sm-3" >	
-<!-- 				<button type="button" style="float:right;height:40px; width:100px;margin-right:0px" ng-hide="checkIsOwner()" id="fix-btn" class="navbar-toggle" ng-model="bookmark" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="bookmarking()">
-			        {{bookmarkstate}}
-			    </button>	 -->
-			</div>
-		</div>	
-	</div>
+		<button type="button" class="navbar-toggle" id="fix-btn" style="height:40px; width:80px" ng-click="cancel()">
+			Back
+		</button>    
+		<a class="navbar-brand" href="#" style="font-size:22px;"><b>Followers</b></a> 
+	</div>		
 </nav>
 
-<div class="container" ng-repeat="follower in followers">
+<div class="container" ng-repeat="follower in followers" style="font-family: 'Roboto'">
 		<div class="row">
 		  	<div class="col-xs-2 col-sm-2" >
 		  		<!-- author photo -->
 		  		<img border="0" class="img-circle" src="{{follower.user_id.profile_figure}}" width="50" height="50">
 		  	</div>
 		  	
-		  	<div class="col-xs-6 col-sm-6">
+		  	<div class="col-xs-7 col-sm-7">
 		  		<p></p>
 		  		<!-- author name -->
 		  		<span style="padding-left:10%"><strong> {{follower.user_id.first_name}} {{follower.user_id.last_name}}</strong> </span>						  		
@@ -40,8 +27,8 @@
 		  	</div>
 		  	<div class="col-xs-3 col-sm-3" style="padding-left:0px">
 				<!-- follow button -->
-				<button type="button" ng-hide="checkIsOwner()" class="btn btn-default"  ng-model="follow" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="following($index)">
-			        {{followerstate[$index]}}
+				<button type="button" ng-hide="checkIsOwner()" class="btn btn-default" style="float:right;margin-right:5px;background-color:#ba2336;color:white;" ng-model="follow" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="following($index)">
+			        <strong>{{followerstate[$index]}}</strong>
 			    </button>
 		  	</div>
 		</div>
