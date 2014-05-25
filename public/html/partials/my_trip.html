@@ -1,15 +1,11 @@
 <title>My trip</title>
-<div class="container-fluid animated slideInLeft">	
-	<!-- Search Trip -->
-	<div class="input-group">
-		<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-		<input ng-model="query" type="text" class="form-control" placeholder="Search Trip Title">
-	</div>
+<div class="container-fluid animated slideInLeft" style="font-family: 'Roboto'">	
+	
 	<br>
 	<!-- Add -->
 	<div>
-		<button class="btn btn-success" ng-click="open()">
-			<span class="glyphicon glyphicon-plus"></span> Add New Trip
+		<button class="btn btn-default" ng-click="open()" style="background-color:#ba2336;color:white;">
+			<span class="glyphicon glyphicon-plus"></span><strong> Add New Trip</strong> 
 		</button>
 	</div>
 	<br>
@@ -17,12 +13,12 @@
 	
 	<tabset>
 		<tab heading="Publish {{publishCount}}" style="width:50%">
-			<a ng-repeat="trip in trips[2] | filter:query" class="list-group-item" ng-click="open(trip)">
+			<a ng-repeat="trip in trips[2]" class="list-group-item" ng-click="open(trip)">
 				{{trip.title}}
 			</a>
 		</tab>
 		<tab heading="Draft {{draftCount}}" style="width:50%">
-			<a ng-repeat="trip in trips[1] | filter:query" class="list-group-item" ng-click="open(trip)">
+			<a ng-repeat="trip in trips[1]" class="list-group-item" ng-click="open(trip)">
 				{{trip.title}}
 			</a>
 		</tab>
