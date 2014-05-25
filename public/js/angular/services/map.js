@@ -31,7 +31,7 @@ mapService.factory('mapFactory', function($http) {
 			sumLat += places[i].foursquare.location.lat;
 		}		
 		avgLat = sumLat/places.length;
-		console.log(avgLat);		
+		// console.log(avgLat);		
 		return avgLat;
 	}	
 
@@ -43,7 +43,7 @@ mapService.factory('mapFactory', function($http) {
 			sumLng += places[i].foursquare.location.lng;
 		}		
 		avgLng = sumLng/places.length;
-		console.log(avgLng);
+		// console.log(avgLng);
 		return avgLng;
 	}	
 
