@@ -7,12 +7,43 @@ modalSearchTripControllers.controller('modalSearchTripCtrl', function ($modal, $
   $scope.trip = searchTripFactory.getChosenTrip();
 
   timelineFactory.setBackUpTrip($scope.trip);   
+
+  console.log($scope.trip);
    
   mapFactory.setPlaces($scope.trip.places);
   $scope.places = mapFactory.getPlaces();
 
-  console.log($scope.places);
+  var month = new Array();
+  month[0] = "Jan";
+  month[1] = "Feb";
+  month[2] = "Mar";
+  month[3] = "Apr";
+  month[4] = "May";
+  month[5] = "Jun";
+  month[6] = "Jul";
+  month[7] = "Aug";
+  month[8] = "Sep";
+  month[9] = "Oct";
+  month[10] = "Nov";
+  month[11] = "Dec";
   
+  // start date
+  var startDate = new Date($scope.trip.date_begin);
+  var beginDate = startDate.getDate()+" "+month[startDate.getMonth()]+" "+startDate.getFullYear();
+
+  // end date 
+  var finishDate = new Date($scope.trip.date_begin+(($scope.trip.days-1)*1000*60*60*24));
+  var endDate = finishDate.getDate()+" "+month[finishDate.getMonth()]+" "+finishDate.getFullYear();
+
+  if(beginDate === endDate){
+    $scope.date = ""+beginDate+"";
+  }
+  else{
+    $scope.date =  ""+beginDate+" - "+endDate+"";
+  }
+  
+  console.log($scope.date);
+
   $scope.latlngs = [];
 
   // marker
@@ -70,7 +101,7 @@ modalSearchTripControllers.controller('modalSearchTripCtrl', function ($modal, $
         center : {
           lat: mapFactory.getAvgLat(),
           lng: mapFactory.getAvgLng(),
-          zoom:15            
+          zoom:12            
         },
         layers: {
             baselayers: {
