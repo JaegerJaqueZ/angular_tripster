@@ -35,7 +35,7 @@ var tripsterApp = angular.module('tripsterApp', [
 	'modalProfileControllers',
 	'modalFollowingControllers',
 	'modalFollowerControllers',
-	'addFriendControllers'		
+	'addFriendControllers',		
 ]);
 
 tripsterApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
