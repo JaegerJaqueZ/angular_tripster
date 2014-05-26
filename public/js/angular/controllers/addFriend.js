@@ -6,6 +6,8 @@ addFriendControllers.controller('addFriendCtrl', function ($rootScope, $scope, $
 
   snapper.close();
 
+  document.getElementById("header").innerHTML="Add Friend";
+
   $scope.loading = true;
   $scope.header = false;
 
@@ -17,9 +19,9 @@ addFriendControllers.controller('addFriendCtrl', function ($rootScope, $scope, $
     url: profileFactory.getOriginPath() + "user/friends"
   })
   .success(function(data, status, headers, config) {
-    console.log(data);
-    console.log(data[0]);
-    console.log(data[1]);
+    // console.log(data);
+    // console.log(data[0]);
+    // console.log(data[1]);
     $scope.friendsInApps = data[0];
     $scope.friendsInvites = data[1];
 
@@ -34,7 +36,7 @@ addFriendControllers.controller('addFriendCtrl', function ($rootScope, $scope, $
      $scope.header  = true;
   })
   .error(function(data, status, headers, config) {
-      alert("Failed to get your Profile, Please Try Again");
+      alert("Failed to get your Friend, Please Try Again");
   }); 
 
 
