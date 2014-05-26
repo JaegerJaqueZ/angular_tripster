@@ -6,8 +6,13 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
 
 	snapper.close();
 
-	$scope.range = 10;
-	$scope.from = 0;
+  document.getElementById("header").innerHTML="tripster";
+
+  $("#menuButton").show();
+  $("#loading").hide();
+
+  $scope.range    = 10;
+	$scope.from     = 0;
 	$scope.loadShow = false;
 
   	$scope.$watchCollection(
@@ -28,8 +33,13 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
       url: timelineFactory.getOriginPath() + "timeline"+ "?skip=" + $scope.from + "&limit=" + $scope.range
     })
     .success(function(data, status, headers, config) {
-    	  console.log(data);
-
+    	  // console.log(data);
+       //  if(data === "")
+       //  {
+       //    //$("#suggestFriend").html("You need to add friends first to see activities on your timeline");
+       //    console.log("kuy");
+       //    document.getElementById("suggestFriend").innerHTML="You need to add friends first to see activities on your timeline";
+       //  }
         timelineFactory.clearResultList(data);
       	for (var i=0;i<data.length;i++)
       	{	
@@ -49,17 +59,17 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
 
     function getActivity(actCode){
     	var activity;
-    	if(actCode ===20)
+    	if(actCode === 20)
     	{
-    		activity = "update trip";
+    		activity = "updated";
     	}
     	else if (actCode === 40)
     	{
-    		activity = "bookmarked trip";
+    		activity = "bookmarked";
     	}
     	else if (actCode === 60)
     	{
-    		activity = "published trip";
+    		activity = "published";
     	}
     	return activity;
     }
@@ -130,13 +140,20 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
 
   	$scope.readmore = function (trip) {
 
+      $("#loading").show();
+      $("linkTrip").prop('disabled', true);
+      //document.getElementById("linkTrip").disabled = true;
+
 	    $http({
 	      method:'GET', 
 	      url: timelineFactory.getOriginPath() + "trip?trip_id=" + trip._id,
 	    })
 	    .success(function(data, status, headers, config) {
 	         console.log(data);
-
+           // $("#timeline").show();
+          $("#loading").hide();
+          $("linkTrip").prop('disabled', false);
+          // document.getElementById("linkTrip").disabled = false;
 	        // console.log(data.places);
 
 	        if(typeof(data.places) !== "undefined"){
@@ -191,7 +208,7 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
       url: timelineFactory.getOriginPath() + "timeline?skip=" + $scope.from + "&limit=" + $scope.range
     })
     .success(function(data, status, headers, config) {
-      // console.log(data);
+       console.log(data);
       //TODO check whether data == [] or not; so, the load more button will be hidden
       if(data != ""){
         timelineFactory.setResultList(data); 

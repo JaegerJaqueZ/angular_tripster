@@ -5,7 +5,11 @@ var bookmarkControllers = angular.module('bookmarkControllers', []);
 bookmarkControllers.controller('bookmarkCtrl', function ($scope, $http, bookmarkFactory, $modal) {
 
   snapper.close();
+  $("#loading").hide();
   
+  // change header name
+  document.getElementById("header").innerHTML="Bookmark"; 
+
   //mock up
   // $scope.trips = bookmarkFactory.getResultList();
 
@@ -14,7 +18,8 @@ bookmarkControllers.controller('bookmarkCtrl', function ($scope, $http, bookmark
       url: bookmarkFactory.getOriginPath() + "bookmarks"
     })
     .success(function(data, status, headers, config) {
-        bookmarkFactory.clearResultList(data);
+        console.log(data);
+        bookmarkFactory.clearResultList();
         bookmarkFactory.setResultList(data);
     })
     .error(function(data, status, headers, config) {
@@ -54,13 +59,19 @@ bookmarkControllers.controller('bookmarkCtrl', function ($scope, $http, bookmark
 
   $scope.readmore = function (trip) {
 
+    $("#loading").show();
+    $("linkTrip").prop('disabled', true);
+    //document.getElementById("linkTrip").disabled = true;
+
     $http({
       method:'GET', 
       url: bookmarkFactory.getOriginPath() + "trip?trip_id=" + trip._id,
     })
     .success(function(data, status, headers, config) {
         // console.log(data);
-
+        $("#loading").hide();
+        $("linkTrip").prop('disabled', false);
+        //document.getElementById("linkTrip").disabled = false;
         // console.log(data.places);
 
         if(typeof(data.places) !== "undefined"){

@@ -5,6 +5,12 @@ var searchTripControllers = angular.module('searchTripControllers', []);
 searchTripControllers.controller('searchTripCtrl', function ($scope, $http, searchTripFactory, $modal) {
 
   snapper.close();
+  $("#loading").hide();
+  
+
+  // set header name
+  document.getElementById("header").innerHTML="Search Trip"; 
+
   getTopTrips();
   
   $scope.range = 10;
@@ -37,6 +43,7 @@ searchTripControllers.controller('searchTripCtrl', function ($scope, $http, sear
     })
     .success(function(data, status, headers, config) {
         $scope.topTrips = data
+        console.log(data);
        
     })
     .error(function(data, status, headers, config) {
@@ -47,8 +54,8 @@ searchTripControllers.controller('searchTripCtrl', function ($scope, $http, sear
   $scope.search = function () {
     
     //reset
+    $("#searchTab").show();
     $scope.from = 0;
-
     $http({
       method:'GET', 
       url: searchTripFactory.getOriginPath() + "trips/search?key=" + $scope.key + "&skip=" + $scope.from + "&limit=" + $scope.range
@@ -89,9 +96,9 @@ searchTripControllers.controller('searchTripCtrl', function ($scope, $http, sear
   };
 
   $scope.load = function () {
-
+    $("#loadingMore").show();
     $scope.from += $scope.range;
-
+    $scope.loadShow = false;
     // $scope.to = $scope.from + $scope.range;
     // console.log($scope.from);
 
@@ -105,11 +112,12 @@ searchTripControllers.controller('searchTripCtrl', function ($scope, $http, sear
       if(data != ""){
         searchTripFactory.setResultList(data); 
         $scope.loadShow = true;
+
       }
       else{
         $scope.loadShow = false;
       }
-
+      $("#loadingMore").hide();
          
     })
     .error(function(data, status, headers, config) {
@@ -120,12 +128,20 @@ searchTripControllers.controller('searchTripCtrl', function ($scope, $http, sear
 
   $scope.readmore = function (trip) {
 
+    $("#loading").show();
+    $("linkTrip").prop('disabled', true);
+    //document.getElementById("linkTrip").disabled = true;    
+
     $http({
       method:'GET', 
       url: searchTripFactory.getOriginPath() + "trip?trip_id=" + trip._id,
     })
     .success(function(data, status, headers, config) {
         // console.log(data);
+
+        $("#loading").hide();
+        $("linkTrip").prop('disabled', false);
+        //document.getElementById("linkTrip").disabled = false;        
 
         if(typeof(data.places) !== "undefined"){
           for (var i=0;i<data.places.length;i++)
@@ -214,6 +230,7 @@ var searchTripModalInstanceCtrl = function ($scope, $modalInstance, timelineFact
     $modalInstance.dismiss('cancel');
   };
 };
+
 
 
 });

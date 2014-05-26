@@ -5,6 +5,9 @@ var myTripControllers = angular.module('myTripControllers', []);
 myTripControllers.controller('myTripCtrl', function ($scope, $http, createTripFactory, $modal) {
 
 	snapper.close();
+	$("#loading").hide();
+
+	document.getElementById("header").innerHTML="Create Trip";
 
 	$http({
 		method:'GET', 
