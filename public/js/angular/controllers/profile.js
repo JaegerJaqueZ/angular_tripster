@@ -5,6 +5,9 @@ var profileControllers = angular.module('profileControllers', []);
 profileControllers.controller('profileCtrl', function ($location, $rootScope, $scope, $http, profileFactory, authFactory, $modal, timelineFactory) {
 
   snapper.close();
+  $("#loading").hide();
+
+  document.getElementById("header").innerHTML="Profile";
 
   $scope.range = 10;
   $scope.from = 0;
