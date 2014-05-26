@@ -33,13 +33,15 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
       url: timelineFactory.getOriginPath() + "timeline"+ "?skip=" + $scope.from + "&limit=" + $scope.range
     })
     .success(function(data, status, headers, config) {
-    	  // console.log(data);
+    	  console.log(data);
        //  if(data === "")
        //  {
        //    //$("#suggestFriend").html("You need to add friends first to see activities on your timeline");
        //    console.log("kuy");
        //    document.getElementById("suggestFriend").innerHTML="You need to add friends first to see activities on your timeline";
-       //  }
+         //  }
+
+
         timelineFactory.clearResultList(data);
       	for (var i=0;i<data.length;i++)
       	{	
@@ -51,7 +53,13 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
       		var time =calTime(data[i].created);
       		data[i].created = time;
       	}  
-        timelineFactory.setResultList(data);
+        if(data !=""){
+          timelineFactory.setResultList(data); 
+          $scope.loadShow = true;
+        }
+        else {
+          $scope.loadShow = false;
+        }  
     })
     .error(function(data, status, headers, config) {
         alert("Failed to get your timeline, Please Try Again");
@@ -199,7 +207,7 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
   	$scope.load = function () {
 
     $scope.from += $scope.range;
-
+    $("#loadingMore").show();
     // $scope.to = $scope.from + $scope.range;
     // console.log($scope.from);
 
@@ -209,6 +217,7 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
     })
     .success(function(data, status, headers, config) {
        console.log(data);
+      $("#loadingMore").hide();
       //TODO check whether data == [] or not; so, the load more button will be hidden
       if(data != ""){
         timelineFactory.setResultList(data); 
