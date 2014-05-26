@@ -14,7 +14,7 @@ loginControllers.controller('loginCtrl', function ($scope, $http, authFactory) {
  //    elem.style.width           = 'auto';
  //    elem.style.position        = 'absolute',
 
-	var bg = "img/tripster4.png";
+	var bg = "img/tripster5.png";
 
 	var bgimg = new Image();
 	bgimg.className  = "img-responsive";
