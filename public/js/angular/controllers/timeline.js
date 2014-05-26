@@ -218,6 +218,17 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
     .success(function(data, status, headers, config) {
        console.log(data);
       $("#loadingMore").hide();
+      for (var i=0;i<data.length;i++)
+      { 
+        //change act code to activity
+        var activity = getActivity(data[i].act_code);
+        data[i].act_code = activity;
+
+        // change created time to time
+        var time =calTime(data[i].created);
+        data[i].created = time;
+      }        
+      
       //TODO check whether data == [] or not; so, the load more button will be hidden
       if(data != ""){
         timelineFactory.setResultList(data); 
