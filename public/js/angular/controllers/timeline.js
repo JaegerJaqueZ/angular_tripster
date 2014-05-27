@@ -70,7 +70,7 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
         }  
     })
     .error(function(data, status, headers, config) {
-        alert("Failed to get your timeline, Please Try Again");
+        
     }); 
 
     function getActivity(actCode){
