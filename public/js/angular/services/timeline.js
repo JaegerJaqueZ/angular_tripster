@@ -12,7 +12,7 @@ timelineService.factory('timelineFactory', function($http) {
 //=============================== Factory Methods ===============================
 
 	function getOriginPath() {
-		return 'http://192.168.0.25:4000/api/';
+		return 'http://158.108.137.28:4000/api/';
 	}
 
 	function getResultList() {
