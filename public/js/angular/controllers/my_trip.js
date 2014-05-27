@@ -7,6 +7,14 @@ myTripControllers.controller('myTripCtrl', function ($scope, $http, createTripFa
 	snapper.close();
 	$("#loading").hide();
 
+  // set color of snap
+  $("#timeline").css("background-color","");
+  $("#myTrip").css("background-color","#a31d2e");
+  $("#searchTrip").css("background-color","");
+  $("#bookmark").css("background-color","");
+  $("#profile").css("background-color","");
+  $("#friend").css("background-color","");	
+
 	document.getElementById("header").innerHTML="Create Trip";
 
 	$http({

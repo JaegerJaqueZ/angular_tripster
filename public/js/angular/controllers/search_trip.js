@@ -7,6 +7,13 @@ searchTripControllers.controller('searchTripCtrl', function ($scope, $http, sear
   snapper.close();
   $("#loading").hide();
   
+  // set color of snap
+  $("#timeline").css("background-color","");
+  $("#myTrip").css("background-color","");
+  $("#searchTrip").css("background-color","#a31d2e");
+  $("#bookmark").css("background-color","");
+  $("#profile").css("background-color","");
+  $("#friend").css("background-color","");
 
   // set header name
   document.getElementById("header").innerHTML="Search Trip"; 

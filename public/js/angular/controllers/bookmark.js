@@ -6,7 +6,15 @@ bookmarkControllers.controller('bookmarkCtrl', function ($scope, $http, bookmark
 
   snapper.close();
   $("#loading").hide();
-  
+
+    // set color of snap
+  $("#timeline").css("background-color","");
+  $("#myTrip").css("background-color","");
+  $("#searchTrip").css("background-color","");
+  $("#bookmark").css("background-color","#a31d2e");
+  $("#profile").css("background-color","");
+  $("#friend").css("background-color","");
+
   // change header name
   document.getElementById("header").innerHTML="Bookmark"; 
 

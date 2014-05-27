@@ -8,6 +8,14 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
 
   document.getElementById("header").innerHTML="tripster";
 
+  // set color of snap
+  $("#timeline").css("background-color","#a31d2e");
+  $("#myTrip").css("background-color","");
+  $("#searchTrip").css("background-color","");
+  $("#bookmark").css("background-color","");
+  $("#profile").css("background-color","");
+  $("#friend").css("background-color","");
+
   $("#menuButton").show();
   $("#loading").hide();
 
@@ -228,7 +236,7 @@ timelineControllers.controller('timelineCtrl', function ($scope, $http, timeline
         var time =calTime(data[i].created);
         data[i].created = time;
       }        
-      
+
       //TODO check whether data == [] or not; so, the load more button will be hidden
       if(data != ""){
         timelineFactory.setResultList(data); 

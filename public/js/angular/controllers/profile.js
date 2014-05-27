@@ -7,6 +7,14 @@ profileControllers.controller('profileCtrl', function ($location, $rootScope, $s
   snapper.close();
   $("#loading").hide();
 
+  // set color of snap
+  $("#timeline").css("background-color","");
+  $("#myTrip").css("background-color","");
+  $("#searchTrip").css("background-color","");
+  $("#bookmark").css("background-color","");
+  $("#profile").css("background-color","#a31d2e");
+  $("#friend").css("background-color","");
+
   document.getElementById("header").innerHTML="Profile";
 
   $scope.range = 10;
